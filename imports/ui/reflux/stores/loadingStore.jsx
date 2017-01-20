@@ -1,4 +1,5 @@
 import {Meteor} from 'meteor/meteor';
+import React, {ReactDOM} from 'react';
 
 let Reflux = require('reflux');
 

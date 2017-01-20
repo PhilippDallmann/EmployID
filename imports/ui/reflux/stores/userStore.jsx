@@ -1,4 +1,4 @@
-import {Meteor} from 'meteor/meteor';
+import {Meteor} from 'meteor/meteor'
 
 import UserActions from "../actions/userActions";
 
@@ -8,7 +8,8 @@ import DefaultModalStore from "../../reflux/stores/defaultModalStore";
 import LoadingActions from "../../reflux/actions/loadingActions";
 import LoadingStore from "../../reflux/stores/loadingStore";
 
-import defaultUserImage from '../../components/assets/img/defaultUserImage_140x140.png';
+//import defaultUserImage from '../../components/assets/img/defaultUserImage_140x140.png';
+var defaultUserImage = '../../components/assets/img/defaultUserImage_140x140.png';
 
 let Reflux = require("reflux");
 
