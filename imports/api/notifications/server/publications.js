@@ -1,3 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+import GroupCollection from '../../groups/groups';
+import NotificationCollection from '../notifications';
+
 if (Meteor.isServer) {
   Meteor.publish('notificationsOfCurrentUser', function(currentUserId) {
     this.autorun(function (computation) {

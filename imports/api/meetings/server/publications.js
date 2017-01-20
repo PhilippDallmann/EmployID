@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import GroupCollection from '../../groups/groups'
+import MeetingCollection from '../meetings'
 
 if (Meteor.isServer) {
   Meteor.publish('userSpecificMeetings', function (currentUserId) {

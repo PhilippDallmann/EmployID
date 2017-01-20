@@ -1,3 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+import MeetingCollection from '../../meetings/meetings';
+import ChatCollection from '../../chats/chats';
+import ChatMessageCollection from '../chatMessages';
 
 if (Meteor.isServer) {
   Meteor.publish('currentChatMessages', function (meetingId) {

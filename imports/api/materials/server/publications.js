@@ -1,3 +1,7 @@
+import { Meteor } from 'meteor/meteor';
+import MeetingCollection from '../../meetings/meetings';
+import MaterialCollection from '../materials';
+import StageCollection from '../../stages/stages';
 
 if (Meteor.isServer) {
   Meteor.publish('materials', function (meetingId, languageKey) {
