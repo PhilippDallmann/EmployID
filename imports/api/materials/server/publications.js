@@ -17,8 +17,7 @@ if (Meteor.isServer) {
     });
   });
   Meteor.publish('allMaterials', function() {
-    var result = MaterialCollection.find({});
-    return result;
+    return MaterialCollection.find({});
   });
   Meteor.publish('editorMaterial', function (stageId, roleId, languageKey) {
     this.autorun(function (computation) {
