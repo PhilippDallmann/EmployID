@@ -1,22 +1,24 @@
 import {Meteor} from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom'
+import {mount} from 'react-mounter';
+
 
 import App from '../../ui/App';
 
 /*import NotFound from "./components/notFound";
-import Header from "./components/header/header";
 import Home from "./components/home/home";
 import EditProfile from "./components/editProfile/editProfile";
 import Topic from "./components/topic/topic";
 import Users from "./components/users/users";
 import UserProfile from "./components/users/userProfile";
 import Editor from "./components/editor/editor";*/
-import Login from '../../ui/components/login/login';
+import Header from '../../ui/components/header/header';
+import Login from '../../ui/components/login/login.jsx';
 
-import LoadingActions from '../../ui/reflux/actions/loadingActions';
-import LoadingStore from '../../ui/reflux/stores/loadingStore';
+import LoadingActions from '../../reflux/actions/loadingActions';
+import LoadingStore from '../../reflux/stores/loadingStore';
 
 const authenticatedRedirect = () => {
   if(!Meteor.loggingIn() && !Meteor.userId()) {
@@ -53,9 +55,8 @@ var exposed = FlowRouter.group({
 exposed.route('/login', {
   name: "login",
   action: function() {
-    ReactDOM.render(App, {
-      children: [<Header />, <Login />]
-    });
+    const containerElement = document.getElementById("render-target");
+    mount(App, {children: <Login />});
   }
 });
 
