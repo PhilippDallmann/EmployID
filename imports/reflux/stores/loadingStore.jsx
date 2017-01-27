@@ -3,7 +3,7 @@ import React, {ReactDOM} from 'react';
 
 let Reflux = require('reflux');
 
-import LoadingModal from '../../components/modals/loadingModal';
+import LoadingModal from '../../ui/components/modals/loadingModal';
 import LoadingActions from '../actions/loadingActions';
 
 let LoadingStore = Reflux.createStore({

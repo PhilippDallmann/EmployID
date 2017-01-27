@@ -2,7 +2,7 @@ import {Meteor} from 'meteor/meteor';
 
 let Reflux = require("reflux");
 
-import DefaultModal from "../../components/modals/defaultModal";
+import DefaultModal from "../../ui/components/modals/defaultModal";
 import DefaultModalActions from "../actions/defaultModalActions";
 
 let DefaultModalStore = Reflux.createStore({
