@@ -1,0 +1,153 @@
+{
+  "languages": {
+    "en": "English",
+    "bg": "Bulgarian",
+    "de": "German"
+  },
+  "header": {
+    "brandName" : "EmployID",
+    "home" : "Home",
+    "help" : "Help",
+    "editProfile" : "Edit Profile",
+    "userList" : "User List",
+    "logout" : "Logout"
+  },
+  "editProfile": {
+    "documentTitle" : "EditProfile | EmployID",
+    "username" : "Username",
+    "emailAddress" : "E-mail address",
+    "firstName" : "First name",
+    "lastName" : "Last name",
+    "enterFirstName" : "Enter first name",
+    "enterLastName" : "Enter last name",
+    "saveChanges" : "Save changes",
+    "uploadImage" : "Upload image"
+  },
+  "home": {
+    "documentTitle" : "Home | EmployID",
+    "meetings" : "My Meetings",
+    "upcomingMeetings" : "Upcoming Meetings",
+    "pastMeetings" : "Past Meetings",
+    "meetingDescription" : "Description: ",
+    "meetingGroup" : "Group: ",
+    "joinButton" : "Join",
+    "scheduleButton" : "Schedule",
+    "reviewButton" : "Review",
+    "sort" : "Sort",
+    "groups" : "My Groups",
+    "groupOverview" : "Overview",
+    "editMeeting" : "Edit"
+  },
+  "meeting": {
+    "documentTitle" : "Meeting | EmployID",
+    "phase1" : "start",
+    "phase2" : "problem",
+    "phase3" : "vision",
+    "phase4" : "resources",
+    "phase5" : "setting goals",
+    "phase6" : "solution",
+    "phase7" : "feedback",
+    "timeRemaining" : "Time Remaining: ",
+    "timeRemainingTotal" : "Time: ",
+    "meetingTopic" : "Topic: ",
+    "chatPanelHeader" : "Chat",
+    "chatInputPlaceholder" : "Enter text",
+    "chatInputButton" : "Send",
+    "supportPanelHeader" : "Process Assistance",
+    "resultPanelHeader" : "Results",
+    "resultDefault" : "Type result here",
+    "addToResult" : "Copy to clipboard",
+    "sendAsChatMessage" : "Send as Chat Message",
+    "minutes": "min"
+  },
+  "stateMessages" : {
+    "0" : "<b>Goals of the start phase:</b><br /> Collect issues of the group members, prioritize & select problem(s), role assignment for next sessions, (schedule next sessions).",
+    "1" : "<b>Goals of the problem phase:</b><br /> Analysis of problem situation and phrasing a single sentence with the core problem description.",
+    "2" : "<b>Goals of the vision phase:</b><br /> Attempt “change of pattern state”, bring the client into a solution-oriented state and collect resources.",
+    "3" : "<b>Goals of the resources phase:</b><br /> Collect further resources in the group, asking open questions on own impressions of the situation.",
+    "4" : "<b>Goals of the setting goals phase:</b><br /> Set a goal for the session and phrased as an order for the advisors.",
+    "5" : "<b>Goals of the solution phase:</b><br /> Find as many solutions as possible, decision on solutions and next steps.",
+    "6" : "<b>Goals of the feedback phase:</b><br /> Reflection on personal learning outcome and process."
+  },
+  "timer" : {
+    "timeExpired": "Warning. The time for the current stage has expired. Please move to the next stage."
+  },
+  "defaultModal": {
+    "error" : "Error",
+    "warning" : "Warning"
+  },
+  "editor": {
+    "documentTitle" : "Editor",
+    "add" : "Add",
+    "materials" : "Materials",
+    "editStageMessages": "Edit stage messages",
+    "selectRole": "Select a role",
+    "selectStage": "Select a Stage",
+    "editMaterials": "Edit Materials",
+    "selectLanguage": "Select a language...",
+    "0" : "Start",
+    "1" : "Problem",
+    "2" : "Vision",
+    "3" : "Resources",
+    "4" : "Setting goals",
+    "5" : "Solution",
+    "6" : "Feedback",
+    "saveChanges": "Save changes"
+  },
+  "createMeetingModal": {
+    "title" : "Create a meeting",
+    "date" : "Date",
+    "topic" : "Topic",
+    "description" : "Description",
+    "group" : "Group",
+    "groupSelect" : "Select a group",
+    "facilitator" : "Select a facilitator",
+    "client" : "Select a client",
+    "closeButton" : "Close",
+    "createButton" : "Create Meeting"
+  },
+  "editMeetingModal": {
+    "title" : "Edit meeting",
+    "createButton" : "Edit Meeting",
+    "delete" : "Delete"
+  },
+  "createGroupModal": {
+    "title" : "Create a group",
+    "name" : "Name",
+    "description" : "Description",
+    "users" : "Add users",
+    "userPlaceholder" : "Enter username",
+    "closeButton" : "Close",
+    "createButton" : "Create Group"
+  },
+  "editGroupModal": {
+    "title" : "Edit group",
+    "createButton" : "Edit Group",
+    "users" : "Edit members",
+    "delete" : "Delete Group"
+  },
+  "roles": {
+    "facilitator": "Facilitator",
+    "client": "Client",
+    "advisor": "Advisor"
+  },
+  "swal": {
+    "areYouSure" : "Are you sure?",
+    "deleteInfo" : "You will not be able to recover these changes",
+    "deleteConfirmation" : "Delete it!"
+  },
+  "tcomb" : {
+    "add" : "Add",
+    "down" : "Down",
+    "up" : "Up",
+    "optional" : " (optional)",
+    "required" : "Required",
+    "remove" : "Remove"
+  },
+  "notifications" : {
+    "accept" : "Accept",
+    "decline" : "Decline",
+    "groupInvitation" : " invited you to join the group ",
+    "meetingCreation" : " has created a meeting with the topic "
+  }
+}

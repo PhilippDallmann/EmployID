@@ -1,0 +1,134 @@
+{
+  "languages": {
+    "en": "Englisch",
+    "bg": "Bulgarisch",
+    "de": "Deutsch"
+  },
+  "header": {
+    "brandName" : "EmployID",
+    "home" : "Startseite",
+    "help" : "Hilfe",
+    "editProfile" : "Profil",
+    "userList" : "User Liste",
+    "logout" : "Logout"
+  },
+  "editProfile": {
+    "documentTitle" : "Profil | EmployID",
+    "username" : "Username",
+    "emailAddress" : "E-Mail-Adresse",
+    "firstName" : "Vorname",
+    "lastName" : "Nachname",
+    "enterFirstName" : "Geben Sie Ihren Vorname ein",
+    "enterLastName" : "Geben Sie Ihren Nachnamen ein",
+    "saveChanges" : "Änderungen speichern",
+    "uploadImage" : "Bild hochladen"
+  },
+  "home": {
+    "documentTitle" : "Home | EmployID",
+    "meetings" : "My Meetings",
+    "upcomingMeetings" : "Anstehende Meetings",
+    "pastMeetings" : "Vergangene Meetings",
+    "meetingDescription" : "Beschreibung: ",
+    "meetingGroup" : "Gruppe: ",
+    "joinButton" : "Beitreten",
+    "scheduleButton" : "Einplanen",
+    "reviewButton" : "Review",
+    "sort" : "Sortierung",
+    "groups" : "My Groups",
+    "groupOverview" : "Überblick",
+    "editMeeting" : "Editieren"
+  },
+  "meeting": {
+    "documentTitle" : "Meeting | EmployID",
+    "phase1" : "Start",
+    "phase2" : "Problem",
+    "phase3" : "Vision",
+    "phase4" : "Ressourcen",
+    "phase5" : "Zielsetzung",
+    "phase6" : "Lösungen",
+    "phase7" : "Feedback",
+    "timeRemaining" : "Verbleibende Zeit: ",
+    "timeRemainingTotal" : "Uhrzeit: ",
+    "meetingTopic" : "Thema: ",
+    "chatPanelHeader" : "Chat",
+    "chatInputPlaceholder" : "Nachricht eingeben...",
+    "chatInputButton" : "Senden",
+    "supportPanelHeader" : "Prozessassistenz",
+    "resultPanelHeader" : "Ergebnisse",
+    "resultDefault" : "Geben Sie hier Ergebnisse ein",
+    "addToResult" : "In die Zwischenablage kopieren",
+    "sendAsChatMessage" : "Als Chat-Nachricht versenden",
+    "minutes": "Min"
+  },
+  "stateMessages" : {
+    "0" : "<b>Ziele der Start-Phase:</b><br /> Sammlung von “Material” (Probleme/ Herausforderungen) von Gruppenmitgliedern, Priorisierung und Problemselektion sowie  Rollenzuteilung für die kommende Sitzung (Absprachen vorab sind sinnvoll!)",
+    "1" : "<b>Ziele der Problem-Phase:</b><br /> Analyse der Problemsituation und Formulierung eines Satzes mit der Problembeschreibung.",
+    "2" : "<b>Ziele der Visions-Phase:</b><br /> Versuch der Musterzustandsänderung: Den Klienten in einen lösungsförderlichen Zustand bringen und Ressourcen sammeln. ",
+    "3" : "<b>Ziele der Ressourcen-Phase:</b><br /> Sammlung weiterer Ressourcen in der Gruppe, stellen von offenen Fragen und eigenen Eindrücken der Situation.",
+    "4" : "<b>Ziele der Zielsetzungs-Phase:</b><br /> Definition eines Ziels für die Sitzung in Form eines Auftrags an die Beratergruppe. ",
+    "5" : "<b>Ziele der Lösungs-Phase:</b><br /> So viel Lösungen wie mögliche finden und Auswahl der Lösung sowie Schrittplanung.",
+    "6" : "<b>Ziele der Feedback-Phase:</b><br /> Reflexion des persönlichen Lernzuwachses."
+  },
+  "timer" : {
+    "timeExpired": "Achtung. Die Zeit für diese Phase ist abgelaufen. Bitte fahren Sie mit der nächsten Phase fort."
+  },
+  "defaultModal": {
+    "error" : "Error",
+    "warning" : "Warning"
+  },
+  "createMeetingModal": {
+    "title" : "Meeting erstellen",
+    "date" : "Datum und Uhrzeit",
+    "topic" : "Thema",
+    "description" : "Beschreibung",
+    "group" : "Gruppe",
+    "groupSelect" : "Wählen Sie eine Gruppe",
+    "facilitator" : "Wählen Sie einen Facilitator",
+    "client" : "Wählen Sie einen Client",
+    "closeButton" : "Schließen",
+    "createButton" : "Meeting erstellen"
+  },
+  "editMeetingModal": {
+    "title" : "Meeting editieren",
+    "createButton" : "Meeting editieren"
+  },
+  "createGroupModal": {
+    "title" : "Gruppe erstellen",
+    "name" : "Name",
+    "description" : "Beschreibung",
+    "users" : "User hinzufügen",
+    "userPlaceholder" : "Username",
+    "closeButton" : "Schließen",
+    "createButton" : "Gruppe erstellen"
+  },
+  "editGroupModal": {
+    "title" : "Gruppe editieren",
+    "createButton" : "Speichern",
+    "users" : "Mitglieder bearbeiten",
+    "delete" : "Gruppe löschen"
+  },
+  "roles": {
+    "facilitator": "Facilitator",
+    "client": "Klient",
+    "advisor": "Berater"
+  },
+  "swal": {
+    "areYouSure" : "Sind sie sicher?",
+    "deleteInfo" : "Dieser Schritt kann nicht rückgängig gemacht werden",
+    "deleteConfirmation" : "Löschen!"
+  },
+  "tcomb" : {
+    "add" : "Hinzufügen",
+    "down" : "Abwärts",
+    "up" : "Aufwärts",
+    "optional" : " (Optional)",
+    "required" : "Benötigt",
+    "remove" : "Löschen"
+  },
+  "notifications" : {
+    "accept" : "Annehmen",
+    "decline" : "Ablehnen",
+    "groupInvitation" : " hat Sie eingeladen einer Gruppe beizutreten. Gruppenname: ",
+    "meetingCreation" : " hat ein Meeting erstellt. Thema: "
+  }
+}
