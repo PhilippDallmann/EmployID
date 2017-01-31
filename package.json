@@ -10,8 +10,11 @@
     "react": "^15.4.2",
     "react-addons-pure-render-mixin": "^15.4.2",
     "react-bootstrap": "^0.30.7",
+    "react-bootstrap-datetimepicker": "0.0.22",
     "react-dom": "^15.4.2",
     "react-mounter": "^1.2.0",
-    "reflux": "^6.0.0"
+    "react-select": "^1.0.0-rc.2",
+    "reflux": "^6.0.0",
+    "tcomb-form": "^0.9.10"
   }
 }

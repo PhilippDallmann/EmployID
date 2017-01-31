@@ -2,8 +2,8 @@ import {Meteor} from 'meteor/meteor';
 
 let Reflux = require("reflux");
 
-import CreateMeetingModal from "../../components/modals/createMeetingModal";
-import CreateGroupModal from "../../components/modals/createGroupModal";
+import CreateMeetingModal from "../../ui/components/modals/createMeetingModal";
+import CreateGroupModal from "../../ui/components/modals/createGroupModal";
 import HomeActions from "../actions/homeActions";
 
 let HomeStore = Reflux.createStore({

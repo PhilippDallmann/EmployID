@@ -29,3 +29,4 @@ kadira:flow-router
 twbs:bootstrap
 less
 accounts-password
+react-meteor-data

@@ -8,14 +8,15 @@ import {mount} from 'react-mounter';
 import App from '../../ui/App';
 
 /*import NotFound from "./components/notFound";
-import Home from "./components/home/home";
 import EditProfile from "./components/editProfile/editProfile";
 import Topic from "./components/topic/topic";
 import Users from "./components/users/users";
 import UserProfile from "./components/users/userProfile";
 import Editor from "./components/editor/editor";*/
 import Header from '../../ui/components/header/header';
-import Login from '../../ui/components/login/login.jsx';
+import Login from '../../ui/components/login/login';
+import Home from '../../ui/components/home/home';
+
 
 import LoadingActions from '../../reflux/actions/loadingActions';
 import LoadingStore from '../../reflux/stores/loadingStore';
@@ -66,7 +67,7 @@ var loggedIn = FlowRouter.group({
   }
 );
 
-/*FlowRouter.route("/", {
+FlowRouter.route("/", {
   name: "landing",
   action: function() {
     FlowRouter.go("home");
@@ -99,12 +100,12 @@ loggedIn.route('/home', {
     }));
   },
   action: function() {
-    ReactLayout.render(App, {
+    mount(App, {
       children: [<Header />, <Home />]
     });
   }
 });
-
+/*
 loggedIn.route('/editProfile', {
   name: "editProfile",
   action: function() {
