@@ -52,25 +52,12 @@ if (Meteor.isServer) {
     }
   });
   Accounts.onCreateUser(function(options, user) {
-    user.roles = ["user"];
+    user.roles = [ "user" ];
     user.profile = options.profile ? options.profile : {};
-    var authorResponse = Meteor.call("createEtherpadAuthor", user);
-    if(authorResponse) {
-      user.profile.authorID = authorResponse;
-      return user;
-    } else {
-      console.log(authorResponse);
-      return false;
-    }
   });
   Accounts.onLogin(function(user) {
     if(!user.user.profile||!user.user.profile.authorID||user.user.profile.authorID==null) {
-      var authorResponse = Meteor.call("createEtherpadAuthor", user);
-      Meteor.users.update(user.user._id, {
-        $set: {
-          "profile.authorID" : authorResponse
-        }
-      });
+
     }
   });
 }

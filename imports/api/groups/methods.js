@@ -1,4 +1,6 @@
 import {Meteor} from 'meteor/meteor';
+import {TAPi18n} from 'meteor/tap:i18n';
+
 import GroupCollection from './groups';
 
 if(Meteor.isServer) {
@@ -17,7 +19,7 @@ if(Meteor.isServer) {
             owner: group.owner
           });
           Meteor.call("createNotification", {
-            text: __("notifications.groupInvitation", {}, languageKey) + group.name,
+            text: TAPi18n.__("notifications.groupInvitation", {}, languageKey) + group.name,
             type: "groupInvitation",
             owner: {_id: Meteor.userId(), username: Meteor.user().username},
             groupId: groupId,
