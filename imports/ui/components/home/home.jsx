@@ -3,6 +3,7 @@ import React, {Component, PropTypes} from 'react';
 import {createContainer} from 'meteor/react-meteor-data';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import {TAPi18n} from 'meteor/tap:i18n';
+import _ from 'lodash';
 
 import MeetingCollection from "../../../api/meetings/meetings";
 import GroupCollection from "../../../api/groups/groups";
@@ -106,6 +107,7 @@ class Home extends Component {
         showCurrentMeetings: true,
         showPastMeetings: false
       };
+      this.togglePastMeetings = this.togglePastMeetings.bind(this);
     }
     componentWillMount() {
         document.title = TAPi18n.__("home.documentTitle");
@@ -198,7 +200,7 @@ class Home extends Component {
                                       {this.props.notifications.map((n, index) => {
                                         let date = new Date(n.timestamp);
                                         date = date.toLocaleString();
-                                        if(n.needs_confirmation&&!lodash.includes(n.confirmed_by, Meteor.userId())) {
+                                        if(n.needs_confirmation&&!_.includes(n.confirmed_by, Meteor.userId())) {
                                           return(
                                             <li className="list-group-item">
                                               <span className="notification-date">{date}</span>

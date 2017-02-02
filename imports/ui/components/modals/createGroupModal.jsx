@@ -1,6 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import React from 'react';
 import {TAPi18n} from 'meteor/tap:i18n';
+import swal from 'sweetalert';
 
 import HomeActions from "../../../reflux/actions/homeActions";
 import t from 'tcomb-form';
