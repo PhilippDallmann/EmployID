@@ -30,3 +30,4 @@ twbs:bootstrap
 less
 accounts-password
 react-meteor-data
+peerlibrary:reactive-publish
