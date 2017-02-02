@@ -6,8 +6,7 @@ let MeetingActions = Reflux.createActions([
     "updateMeetingStageAndSetStageActive",
     "playMeeting",
     "pauseMeeting",
-    "updateMeetingStatusWithTimeRemaining",
-    "setEtherpadCookie"
+    "updateMeetingStatusWithTimeRemaining"
 ]);
 
 export default MeetingActions;

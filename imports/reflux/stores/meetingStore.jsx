@@ -56,24 +56,6 @@ let MeetingStore = Reflux.createStore({
     },
     onUpdateMeetingStatusWithTimeRemaining: function(meetingId, statusCode, currentStageTimeRemaining, endtime) {
       Meteor.call("updateMeetingStatusWithTimeRemaining", meetingId, statusCode, currentStageTimeRemaining, endtime)
-    },
-    onSetEtherpadCookie: function(meetingId) {
-      var meeting = MeetingCollection.findOne({_id: meetingId}, {fields: {etherpad_group: 1}});
-      var validUntil = new Date();
-      validUntil.setDate(validUntil.getDate()+1);
-      Meteor.call("createPadSession", meeting.etherpad_group, Meteor.user().profile.authorID, validUntil.getTime(), function(error, result) {
-        if(error) {
-          console.log(error);
-        } else {
-          if(result) {
-            Cookies.set("sessionID", result, { expires: 1, path: "/"});
-              var iframe = document.getElementById('etherpadEditorFullscreen');
-              iframe.src = iframe.src;
-          } else {
-            console.log(result);
-          }
-        }
-      });
     }
 });
 

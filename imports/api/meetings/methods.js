@@ -36,14 +36,12 @@ if(Meteor.isServer) {
           client: meeting.client,
           facilitator: meeting.facilitator,
           chat: chatId,
-          etherpad_group: null,
           result_group_pad: null,
           active_stage_id: 0,
           status_code: 0,
           current_stage_time_remaining: 0,
           time_total: 0
         });
-        Meteor.call("createEtherpadGroup", meetingId);
         Meteor.call("createNotification", {
           text: __("notifications.meetingCreation", {}, languageKey) + meeting.topic,
           type: "meetingCreation",

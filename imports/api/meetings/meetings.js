@@ -25,10 +25,6 @@ let MeetingSchema = new SimpleSchema({
   "chat": {
     type: String
   },
-  "etherpad_group": {
-    type: String,
-    optional: true
-  },
   "result_group_pad": {
     type: String,
     optional: true

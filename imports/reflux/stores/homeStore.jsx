@@ -1,4 +1,7 @@
 import {Meteor} from 'meteor/meteor';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import swal from 'sweetalert';
 
 let Reflux = require("reflux");
 
@@ -29,9 +32,9 @@ let HomeStore = Reflux.createStore({
     },
     onCreateGroup: function(group) {
       let me = this;
-      Meteor.call("validateUsernameList", group.users, function(error, result) {
+      Meteor.call("validateUsernameList",group.users, function(error, result) {
         if(error) {
-          swal(error.details);
+          swal(error.message);
         } else {
           group.users = result;
           Meteor.call("createGroup", group, TAPi18n.getLanguage(), function(error, result) {
