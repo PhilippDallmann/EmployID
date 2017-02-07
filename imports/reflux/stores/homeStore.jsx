@@ -15,8 +15,8 @@ let HomeStore = Reflux.createStore({
       modal: null
     },
     onOpenCreateMeeting: function() {
-      this.state.modal = ReactDOM.render(<CreateMeetingModal meeting={null}/>, document.getElementById("createMeetingModal"));
-      this.state.modal.open();
+      ReactDOM.unmountComponentAtNode(document.getElementById('createMeetingModal'));
+      ReactDOM.render(<CreateMeetingModal meeting={null}/>, document.getElementById("createMeetingModal"));
     },
     onOpenEditMeeting: function(meeting) {
         this.state.modal = ReactDOM.render(<CreateMeetingModal meeting={meeting}/>, document.getElementById("createMeetingModal"));

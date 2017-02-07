@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
-import React from 'react';
-import ReactMeteorData from 'meteor/react-meteor-data';
+import React, {Component, PropTypes} from 'react';
 import {TAPi18n} from 'meteor/tap:i18n';
+import {createContainer} from 'meteor/react-meteor-data';
 
 import GroupCollection from '../../../api/groups/groups';
 import CreateMeetingModalActions from '../../../reflux/actions/createMeetingModalActions';
@@ -55,55 +55,55 @@ const MeetingSchema = t.struct({
 	}
 }*/
 
-let CreateMeetingModal = React.createClass({
-	mixins: [ReactMeteorData],
-	getInitialState: function () {
-		if(this.props.meeting!==null) {
-			var meeting = this.props.meeting;
-			return {
-				show: false,
-				isEditModal: true,
-				date: meeting.start_date,
-				value: {
-					topic: meeting.topic,
-					description: meeting.description,
-					group: meeting.group,
-					faciliator: meeting.facilitator,
-					client: meeting.client
-				}
-			};
-		} else {
-			return {
-				show: false,
-				isEditModal: false,
-				date: new Date().toISOString(),
-				value: {
-					topic: null,
-					description: null,
-					group: null,
-					facilitator: null,
-					client: null
-				},
-			};
-		}
-	},
-	getMeteorData: function () {
-		let userHandle = Meteor.subscribe('usersOfGroup', this.state.value.group);
-		return {
-			groups: GroupCollection.find().fetch(),
-			users: Meteor.users.find().fetch()
-		};
-	},
-	componentDidMount: function () {
-		require('../../../../../node_modules/react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.css');
-		require('../../../../../node_modules/react-select/dist/react-select.css');
-		require('./createMeetingModal.less');
-	},
-	componentWillReceiveProps: function(nextProps) {
+class CreateMeetingModal extends Component{
+  constructor(props) {
+    super(props);
+
+    if(this.props.meeting!==null) {
+      var meeting = this.props.meeting;
+      this.state = {
+        show: true,
+        isEditModal: true,
+        date: meeting.start_date,
+        value: {
+          topic: meeting.topic,
+          description: meeting.description,
+          group: meeting.group,
+          facilitator: meeting.facilitator,
+          client: meeting.client
+        }
+      };
+    } else {
+      this.state = {
+        show: true,
+        isEditModal: false,
+        date: new Date().toISOString(),
+        value: {
+          topic: null,
+          description: null,
+          group: null,
+          facilitator: null,
+          client: null
+        },
+      };
+    }
+    this.close = this.close.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.save = this.save.bind(this);
+    this.createMeeting = this.createMeeting.bind(this);
+    this.editMeeting = this.editMeeting.bind(this);
+    this.deleteMeeting = this.deleteMeeting.bind(this);
+  }
+
+	componentDidMount() {
+		require('../../../../node_modules/react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.css');
+		require('../../../../node_modules/react-select/dist/react-select.css');
+	}
+	componentWillReceiveProps(nextProps) {
 		if(nextProps.meeting!==null) {
 			var meeting = nextProps.meeting;
 			this.setState({
-				show: false,
+				show: true,
 				isEditModal: true,
 				date: meeting.start_date,
 				value: {
@@ -116,7 +116,7 @@ let CreateMeetingModal = React.createClass({
 			});
 		} else {
 			this.setState({
-				show: false,
+				show: true,
 				isEditModal: false,
 				date: new Date().toISOString(),
 				value: {
@@ -128,26 +128,21 @@ let CreateMeetingModal = React.createClass({
 				}
 			});
 		}
-	},
-	open: function () {
-		this.setState({
-			show: true
-		});
-	},
-	close: function () {
+	}
+	close() {
 		this.setState({
 			show: false
 		});
-	},
-	onChange: function(value, path) {
+	}
+	onChange(value, path) {
 		if(this.refs.form.getComponent(path)) {
 			this.refs.form.getComponent(path).validate();
 		}
 		this.setState({
 			value: value
 		});
-	},
-	save: function() {
+	}
+	save() {
 		var validation = t.validate(this.state.value, MeetingSchema);
 		if(validation.isValid()) {
 			if(this.state.isEditModal) {
@@ -158,8 +153,8 @@ let CreateMeetingModal = React.createClass({
 		} else {
 			this.refs.form.validate();
 		}
-	},
-	createMeeting: function () {
+	}
+	createMeeting() {
 		var meeting = {
 			owner: Meteor.userId(),
 			group: this.state.value.group,
@@ -171,8 +166,8 @@ let CreateMeetingModal = React.createClass({
 		};
 		CreateMeetingModalActions.createMeeting(meeting, TAPi18n.getLanguage());
 		this.close();
-	},
-	editMeeting: function() {
+	}
+	editMeeting() {
 		var meeting = {
 			_id: this.props.meeting._id,
 			group: this.state.value.group,
@@ -184,8 +179,8 @@ let CreateMeetingModal = React.createClass({
 		};
 		CreateMeetingModalActions.editMeeting(meeting);
 		this.close();
-	},
-	deleteMeeting: function() {
+	}
+	deleteMeeting() {
 		let me = this;
 		swal({
 			title: TAPi18n.__("swal.areYouSure"),
@@ -203,15 +198,15 @@ let CreateMeetingModal = React.createClass({
 				}
 			});
 		});
-	},
-	render: function () {
+	}
+	render() {
 		let groups = [];
 		let users = [];
-		for(let g in this.data.groups) {
-			groups.push({value: this.data.groups[g]._id, text: this.data.groups[g].name});
+		for(let g in this.props.groups) {
+			groups.push({value: this.props.groups[g]._id, text: this.props.groups[g].name});
 		}
-		for(let u in this.data.users) {
-			users.push({value: this.data.users[u]._id, text: this.data.users[u].username});
+		for(let u in this.props.users) {
+			users.push({value: this.props.users[u]._id, text: this.props.users[u].username});
 		}
 		let options = {
 			fields: {
@@ -239,43 +234,56 @@ let CreateMeetingModal = React.createClass({
 			}
 		}
 		return (
-		<div>
-    <Modal
-           show={this.state.show}
-           onHide={this.close}
-           container={this}
-           aria-labelledby="contained-modal-title">
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title">
-          {this.state.isEditModal ? TAPi18n.__("editMeetingModal.title") : TAPi18n.__("createMeetingModal.title")}
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <label>
-          {TAPi18n.__("createMeetingModal.date")}
-        </label>
-        <DateTimeField
-                       className="input-area"
-                       dateTime={this.state.date}
-                       format="YYYY-MM-DDTHH:mm:ss.sssZ"
-                       onChange={this.updateDate}>
-					
-				</DateTimeField>
-				<t.form.Form
-					ref="form"
-					type={MeetingSchema}
-					options={options}
-					value={this.state.value}
-					onChange={this.onChange}
-				>
-				</t.form.Form>
-				<button type="submit" className="btn btn-primary" onClick={this.save}>{this.state.isEditModal? TAPi18n.__("editMeetingModal.createButton") : TAPi18n.__("createMeetingModal.createButton")}</button>
-				{this.state.isEditModal ? <button type="delete" className="btn btn-danger pull-right" onClick={this.deleteMeeting}>{TAPi18n.__("editMeetingModal.delete")}</button> : null}
-      </Modal.Body>
-    </Modal>
-  </div>
+      <div>
+        <Modal
+               show={this.state.show}
+               onHide={this.close}
+               container={this}
+               aria-labelledby="contained-modal-title">
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title">
+              {this.state.isEditModal ? TAPi18n.__("editMeetingModal.title") : TAPi18n.__("createMeetingModal.title")}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <label>
+              {TAPi18n.__("createMeetingModal.date")}
+            </label>
+            <DateTimeField
+                           className="input-area"
+                           dateTime={this.state.date}
+                           format="YYYY-MM-DDTHH:mm:ss.sssZ"
+                           onChange={this.updateDate}>
+
+            </DateTimeField>
+            <t.form.Form
+              ref="form"
+              type={MeetingSchema}
+              options={options}
+              value={this.state.value}
+              onChange={this.onChange}
+            >
+            </t.form.Form>
+            <button type="submit" className="btn btn-primary" onClick={this.save}>{this.state.isEditModal? TAPi18n.__("editMeetingModal.createButton") : TAPi18n.__("createMeetingModal.createButton")}</button>
+            {this.state.isEditModal ? <button type="delete" className="btn btn-danger pull-right" onClick={this.deleteMeeting}>{TAPi18n.__("editMeetingModal.delete")}</button> : null}
+          </Modal.Body>
+        </Modal>
+      </div>
 		);
 	}
-});
+}
 
-export default CreateMeetingModal;
+CreateMeetingModal.propTypes = {
+	groups: PropTypes.array,
+	users: PropTypes.array
+};
+
+export default createContainer(() => {
+  if(this.state) {
+    let userHandle = Meteor.subscribe('usersOfGroup', this.state.value.group);
+  }
+  return {
+    groups: GroupCollection.find().fetch(),
+    users: Meteor.users.find().fetch()
+  };
+},CreateMeetingModal);
