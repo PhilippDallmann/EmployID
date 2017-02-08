@@ -1,4 +1,6 @@
 import {Meteor} from 'meteor/meteor'
+import {Accounts} from 'meteor/accounts-base';
+
 import StageCollection from '../../api/stages/stages';
 import StageMessagesCollection from '../../api/stageMessages/stageMessages';
 
@@ -41,19 +43,17 @@ if (Meteor.isServer) {
         }
       }
     }
-    if (!Meteor.users.find().count()) {
-      var options = {
-        username: "admin",
-        password: "AdminPassword",
-        email: "admin@admin.com"
-      };
-      var id = Accounts.createUser(options);
-      Roles.addUsersToRoles(id, ["admin"]);
-    }
   });
   Accounts.onCreateUser(function(options, user) {
-    user.roles = [ "user" ];
-    user.profile = options.profile ? options.profile : {};
+    if (!Meteor.users.find().count()) {
+      user.roles = ['user', 'admin']  ;
+      user.profile = options.profile ? options.profile : {};
+    }
+    else {
+      user.roles = ['user'];
+      user.profile = options.profile ? options.profile : {};
+    }
+    return user;
   });
   Accounts.onLogin(function(user) {
     if(!user.user.profile||!user.user.profile.authorID||user.user.profile.authorID==null) {
