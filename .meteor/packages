@@ -20,14 +20,14 @@ shell-server@0.2.1            # Server-side component of the `meteor shell` comm
 
 aldeed:collection2
 alanning:roles
-accounts-ui
+accounts-ui@1.1.9
 tap:i18n
 copleykj:shower
 yuukan:streamy
 yuukan:streamy-rooms
 kadira:flow-router
 twbs:bootstrap
-less
-accounts-password
+less@2.7.8
+accounts-password@1.3.3
 react-meteor-data
 peerlibrary:reactive-publish
