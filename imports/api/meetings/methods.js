@@ -1,4 +1,6 @@
 import {Meteor} from 'meteor/meteor';
+import TAPi18n from 'meteor/tap:i18n';
+
 import MeetingCollection from './meetings';
 import ChatCollection from '../chats/chats';
 
@@ -36,14 +38,13 @@ if(Meteor.isServer) {
           client: meeting.client,
           facilitator: meeting.facilitator,
           chat: chatId,
-          result_group_pad: null,
           active_stage_id: 0,
           status_code: 0,
           current_stage_time_remaining: 0,
           time_total: 0
         });
         Meteor.call("createNotification", {
-          text: __("notifications.meetingCreation", {}, languageKey) + meeting.topic,
+          text: TAPi18n._("notifications.meetingCreation", {}, languageKey) + meeting.topic,
           type: "meetingCreation",
           owner: {_id: Meteor.userId(), username: Meteor.user().username},
           groupId: meeting.group,
@@ -53,7 +54,6 @@ if(Meteor.isServer) {
       }
     },
     "editMeeting": function(meeting) {
-      //TODO: detect changes and only update changed values?
       MeetingCollection.update(meeting._id, {
         $set: {
           topic: meeting.topic,
