@@ -10,7 +10,6 @@ import t from 'tcomb-form';
 
 let Modal = require('react-bootstrap').Modal;
 let Button = require('react-bootstrap').Button;
-let Input = require('react-bootstrap').Input;
 let Row = require('react-bootstrap').Row;
 let Col = require('react-bootstrap').Col;
 let Panel = require('react-bootstrap').Panel;

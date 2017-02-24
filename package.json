@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "babel-runtime": "^6.18.0",
+    "clipboard": "^1.6.0",
     "lodash": "^4.17.4",
     "meteor-node-stubs": "~0.2.0",
     "react": "^15.4.2",
@@ -13,6 +14,7 @@
     "react-bootstrap": "^0.30.7",
     "react-bootstrap-datetimepicker": "0.0.22",
     "react-dom": "^15.4.2",
+    "react-emoji": "^0.4.4",
     "react-mounter": "^1.2.0",
     "react-select": "^1.0.0-rc.3",
     "reflux": "^6.0.0",

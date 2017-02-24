@@ -7,7 +7,6 @@ import MeetingTimeActions from '../actions/meetingTimeActions';
 import MeetingActions from '../actions/meetingActions';
 import MeetingStore from './meetingStore';
 
-import DefaultModal from "../../components/modals/defaultModal";
 import DefaultModalActions from "../actions/defaultModalActions";
 
 var STAGE_TIME_ARRAY = [2700, 2400, 1800, 1200, 900, 300, 0];
@@ -25,21 +24,22 @@ let MeetingTimeStore = Reflux.createStore({
 		if(!meeting) {
 			return;
 		}
+		if(document.getElementById('timer')){
+			// 0 -> paused /// 1 -> active
+			if (meeting.status_code == 0) {
+				clearInterval(me.state.timeInterval);
+				me.state.timeLeftInSeconds = meeting.current_stage_time_remaining;
 
-		// 0 -> paused /// 1 -> active
-		if (meeting.status_code == 0) {
-			clearInterval(me.state.timeInterval);
-			me.state.timeLeftInSeconds = meeting.current_stage_time_remaining;
-
-			if (me.state.timeLeftInSeconds <= 0) {
-				document.getElementById('timer').innerHTML = "00:00";
+				if (me.state.timeLeftInSeconds <= 0) {
+					document.getElementById('timer').innerHTML = "00:00";
+				} else {
+					var endtime = Date.parse(new Date()) + (me.state.timeLeftInSeconds*1000);
+					var t = me.getTimeRemaining(endtime);
+					document.getElementById('timer').innerHTML = t.minutes + ":" + t.seconds;
+				}
 			} else {
-				var endtime = Date.parse(new Date()) + (me.state.timeLeftInSeconds*1000);
-				var t = me.getTimeRemaining(endtime);
-				document.getElementById('timer').innerHTML = t.minutes + ":" + t.seconds;
+				me.onStartTimer(meeting, meeting.current_stage_endtime);
 			}
-		} else {
-			me.onStartTimer(meeting, meeting.current_stage_endtime);
 		}
 	},
 	onKillTimer: function() {

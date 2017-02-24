@@ -1,0 +1,73 @@
+.userIcon {
+  float: left;
+  min-height: 60px;
+  max-height: 60px;
+  text-align: center;
+  vertical-align: middle;
+  padding-right: 10px;
+  img {
+    width: 35px;
+    height:35px;
+    top: 0px;
+
+    float: left;
+    position: relative;
+
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+  }
+  span {
+    clear: both;
+    float: left;
+    position: relative;
+  }
+}
+.online {
+  -webkit-box-shadow: 0 0 0 3px #fff, 0 0 0 4px #00FF00, 0 2px 5px 4px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 0 0 3px #fff, 0 0 0 4px #00FF00, 0 2px 5px 4px rgba(0,0,0,.2);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px #00FF00, 0 2px 5px 4px rgba(0,0,0,.2);
+}
+.offline {
+  -webkit-box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px #999, 0 2px 5px 4px rgba(0,0,0,.2);
+}
+.typing {
+  -webkit-box-shadow: 0 0 0 3px #fff, 0 0 0 4px #e44015, 0 2px 5px 4px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 0 0 3px #fff, 0 0 0 4px #e44015, 0 2px 5px 4px rgba(0,0,0,.2);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px #e44015, 0 2px 5px 4px rgba(0,0,0,.2);
+}
+.no-pulse {
+
+}
+.pulse-ring {
+  content: '';
+  width: 35px;
+  height: 35px;
+  border: 2px solid #e44015;
+  border-radius: 50%;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  animation: pulsate infinite 1s;
+}
+@-webkit-keyframes pulsate {
+  0% {
+    -webkit-transform: scale(1, 1);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: scale(1.6, 1.6);
+    opacity: 0;
+  }
+}
+#chatUserBar {
+  position: absolute;
+  min-height: 60px;
+  max-height: 60px;
+  //top: 540px;
+  bottom: 65px;
+  left: 50px;
+  right: 0px;
+}

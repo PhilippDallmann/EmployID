@@ -9,13 +9,13 @@ import App from '../../ui/App';
 
 /*import NotFound from "./components/notFound";
 import EditProfile from "./components/editProfile/editProfile";
-import Topic from "./components/topic/topic";
 import Users from "./components/users/users";
 import UserProfile from "./components/users/userProfile";
 import Editor from "./components/editor/editor";*/
 import Header from '../../ui/components/header/header';
 import Login from '../../ui/components/login/login';
 import Home from '../../ui/components/home/home';
+import Meeting from "../../ui/components/meeting/meeting";
 
 
 import LoadingActions from '../../reflux/actions/loadingActions';
@@ -114,7 +114,7 @@ loggedIn.route('/editProfile', {
     });
   }
 });
-
+*/
 loggedIn.route("/meeting/:meetingId", {
   name: "topic",
   subscriptions: function(params) {
@@ -153,12 +153,12 @@ loggedIn.route("/meeting/:meetingId", {
     }));
   },
   action: function() {
-    ReactLayout.render(App, {
-      children: [<Header />, <Topic />]
+    mount(App, {
+      children: [<Header />, <Meeting />]
     });
   }
 });
-
+/*
 loggedIn.route('/users', {
   name: "users",
   action: function() {

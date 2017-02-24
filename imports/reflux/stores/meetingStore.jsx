@@ -1,16 +1,14 @@
 import {Meteor} from 'meteor/meteor';
 
 let Reflux = require("reflux");
-let Cookies = require("js-cookie");
 
 import MeetingActions from "../actions/meetingActions";
 
 import MeetingTimeActions from '../actions/meetingTimeActions';
 import MeetingTimeStore from './meetingTimeStore';
 
-import MeetingCollection from '../../../collections/Meetings';
-import StageCollection from '../../../collections/Stages';
-import StageMessagesCollection from '../../../collections/StageMessages';
+import StageCollection from '../../api/stages/stages';
+import StageMessagesCollection from '../../api/stageMessages/stageMessages';
 
 let MeetingStore = Reflux.createStore({
     listenables: [MeetingActions],
