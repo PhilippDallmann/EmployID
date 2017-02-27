@@ -22,10 +22,6 @@ let Header = React.createClass({
             username : Meteor.user() ? Meteor.user().username : ''
         }
     },
-    componentDidMount: function() {
-        require("./header.less");
-        require("./languages.less")
-    },
     logout: function() {
         UserActions.logout();
     },
