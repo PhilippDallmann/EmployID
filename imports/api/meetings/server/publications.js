@@ -15,4 +15,12 @@ if (Meteor.isServer) {
   Meteor.publish('currentMeeting', function (meetingId) {
     return MeetingCollection.find({_id: meetingId});
   });
+  Meteor.publish('meetingParticipants', function (meetingId) {
+    this.autorun(function (computation) {
+      var meeting = MeetingCollection.findOne(meetingId, {fields: {group: 1}});
+      var group = GroupCollection.findOne(meeting.group, {fields: {users: 1}});
+
+      return Meteor.users.find({_id: {$in: group.users}}, {fields: {id: 1, profile: 1, username: 1, status: 1}});
+    });
+  });
 }

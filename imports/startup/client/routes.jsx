@@ -116,7 +116,7 @@ loggedIn.route('/editProfile', {
 });
 */
 loggedIn.route("/meeting/:meetingId", {
-  name: "topic",
+  name: "meeting",
   subscriptions: function(params) {
     LoadingActions.setLoading();
     var subsReady = 0;

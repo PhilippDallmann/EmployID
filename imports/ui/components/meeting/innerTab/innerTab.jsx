@@ -60,6 +60,8 @@ class InnerTab extends Reflux.Component {
       time: time.getHours() + ":" + time.getMinutes()
     };
     this.time = MeetingTimeStore;
+
+    this.createChatMessage = this.createChatMessage.bind(this);
   }
 	shouldComponentUpdate(nextProps, nextState) {
 		return false;
