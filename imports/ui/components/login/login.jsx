@@ -5,7 +5,7 @@ import UserActions from "../../../reflux/actions/userActions";
 import UserStore from "../../../reflux/stores/userStore";
 
 //import LOGO_URL from "../assets/img/employid_logo_xlarge.png";
-var LOGO_URL = "../assets/img/employid_logo_xlarge.png";
+var LOGO_URL = "/img/employid_logo_xlarge.png";
 
 let Button = require("react-bootstrap").Button;
 let FormGroup = require("react-bootstrap").FormGroup;

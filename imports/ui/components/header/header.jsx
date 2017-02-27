@@ -5,8 +5,7 @@ import {TAPi18n} from 'meteor/tap:i18n';
 import UserActions from "../../../reflux/actions/userActions";
 import UserStore from "../../../reflux/stores/userStore";
 
-//import logoUrl from "../../assets/img/logo_31x36.png"
-var logoUrl = '../assets/img/logo_31x36';
+var logoUrl = '/img/logo_31x36.png';
 
 import LoadingActions from "../../../reflux/actions/loadingActions";
 import LoadingStore from "../../../reflux/stores/loadingStore";

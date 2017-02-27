@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 
 import truncate from "../../../../../util/truncate";
 
-let defaultUserImage = '../../../assets/img/defaultUserImage_140x140.png';
+let defaultUserImage = '/img/defaultUserImage_140x140.png';
 
 let UserIcon = React.createClass({
     render: function() {
