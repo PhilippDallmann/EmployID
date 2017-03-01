@@ -48,7 +48,7 @@ const emojifyButtonOptions = {
 };
 var messageChangeCount = 0;
 var currentMeeting = null;
-// {TAPi18n._("meeting.timeRemainingTotal")}<div id="timerTotal">{this.props&&this.props.currentMeeting ? this.props.currentMeeting.time_total + " " +  TAPi18n._("meeting.minutes") : "0"}</div>
+// {TAPi18n.__("meeting.timeRemainingTotal")}<div id="timerTotal">{this.props&&this.props.currentMeeting ? this.props.currentMeeting.time_total + " " +  TAPi18n._("meeting.minutes") : "0"}</div>
 
 class InnerTab extends Reflux.Component {
   constructor(props) {

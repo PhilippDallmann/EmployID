@@ -44,7 +44,7 @@ if(Meteor.isServer) {
           time_total: 0
         });
         Meteor.call("createNotification", {
-          text: TAPi18n._("notifications.meetingCreation", {}, languageKey) + meeting.topic,
+          text: TAPi18n.__("notifications.meetingCreation", {}, languageKey) + meeting.topic,
           type: "meetingCreation",
           owner: {_id: Meteor.userId(), username: Meteor.user().username},
           groupId: meeting.group,

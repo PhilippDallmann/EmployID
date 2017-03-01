@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import React, {Component, PropTypes} from 'react';
+import ReactDOM from 'react-dom';
 import {TAPi18n} from 'meteor/tap:i18n';
 import {createContainer} from 'meteor/react-meteor-data';
 
@@ -23,38 +24,10 @@ const MeetingSchema = t.struct({
 	facilitator: t.String,
 	client: t.String
 });
-/*let options = {
-	fields: {
-		topic: {
-			label: TAPi18n.__("createMeetingModal.topic")
-		},
-		description: {
-			label: TAPi18n.__("createMeetingModal.description")
-		},
-		group: {
-			factory: t.form.Select,
-			label: TAPi18n.__("createMeetingModal.group")
-		},
-		facilitator: {
-			factory: t.form.Select,
-			label: TAPi18n.__("createMeetingModal.facilitator")
-		},
-		client: {
-			factory: t.form.Select,
-			label: TAPi18n.__("createMeetingModal.client")
-		}
-	},
-	i18n: {
-		add: TAPi18n.__("tcomb.add"),               // add button
-		down: TAPi18n.__("tcomb.down"),                // move down button
-		optional: TAPi18n.__("tcomb.optional"),   // suffix added to optional fields
-		required: TAPi18n.__("tcomb.required"),               // suffix added to required fields
-		remove: TAPi18n.__("tcomb.remove"),          // remove button
-		up: TAPi18n.__("tcomb.up")                    // move up button
-	}
-}*/
 
-class CreateMeetingModal extends Component{
+let form;
+
+export default class CreateMeetingModalState extends Component {
   constructor(props) {
     super(props);
 
@@ -94,110 +67,129 @@ class CreateMeetingModal extends Component{
     this.deleteMeeting = this.deleteMeeting.bind(this);
   }
 
-	componentDidMount() {
-		require('../../../../node_modules/react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.css');
-		require('../../../../node_modules/react-select/dist/react-select.css');
-	}
-	componentWillReceiveProps(nextProps) {
-		if(nextProps.meeting!==null) {
-			var meeting = nextProps.meeting;
-			this.setState({
-				show: true,
-				isEditModal: true,
-				date: meeting.start_date,
-				value: {
-					topic: meeting.topic,
-					description: meeting.description,
-					group: meeting.group,
-					facilitator: meeting.facilitator,
-					client: meeting.client
-				}
-			});
-		} else {
-			this.setState({
-				show: true,
-				isEditModal: false,
-				date: new Date().toISOString(),
-				value: {
-					topic: null,
-					description: null,
-					group: null,
-					facilitator: null,
-					client: null
-				}
-			});
-		}
-	}
-	close() {
-		this.setState({
-			show: false
-		});
-	}
-	onChange(value, path) {
-		if(this.refs.form.getComponent(path)) {
-			this.refs.form.getComponent(path).validate();
-		}
-		this.setState({
-			value: value
-		});
-	}
-	save() {
-		var validation = t.validate(this.state.value, MeetingSchema);
-		if(validation.isValid()) {
-			if(this.state.isEditModal) {
-				this.editMeeting();
-			} else {
-				this.createMeeting();
-			}
-		} else {
-			this.refs.form.validate();
-		}
-	}
-	createMeeting() {
-		var meeting = {
-			owner: Meteor.userId(),
-			group: this.state.value.group,
-			topic: this.state.value.topic,
-			description: this.state.value.description,
-			start_date: this.state.date,
-			facilitator: this.state.value.facilitator,
-			client: this.state.value.client
-		};
-		CreateMeetingModalActions.createMeeting(meeting, TAPi18n.getLanguage());
-		this.close();
-	}
-	editMeeting() {
-		var meeting = {
-			_id: this.props.meeting._id,
-			group: this.state.value.group,
-			topic: this.state.value.topic,
-			description: this.state.value.description,
-			start_date: this.state.date,
-			facilitator: this.state.value.facilitator,
-			client: this.state.value.client
-		};
-		CreateMeetingModalActions.editMeeting(meeting);
-		this.close();
-	}
-	deleteMeeting() {
-		let me = this;
-		swal({
-			title: TAPi18n.__("swal.areYouSure"),
-			text: TAPi18n.__("swal.deleteInfo"),
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: TAPi18n.__("swal.deleteConfirmation"),
-			closeOnConfirm: true,
-			html: false
-		}, function(){
-			Meteor.call("deleteMeeting", me.props.meeting, function(error, result) {
-				if(!error) {
-					me.close();
-				}
-			});
-		});
-	}
+  componentDidMount() {
+    require('../../../../node_modules/react-bootstrap-datetimepicker/css/bootstrap-datetimepicker.css');
+    require('../../../../node_modules/react-select/dist/react-select.css');
+  }
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.meeting!==null) {
+      var meeting = nextProps.meeting;
+      this.setState({
+        show: true,
+        isEditModal: true,
+        date: meeting.start_date,
+        value: {
+          topic: meeting.topic,
+          description: meeting.description,
+          group: meeting.group,
+          facilitator: meeting.facilitator,
+          client: meeting.client
+        }
+      });
+    } else {
+      this.setState({
+        show: true,
+        isEditModal: false,
+        date: new Date().toISOString(),
+        value: {
+          topic: null,
+          description: null,
+          group: null,
+          facilitator: null,
+          client: null
+        }
+      });
+    }
+  }
+  close() {
+    this.setState({
+      show: false
+    });
+  }
+  onChange(value, path) {
+    if(Array.isArray(path)) {
+      if(form.getComponent(path)) {
+        form.getComponent(path).validate();
+      }
+      this.setState({
+        value: value
+      });
+    }
+  }
+  save() {
+    var validation = t.validate(this.state.value, MeetingSchema);
+    if(validation.isValid()) {
+      if(this.state.isEditModal) {
+        this.editMeeting();
+      } else {
+        this.createMeeting();
+      }
+    } else {
+      form.validate();
+    }
+  }
+  createMeeting() {
+    var meeting = {
+      owner: Meteor.userId(),
+      group: this.state.value.group,
+      topic: this.state.value.topic,
+      description: this.state.value.description,
+      start_date: this.state.date,
+      facilitator: this.state.value.facilitator,
+      client: this.state.value.client
+    };
+    CreateMeetingModalActions.createMeeting(meeting, TAPi18n.getLanguage());
+    this.close();
+  }
+  editMeeting() {
+    var meeting = {
+      _id: this.props.meeting._id,
+      group: this.state.value.group,
+      topic: this.state.value.topic,
+      description: this.state.value.description,
+      start_date: this.state.date,
+      facilitator: this.state.value.facilitator,
+      client: this.state.value.client
+    };
+    CreateMeetingModalActions.editMeeting(meeting);
+    this.close();
+  }
+  deleteMeeting() {
+    let me = this;
+    swal({
+      title: TAPi18n.__("swal.areYouSure"),
+      text: TAPi18n.__("swal.deleteInfo"),
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: TAPi18n.__("swal.deleteConfirmation"),
+      closeOnConfirm: true,
+      html: false
+    }, function(){
+      Meteor.call("deleteMeeting", me.props.meeting, function(error, result) {
+        if(!error) {
+          me.close();
+        }
+      });
+    });
+  }
+  render() {
+    return <CreateMeetingModalContainer
+      show = {this.state.show}
+      isEditModal = {this.state.isEditModal}
+      date = {this.state.date}
+      value = {this.state.value}
+      close = {this.close.bind(this)}
+      onChange = {this.onChange.bind(this)}
+      save = {this.save.bind(this)}
+      createMeeting = {this.createMeeting.bind(this)}
+      editMeeting = {this.editMeeting.bind(this)}
+      deleteMeeting = {this.deleteMeeting.bind(this)}
+    />
+  }
+}
+
+class CreateMeetingModal extends Component{
 	render() {
 		let groups = [];
 		let users = [];
@@ -233,15 +225,15 @@ class CreateMeetingModal extends Component{
 			}
 		}
 		return (
-      <div>
+      <div id='createMeetingModal'>
         <Modal
-               show={this.state.show}
-               onHide={this.close}
+               show={this.props.show}
+               onHide={this.props.close}
                container={this}
                aria-labelledby="contained-modal-title">
           <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title">
-              {this.state.isEditModal ? TAPi18n.__("editMeetingModal.title") : TAPi18n.__("createMeetingModal.title")}
+              {this.props.isEditModal ? TAPi18n.__("editMeetingModal.title") : TAPi18n.__("createMeetingModal.title")}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -250,21 +242,21 @@ class CreateMeetingModal extends Component{
             </label>
             <DateTimeField
                            className="input-area"
-                           dateTime={this.state.date}
+                           dateTime={this.props.date}
                            format="YYYY-MM-DDTHH:mm:ss.sssZ"
                            onChange={this.updateDate}>
 
             </DateTimeField>
             <t.form.Form
-              ref="form"
+              ref = {(c)=> form = c}
               type={MeetingSchema}
               options={options}
-              value={this.state.value}
-              onChange={this.onChange}
+              value={this.props.value}
+              onChange={this.props.onChange}
             >
             </t.form.Form>
-            <button type="submit" className="btn btn-primary" onClick={this.save}>{this.state.isEditModal? TAPi18n.__("editMeetingModal.createButton") : TAPi18n.__("createMeetingModal.createButton")}</button>
-            {this.state.isEditModal ? <button type="delete" className="btn btn-danger pull-right" onClick={this.deleteMeeting}>{TAPi18n.__("editMeetingModal.delete")}</button> : null}
+            <button type="submit" className="btn btn-primary" onClick={this.props.save}>{this.props.isEditModal? TAPi18n.__("editMeetingModal.createButton") : TAPi18n.__("createMeetingModal.createButton")}</button>
+            {this.props.isEditModal ? <button type="delete" className="btn btn-danger pull-right" onClick={this.props.deleteMeeting}>{TAPi18n.__("editMeetingModal.delete")}</button> : null}
           </Modal.Body>
         </Modal>
       </div>
@@ -277,10 +269,9 @@ CreateMeetingModal.propTypes = {
 	users: PropTypes.array
 };
 
-export default createContainer(() => {
-  if(this.state) {
-    let userHandle = Meteor.subscribe('usersOfGroup', this.state.value.group);
-  }
+let CreateMeetingModalContainer = createContainer((props) => {
+  Meteor.subscribe('usersOfGroup', props.value.group);
+
   return {
     groups: GroupCollection.find().fetch(),
     users: Meteor.users.find().fetch()
