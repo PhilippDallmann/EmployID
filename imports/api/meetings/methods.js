@@ -1,5 +1,5 @@
 import {Meteor} from 'meteor/meteor';
-import TAPi18n from 'meteor/tap:i18n';
+import {TAPi18n} from 'meteor/tap:i18n';
 
 import MeetingCollection from './meetings';
 import ChatCollection from '../chats/chats';

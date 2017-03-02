@@ -47,7 +47,7 @@ const emojifyButtonOptions = {
 	attributes: { width: '18px', height: '18px'}
 };
 var messageChangeCount = 0;
-var currentMeeting = null;
+var currentMeetingId = null;
 // {TAPi18n.__("meeting.timeRemainingTotal")}<div id="timerTotal">{this.props&&this.props.currentMeeting ? this.props.currentMeeting.time_total + " " +  TAPi18n._("meeting.minutes") : "0"}</div>
 
 class InnerTab extends Reflux.Component {
@@ -62,9 +62,14 @@ class InnerTab extends Reflux.Component {
     this.time = MeetingTimeStore;
 
     this.createChatMessage = this.createChatMessage.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 	shouldComponentUpdate(nextProps, nextState) {
-		return false;
+    if(nextProps.currentChatMessages!==this.props.currentChatMessages) {
+      return true
+    } else {
+      return false;
+    }
 	}
 	componentWillReceiveProps(nextProps) {
 		this.setState({
@@ -80,7 +85,7 @@ class InnerTab extends Reflux.Component {
 	componentWillUnmount() {
 		UserActions.unsetActiveMeeting();
 		MeetingTimeActions.killTimer();
-		Streamy.leave(this.currentMeetingId);
+		Streamy.leave(currentMeetingId);
   }
 	componentDidUpdate() {
 		this.updateScroll();
@@ -110,7 +115,7 @@ class InnerTab extends Reflux.Component {
 	}
 	handleChatMessageChange(event) {
 		if (messageChangeCount == 0) {
-			Streamy.rooms(this.currentMeetingId).emit('isTyping', {username: Meteor.user().username});
+			Streamy.rooms(currentMeetingId).emit('isTyping', {username: Meteor.user().username});
 			messageChangeCount = 5;
 		} else {
 			messageChangeCount -= 1;
@@ -199,6 +204,7 @@ class InnerTab extends Reflux.Component {
 				</Panel>
 			</div>
 		);
+		console.debug(this.props.currentChatMessages);
 		return (
 		<div className="inner-tab">
     <Grid fluid>
@@ -263,7 +269,7 @@ class InnerTab extends Reflux.Component {
 																		</ButtonGroup>
 																</Popover>
 															}>
-			                      	<span className="message-text right"><div><span className="chat-message-date">{date}</span><span id={message._id}>{ReactEmojiMixin.emojify(message.text, emojifyOptions)}</span></div></span>
+			                      	<span className="message-text right"><div><span className="chat-message-date">{date}</span><span id={message._id}>{ReactEmoji.emojify(message.text, emojifyOptions)}</span></div></span>
 														</OverlayTrigger>
 			                      <div className="clear"></div>
 			                    </li>
@@ -282,7 +288,7 @@ class InnerTab extends Reflux.Component {
 																		</ButtonGroup>
 																</Popover>
 															}>
-			                      	<span className="message-text left"><div><span className="chat-message-date">{date}</span><span id={message._id}>{ReactEmojiMixin.emojify(message.text, emojifyOptions)}</span></div></span>
+			                      	<span className="message-text left"><div><span className="chat-message-date">{date}</span><span id={message._id}>{ReactEmoji.emojify(message.text, emojifyOptions)}</span></div></span>
 														</OverlayTrigger>
 			                      <div className="clear"></div>
 			                    </li>
@@ -352,17 +358,16 @@ export default createContainer(({stageId}) => {
 
   var currentMeeting = MeetingCollection.find().fetch()[0];
   if (currentMeeting) {
-    if (!this.currentMeetingId) {
-      this.currentMeetingId = currentMeeting._id;
+    if (!currentMeetingId) {
+      currentMeetingId = currentMeeting._id;
       UserActions.setActiveMeeting(currentMeeting._id);
-      Streamy.join(this.currentMeetingId);
-    } else if (this.currentMeetingId != currentMeeting._id) {
-      this.currentMeetingId = currentMeeting._id;
+      Streamy.join(currentMeetingId);
+    } else if (currentMeetingId != currentMeeting._id) {
+      currentMeetingId = currentMeeting._id;
       UserActions.setActiveMeeting(currentMeeting._id);
-      Streamy.join(this.currentMeetingId);
+      Streamy.join(currentMeetingId);
     }
   }
-
   return {
     currentMeeting: currentMeeting,
     currentChatMessages: ChatMessageCollection.find().fetch(),
