@@ -46,11 +46,9 @@ let MeetingStore = Reflux.createStore({
         var currentStageEndtime = Date.parse(new Date()) + (meeting.current_stage_time_remaining*1000);
         Meteor.call("updateMeetingStatusWithTimeRemaining", meeting._id, 1, null, currentStageEndtime);
       }
-      Meteor.call("startTotalTimeInterval", meeting._id);
     },
     onPauseMeeting: function(meetingId) {
       MeetingTimeActions.pauseTimer(meetingId);
-      Meteor.call("stopTotalTimeInterval", meetingId);
     },
     onUpdateMeetingStatusWithTimeRemaining: function(meetingId, statusCode, currentStageTimeRemaining, endtime) {
       Meteor.call("updateMeetingStatusWithTimeRemaining", meetingId, statusCode, currentStageTimeRemaining, endtime)

@@ -63,6 +63,12 @@ class InnerTab extends Reflux.Component {
 
     this.createChatMessage = this.createChatMessage.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.onPlayButtonClick = this.onPlayButtonClick.bind(this);
+    this.onNextStageButtonClick = this.onNextStageButtonClick.bind(this);
+    this.onPauseButtonClick = this.onPauseButtonClick.bind(this);
+    this.showOnlyIfFacilitator = this.showOnlyIfFacilitator.bind(this);
+    this.isClient = this.isClient.bind(this);
+    this.getRole = this.getRole.bind(this);
   }
 	shouldComponentUpdate(nextProps, nextState) {
     if(nextProps.currentChatMessages!==this.props.currentChatMessages) {

@@ -99,27 +99,6 @@ if(Meteor.isServer) {
           time_total: 1
         }
       });
-    },
-    startTotalTimeInterval : function(meetingId) {
-      var intervalId = Meteor.setInterval(function() {
-        MeetingCollection.update(meetingId, {
-          $inc: {
-            time_total: 1
-          }
-        });
-      }, 60000);
-      var intervalObj = {
-        meetingId: meetingId,
-        intervalId: intervalId
-      };
-      intervalArray.push(intervalObj);
-    },
-    "stopTotalTimeInterval" : function(meetingId) {
-      var intervalObj = intervalArray.filter(function(obj) {
-        return obj.meetingId === meetingId;
-      })
-      Meteor.clearInterval(intervalObj[0].intervalId);
-      removeByAttr(intervalArray, 'meetingId', meetingId);
     }
   });
 

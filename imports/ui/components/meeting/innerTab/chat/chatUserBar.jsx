@@ -19,7 +19,6 @@ class ChatUserBar extends Reflux.Component {
     this.store = ChatStore;
   }
   render() {
-    console.debug(this.state.typingUserArray);
     return(
       <div id="chatUserBar">
         {this.props.participants.map((user, index) => {
