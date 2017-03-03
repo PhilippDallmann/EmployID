@@ -204,7 +204,6 @@ class InnerTab extends Reflux.Component {
 				</Panel>
 			</div>
 		);
-		console.debug(this.props.currentChatMessages);
 		return (
 		<div className="inner-tab">
     <Grid fluid>

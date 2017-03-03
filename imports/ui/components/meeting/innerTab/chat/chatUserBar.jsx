@@ -15,18 +15,17 @@ class ChatUserBar extends Reflux.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      chatStore: null
-    }
-    this.chatStore = ChatStore;
+    this.state = {}
+    this.store = ChatStore;
   }
   render() {
+    console.debug(this.state.typingUserArray);
     return(
       <div id="chatUserBar">
         {this.props.participants.map((user, index) => {
           var userStatus;
           var pulse='no-pulse';
-          if($.inArray(user.username, this.chatStore.typingUserArray)>-1) {
+          if($.inArray(user.username, this.state.typingUserArray)>-1) {
               userStatus = 'typing';
               pulse = 'pulse-ring';
           } else if (user && user.profile && user.profile.activeMeetingId == this.props.currentMeetingId) {
