@@ -59,7 +59,7 @@ class MaterialArea extends Component {
                   <OverlayTrigger trigger="click" rootClose placement="left" overlay={
                       <Popover>
                           <ButtonGroup vertical block>
-                            <Button itemID={material.text} onClick={this.onSendAsChatMessageClick}>{__("meeting.sendAsChatMessage")}</Button>
+                            <Button itemID={material.text} onClick={this.onSendAsChatMessageClick}>{TAPi18n.__("meeting.sendAsChatMessage")}</Button>
                           </ButtonGroup>
                       </Popover>
                     }>
@@ -74,7 +74,7 @@ class MaterialArea extends Component {
                   <OverlayTrigger trigger="click" rootClose placement="left" overlay={
                       <Popover>
                           <ButtonGroup vertical block>
-                            <Button itemID={material.text} onClick={this.onSendAsChatMessageClick}>{__("meeting.sendAsChatMessage")}</Button>
+                            <Button itemID={material.text} onClick={this.onSendAsChatMessageClick.bind(this)}>{TAPi18n.__("meeting.sendAsChatMessage")}</Button>
                           </ButtonGroup>
                       </Popover>
                     }>
