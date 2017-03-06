@@ -174,6 +174,7 @@ class InnerTab extends Reflux.Component {
 			}
 	}
 	render() {
+    //TODO: decide whether client needs specific page or not
 		const supportPanelHeading = (
 			<Row>
 				<div className="title-panel pull-left">
@@ -196,18 +197,14 @@ class InnerTab extends Reflux.Component {
 			</Row>
 		);
 		let clientPage = (
-			<Panel key={this.props.resultKey} className="results-panel-client" header={TAPi18n.__("meeting.resultPanelHeader")}>
-				<ResultEditor groupPadID={this.props.currentMeeting ?this.props.currentMeeting.result_group_pad : null}/>
-			</Panel>
+      <ResultEditor facilitator={this.props.currentMeeting ? this.props.currentMeeting.facilitator : null} meetingId={this.props.currentMeeting? this.props.currentMeeting._id : null} result={this.props.currentMeeting? this.props.currentMeeting.result : null}/>
 		);
 		let regularPage = (
 			<div>
 				<Panel className="support-panel" header={supportPanelHeading}>
 					<MaterialArea stageId= {this.state.stageId} chatId={this.props.currentMeeting ? this.props.currentMeeting.chat : null} stage={this.props.currentStage ? this.props.currentStage : null}/>
 				</Panel>
-				<Panel key={this.props.resultKey} className="results-panel" header={TAPi18n.__("meeting.resultPanelHeader")}>
-					<ResultEditor/>
-				</Panel>
+          <ResultEditor facilitator={this.props.currentMeeting ? this.props.currentMeeting.facilitator : null} meetingId={this.props.currentMeeting? this.props.currentMeeting._id : null} result={this.props.currentMeeting? this.props.currentMeeting.result : null}/>
 			</div>
 		);
 		return (
@@ -343,7 +340,7 @@ class InnerTab extends Reflux.Component {
              sm={12}
              md={7}
              lg={6}>
-					{this.isClient() ?	clientPage : regularPage}
+					{this.isClient() ?	regularPage : regularPage}
         </Col>
       </Row>
     </Grid>

@@ -36,6 +36,7 @@ if(Meteor.isServer) {
           owner: meeting.owner,
           group: meeting.group,
           client: meeting.client,
+          result: null,
           facilitator: meeting.facilitator,
           chat: chatId,
           active_stage_id: 0,
@@ -93,10 +94,10 @@ if(Meteor.isServer) {
         }
       });
     },
-    "updateMeetingTimeTotal" : function(meetingId, newTime) {
+    "updateResult": function(meetingId, value) {
       MeetingCollection.update(meetingId, {
-        $inc: {
-          time_total: 1
+        $set: {
+          result: value
         }
       });
     }
