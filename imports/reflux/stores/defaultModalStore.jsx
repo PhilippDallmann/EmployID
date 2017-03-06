@@ -1,4 +1,7 @@
 import {Meteor} from 'meteor/meteor';
+import {TAPi18n} from 'meteor/tap:i18n';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 let Reflux = require("reflux");
 
@@ -13,19 +16,19 @@ let DefaultModalStore = Reflux.createStore({
     onShowError: function(err) {
         if(this.state.defaultModal===null) {
             var newModal = ReactDOM.render(<DefaultModal />, document.getElementById("defaultModal"));
-            newModal.open(__("defaultModal.error"), err.message, 'danger');
+            newModal.open(TAPi18n.__("defaultModal.error"), err.message, 'danger');
             this.state.defaultModal = newModal;
         } else {
-            this.state.defaultModal.open(__("defaultModal.error"), err.message, 'danger');
+            this.state.defaultModal.open(TAPi18n.__("defaultModal.error"), err.message, 'danger');
         }
     },
     onShowWarning: function(msg) {
         if(this.state.defaultModal===null) {
             var newModal = ReactDOM.render(<DefaultModal />, document.getElementById("defaultModal"));
-            newModal.open(__("defaultModal.warning"), msg, 'warning');
+            newModal.open(TAPi18n.__("defaultModal.warning"), msg, 'warning');
             this.state.defaultModal = newModal;
         } else {
-            this.state.defaultModal.open(__("defaultModal.warning"), msg, 'warning');
+            this.state.defaultModal.open(TAPi18n.__("defaultModal.warning"), msg, 'warning');
         }
     },
     onShowInfo: function(title, bodyMessage) {

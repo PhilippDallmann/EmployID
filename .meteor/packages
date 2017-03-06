@@ -31,3 +31,4 @@ less@2.7.9
 accounts-password@1.3.4
 react-meteor-data
 peerlibrary:reactive-publish
+mizzao:user-status

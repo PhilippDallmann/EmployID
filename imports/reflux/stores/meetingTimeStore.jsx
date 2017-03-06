@@ -1,4 +1,5 @@
 import {Meteor} from 'meteor/meteor';
+import {TAPi18n} from 'meteor/tap:i18n';
 
 let Reflux = require('reflux');
 
@@ -55,7 +56,7 @@ let MeetingTimeStore = Reflux.createStore({
 		if (t <= 0) {
 			document.getElementById('timer').innerHTML = "00:00";
 			if(meeting.facilitator == Meteor.userId()) {
-				DefaultModalActions.showWarning(__("timer.timeExpired"));
+				DefaultModalActions.showWarning(TAPi18n.__("timer.timeExpired"));
 				me.state.timeLeftInSeconds = 0;
 				me.onPauseTimer(meeting._id);
 			}
@@ -67,7 +68,7 @@ let MeetingTimeStore = Reflux.createStore({
 
 				if(t.total<=0){
 					if(meeting.facilitator == Meteor.userId()) {
-						DefaultModalActions.showWarning(__("timer.timeExpired"));
+						DefaultModalActions.showWarning(TAPi18n.__("timer.timeExpired"));
 						me.state.timeLeftInSeconds = 0;
 						me.onPauseTimer(meeting._id);
 					}
