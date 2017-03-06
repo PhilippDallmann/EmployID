@@ -57,7 +57,7 @@ class InnerTab extends Reflux.Component {
     let time = new Date();
     this.state = {
       stageId: this.props.stageId,
-      time: time.getHours() + ":" + time.getMinutes()
+      time: ('0' + time.getHours()).slice(-2) + ":" + ('0' + time.getMinutes()).slice(-2)
     };
     this.time = MeetingTimeStore;
 
@@ -97,7 +97,7 @@ class InnerTab extends Reflux.Component {
 		this.updateScroll();
     let time = new Date();
     this.setState({
-      time: time.getHours() + ":" + time.getMinutes()
+      time: ('0' + time.getHours()).slice(-2) + ":" + ('0' + time.getMinutes()).slice(-2)
     });
 	}
 	updateScroll() {

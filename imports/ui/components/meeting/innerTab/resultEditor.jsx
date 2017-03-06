@@ -33,37 +33,67 @@ class ResultEditor extends Component{
     super(props);
 
     this.state = {
+      result: this.props.result,
       value: this.props.result,
-      isFacilitator: this.props.facilitator==Meteor.userId()
+      isFacilitator: this.props.facilitator==Meteor.userId(),
+      isResultLoaded: false
     };
     this.onChange = this.onChange.bind(this);
   }
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      value: nextProps.result,
-      isFacilitator: nextProps.facilitator==Meteor.userId()
-    });
+    if(this.state.isResultLoaded) {
+      this.setState({
+        result: nextProps.result,
+        isFacilitator: nextProps.facilitator==Meteor.userId()
+      });
+    } else {
+      this.setState({
+        result: nextProps.result,
+        value: nextProps.result,
+        isFacilitator: nextProps.facilitator==Meteor.userId(),
+        isResultLoaded: true
+      });
+    }
   }
   componentDidMount() {
     require('../../../../../node_modules/react-quill/dist/quill.snow.css');
   }
   onChange(value) {
+    this.setState({
+      value: value
+    });
     Meteor.call('updateResult', this.props.meetingId, value);
   }
   render() {
-    return (
-      <div className="text-editor">
-        <CustomToolbar />
-        <ReactQuill
-          theme='snow'
-          value={this.state.value}
-          onChange={this.onChange}
-          modules={ResultEditor.modules}
-          readOnly={!this.state.isFacilitator}
-        >
-        </ReactQuill>
-      </div>
-    )
+    if(this.state.isFacilitator) {
+      return (
+        <div className="text-editor">
+          <CustomToolbar />
+          <ReactQuill
+            theme='snow'
+            defaultValue={this.state.result}
+            value={this.state.value}
+            onChange={this.onChange}
+            modules={ResultEditor.modules}
+            readOnly={false}
+          >
+          </ReactQuill>
+        </div>
+      )
+    } else {
+      return (
+        <div className="text-editor">
+          <CustomToolbar />
+          <ReactQuill
+            theme='snow'
+            value={this.state.result}
+            modules={ResultEditor.modules}
+            readOnly={true}
+          >
+          </ReactQuill>
+        </div>
+      )
+    }
   }
 }
 
