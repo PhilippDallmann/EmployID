@@ -11,11 +11,12 @@ import App from '../../ui/App';
 import EditProfile from "./components/editProfile/editProfile";
 import Users from "./components/users/users";
 import UserProfile from "./components/users/userProfile";
-import Editor from "./components/editor/editor";*/
+*/
 import Header from '../../ui/components/header/header';
 import Login from '../../ui/components/login/login';
 import Home from '../../ui/components/home/home';
 import Meeting from "../../ui/components/meeting/meeting";
+import Editor from "../../ui/components/editor/editor";
 
 
 import LoadingActions from '../../reflux/actions/loadingActions';
@@ -178,7 +179,7 @@ loggedIn.route('/users/:username', {
     });
   }
 });
-
+*/
 loggedIn.route("/editor", {
   name: "editor",
   subscriptions: function(params) {
@@ -199,8 +200,8 @@ loggedIn.route("/editor", {
     }));
   },
   action: function() {
-    ReactLayout.render(App, {
+    mount(App, {
       children: [<Header />, <Editor />]
     })
   }
-});*/
+});
