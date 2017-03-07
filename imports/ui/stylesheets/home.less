@@ -12,9 +12,17 @@
     .panel-body {
       position: absolute;
       top: 47px;
-      left: 0;
       bottom: 20px;
-      right: 0px;
+      left: 12px;
+      right: 12px;
+      #groupOverview {
+        position: absolute;
+        top: 10px;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        overflow: auto;
+      }
     }
   }
   .meeting-panel {
@@ -148,5 +156,10 @@
   .notification-owner {
     font-weight: bold;
     cursor: pointer;
+  }
+}
+#groupOverview-pane-0 {
+  ul {
+    padding: 0px;
   }
 }

@@ -108,6 +108,7 @@ class Home extends Component {
         showPastMeetings: false
       };
       this.togglePastMeetings = this.togglePastMeetings.bind(this);
+      this.toggleCurrentMeetings = this.toggleCurrentMeetings.bind(this);
     }
     componentWillMount() {
         document.title = TAPi18n.__("home.documentTitle");
