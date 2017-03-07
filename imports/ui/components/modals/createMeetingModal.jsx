@@ -65,6 +65,7 @@ export default class CreateMeetingModalState extends Component {
     this.createMeeting = this.createMeeting.bind(this);
     this.editMeeting = this.editMeeting.bind(this);
     this.deleteMeeting = this.deleteMeeting.bind(this);
+    this.updateDate = this.updateDate.bind(this);
   }
 
   componentDidMount() {
@@ -104,6 +105,12 @@ export default class CreateMeetingModalState extends Component {
   close() {
     this.setState({
       show: false
+    });
+  }
+  updateDate(value) {
+    console.log(value);
+    this.setState({
+      date: value
     });
   }
   onChange(value, path) {
@@ -185,6 +192,7 @@ export default class CreateMeetingModalState extends Component {
       createMeeting = {this.createMeeting.bind(this)}
       editMeeting = {this.editMeeting.bind(this)}
       deleteMeeting = {this.deleteMeeting.bind(this)}
+      updateDate = {this.updateDate.bind(this)}
     />
   }
 }
@@ -244,7 +252,7 @@ class CreateMeetingModal extends Component{
                            className="input-area"
                            dateTime={this.props.date}
                            format="YYYY-MM-DDTHH:mm:ss.sssZ"
-                           onChange={this.updateDate}>
+                           onChange={this.props.updateDate}>
 
             </DateTimeField>
             <t.form.Form
