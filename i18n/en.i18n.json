@@ -12,6 +12,9 @@
     "userList" : "User List",
     "logout" : "Logout"
   },
+  "login": {
+    "welcomeText": "Welcome to the Peer Coaching Tool"
+  },
   "editProfile": {
     "documentTitle" : "EditProfile | EmployID",
     "username" : "Username",

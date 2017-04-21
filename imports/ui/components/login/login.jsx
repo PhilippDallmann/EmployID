@@ -1,6 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import {Shower} from 'meteor/copleykj:shower';
 import React, {Component} from 'react';
+import {TAPi18n} from 'meteor/tap:i18n';
 import UserActions from "../../../reflux/actions/userActions";
 import UserStore from "../../../reflux/stores/userStore";
 
@@ -194,12 +195,10 @@ let Login = React.createClass({
 
     return (
       <Row>
-        <Col className="logo" sm={0} md={6}>
-          <h1>Welcome</h1>
-          <Image responsive={true} className="logo" src={LOGO_URL}/>
-        </Col>
-        <Col className="login" sm={12} md={6}>
+        <Col className="login" sm={12} md={12}>
           <div id="login-container">
+            <Image responsive={true} className="logo" src={LOGO_URL}/>
+            <div className="welcome-text">{TAPi18n.__("login.welcomeText")}</div>
             <FormGroup ref="userEmailInput" controlId="userEmailInput">
               <FormControl type="email" label="Email Address" placeholder="Enter Email" onChange={this.handleEmailChange} bsStyle={(this.state.validationMessages.userEmail == null) ? null : 'error'}/>
             </FormGroup>
@@ -221,3 +220,8 @@ let Login = React.createClass({
 });
 
 export default Login;
+
+/*        <Col className="logo" sm={0} md={6}>
+ <h1>Welcome</h1>
+ <Image responsive={true} className="logo" src={LOGO_URL}/>
+ </Col>*/
