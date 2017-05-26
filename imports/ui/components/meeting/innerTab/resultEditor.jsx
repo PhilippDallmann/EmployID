@@ -1,5 +1,6 @@
 import {Meteor} from 'meteor/meteor';
 import React, {Component, PropTypes} from 'react';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import ReactQuill from 'react-quill';
 import {TAPi18n} from 'meteor/tap:i18n';
 import {createContainer} from 'meteor/react-meteor-data';
@@ -41,7 +42,7 @@ class ResultEditor extends Component{
     this.onChange = this.onChange.bind(this);
   }
   componentWillReceiveProps(nextProps) {
-    if(this.state.isResultLoaded) {
+    if(this.state.isResultLoaded || this.state.result==null) {
       this.setState({
         result: nextProps.result,
         isFacilitator: nextProps.facilitator==Meteor.userId()
@@ -62,38 +63,37 @@ class ResultEditor extends Component{
     this.setState({
       value: value
     });
-    Meteor.call('updateResult', this.props.meetingId, value);
+    Meteor.call('updateResult', this.props.resultId, value);
   }
   render() {
-    if(this.state.isFacilitator) {
-      return (
-        <div className="text-editor">
-          <CustomToolbar />
-          <ReactQuill
-            theme='snow'
-            defaultValue={this.state.result}
-            value={this.state.value}
-            onChange={this.onChange}
-            modules={ResultEditor.modules}
-            readOnly={false}
-          >
-          </ReactQuill>
-        </div>
-      )
-    } else {
-      return (
-        <div className="text-editor">
-          <CustomToolbar />
-          <ReactQuill
-            theme='snow'
-            value={this.state.result}
-            modules={ResultEditor.modules}
-            readOnly={true}
-          >
-          </ReactQuill>
-        </div>
-      )
-    }
+      if(this.state.isFacilitator) {
+        return (
+          <div className="text-editor">
+            <CustomToolbar />
+            <ReactQuill
+              theme='snow'
+              value={this.state.value}
+              onChange={this.onChange}
+              modules={ResultEditor.modules}
+              readOnly={false}
+            >
+            </ReactQuill>
+          </div>
+        )
+      } else {
+        return (
+          <div className="text-editor">
+            <CustomToolbar />
+            <ReactQuill
+              theme='snow'
+              value={this.state.result}
+              modules={ResultEditor.modules}
+              readOnly={true}
+            >
+            </ReactQuill>
+          </div>
+        )
+      }
   }
 }
 

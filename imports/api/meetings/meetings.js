@@ -25,9 +25,8 @@ let MeetingSchema = new SimpleSchema({
   "chat": {
     type: String
   },
-  "result": {
-    type: String,
-    optional: true
+  "result_id": {
+    type: String
   },
   "active_stage_id": {
     type: Number

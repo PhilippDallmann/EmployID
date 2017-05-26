@@ -3,6 +3,7 @@ import {TAPi18n} from 'meteor/tap:i18n';
 
 import MeetingCollection from './meetings';
 import ChatCollection from '../chats/chats';
+import ResultCollection from '../results/results';
 
 if(Meteor.isServer) {
   let intervalArray = [];
@@ -29,6 +30,9 @@ if(Meteor.isServer) {
         var chatId = ChatCollection.insert({
           chat_messages: []
         });
+        var resultId = ResultCollection.insert({
+          text: "Insert your results!"
+        });
         var meetingId = MeetingCollection.insert({
           topic: meeting.topic,
           description: meeting.description,
@@ -36,7 +40,7 @@ if(Meteor.isServer) {
           owner: meeting.owner,
           group: meeting.group,
           client: meeting.client,
-          result: null,
+          result_id: resultId,
           facilitator: meeting.facilitator,
           chat: chatId,
           active_stage_id: 0,
@@ -91,13 +95,6 @@ if(Meteor.isServer) {
           status_code: statusCode,
           current_stage_time_remaining: currentStageTimeRemaining,
           current_stage_endtime: currentStageEndtime
-        }
-      });
-    },
-    "updateResult": function(meetingId, value) {
-      MeetingCollection.update(meetingId, {
-        $set: {
-          result: value
         }
       });
     }

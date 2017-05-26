@@ -121,7 +121,7 @@ loggedIn.route("/meeting/:meetingId", {
   subscriptions: function(params) {
     LoadingActions.setLoading();
     var subsReady = 0;
-    var subs = 5;
+    var subs = 6;
     this.register("currentMeeting", Meteor.subscribe("currentMeeting", params.meetingId, {
       onReady: function() {
         subsReady = subsReady + 1;
@@ -138,6 +138,12 @@ loggedIn.route("/meeting/:meetingId", {
       onReady: function() {
         subsReady = subsReady + 1;
         checkIfSubsAreReady(subs, subsReady);
+      }
+    }));
+    this.register("currentResult", Meteor.subscribe("currentResult", params.meetingId, {
+      onReady: function() {
+        subsReady = subsReady + 1;
+        checkIfSubsAreReady(subs, subsReady)
       }
     }));
     this.register("stages", Meteor.subscribe("stages", {

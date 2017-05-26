@@ -61,7 +61,8 @@
     "resultDefault" : "Type result here",
     "addToResult" : "Copy to clipboard",
     "sendAsChatMessage" : "Send as Chat Message",
-    "minutes": "min"
+    "minutes": "min",
+    "recorder": "recorder"
   },
   "stateMessages" : {
     "0" : "<b>Goals of the start phase:</b><br /> Collect issues of the group members, prioritize & select problem(s), role assignment for next sessions, (schedule next sessions).",

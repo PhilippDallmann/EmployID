@@ -10,6 +10,7 @@ import MeetingCollection from '../../../../api/meetings/meetings';
 import ChatMessageCollection from '../../../../api/chatMessages/chatMessages';
 import StageCollection from '../../../../api/stages/stages';
 import MaterialCollection from '../../../../api/materials/materials';
+import ResultCollection from '../../../../api/results/results';
 
 import MeetingActions from '../../../../reflux/actions/meetingActions';
 import MeetingStore from '../../../../reflux/stores/meetingStore';
@@ -34,10 +35,12 @@ let Panel = require('react-bootstrap').Panel;
 let FormGroup = require('react-bootstrap').FormGroup;
 let FormControl = require('react-bootstrap').FormControl;
 let Button = require('react-bootstrap').Button;
+let DropdownButton = require('react-bootstrap').DropdownButton;
 let OverlayTrigger = require('react-bootstrap').OverlayTrigger;
 let Popover = require('react-bootstrap').Popover;
 let ButtonGroup = require('react-bootstrap').ButtonGroup;
 let InputGroup = require('react-bootstrap').InputGroup;
+let MenuItem = require('react-bootstrap').MenuItem;
 
 var EMOTICONS = [":smiley:" , ":pensive:" , ":rage:" , ":open_mouth:" , ":fearful:" , ":blush:" , ":worried:" , ":stuck_out_tongue_closed_eyes:"];
 const emojifyOptions = {
@@ -71,7 +74,7 @@ class InnerTab extends Reflux.Component {
     this.getRole = this.getRole.bind(this);
   }
 	shouldComponentUpdate(nextProps, nextState) {
-    if(nextProps.currentChatMessages!==this.props.currentChatMessages) {
+    if(nextProps.currentChatMessages!==this.props.currentChatMessages || nextProps.currentResult!==this.props.currentResult) {
       return true
     } else {
       return false;
@@ -174,6 +177,7 @@ class InnerTab extends Reflux.Component {
 			}
 	}
 	render() {
+    console.debug(this.props.participants);
     //TODO: decide whether client needs specific page or not
 		const supportPanelHeading = (
 			<Row>
@@ -194,17 +198,24 @@ class InnerTab extends Reflux.Component {
 					disabled={this.props.currentMeeting ? (this.props.currentMeeting.active_stage_id >= 6 || this.props.currentMeeting.active_stage_id == 0) : true}>
 					<span className="glyph glyphicon glyphicon-forward"></span>
 				</Button>
+
+        <DropdownButton className="recorder-button" title={TAPi18n.__("meeting.recorder")} style={this.showOnlyIfFacilitator()}>
+          {this.props.participants.map((user, index) => {
+            console.debug(index);
+            <MenuItem eventKey={index} id={index}>{user.username}</MenuItem>
+          })}
+        </DropdownButton>
 			</Row>
 		);
 		let clientPage = (
-      <ResultEditor facilitator={this.props.currentMeeting ? this.props.currentMeeting.facilitator : null} meetingId={this.props.currentMeeting? this.props.currentMeeting._id : null} result={this.props.currentMeeting? this.props.currentMeeting.result : null}/>
+      <ResultEditor facilitator={this.props.currentMeeting ? this.props.currentMeeting.facilitator : null} meetingId={this.props.currentMeeting? this.props.currentMeeting._id : null} result={this.props.currentResult? this.props.currentResult.text : null}/>
 		);
 		let regularPage = (
 			<div>
 				<Panel className="support-panel" header={supportPanelHeading}>
 					<MaterialArea stageId= {this.state.stageId} chatId={this.props.currentMeeting ? this.props.currentMeeting.chat : null} stage={this.props.currentStage ? this.props.currentStage : null}/>
 				</Panel>
-          <ResultEditor facilitator={this.props.currentMeeting ? this.props.currentMeeting.facilitator : null} meetingId={this.props.currentMeeting? this.props.currentMeeting._id : null} result={this.props.currentMeeting? this.props.currentMeeting.result : null}/>
+          <ResultEditor facilitator={this.props.currentMeeting ? this.props.currentMeeting.facilitator : null} resultId={this.props.currentMeeting? this.props.currentMeeting.result_id : null} result={this.props.currentResult? this.props.currentResult.text : null}/>
 			</div>
 		);
 		return (
@@ -340,7 +351,7 @@ class InnerTab extends Reflux.Component {
              sm={12}
              md={7}
              lg={6}>
-					{this.isClient() ?	regularPage : regularPage}
+					{regularPage}
         </Col>
       </Row>
     </Grid>
@@ -353,7 +364,8 @@ InnerTab.propTypes = {
   currentMeeting: PropTypes.object,
   currentChatMessages: PropTypes.array.isRequired,
   currentStage: PropTypes.object,
-  roleMaterial: PropTypes.array.isRequired
+  roleMaterial: PropTypes.array.isRequired,
+  participants: PropTypes.array.isRequired
 };
 
 export default createContainer(({stageId}) => {
@@ -374,6 +386,8 @@ export default createContainer(({stageId}) => {
     currentMeeting: currentMeeting,
     currentChatMessages: ChatMessageCollection.find().fetch(),
     currentStage: StageCollection.find({stage_id: stageId}).fetch()[0],
-    roleMaterial: MaterialCollection.find().fetch()
+    roleMaterial: MaterialCollection.find().fetch(),
+		currentResult: ResultCollection.find().fetch()[0],
+    participants: Meteor.users.find().fetch()
   };
 },InnerTab);

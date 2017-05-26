@@ -61,7 +61,8 @@
     "resultDefault" : "Geben Sie hier Ergebnisse ein",
     "addToResult" : "In die Zwischenablage kopieren",
     "sendAsChatMessage" : "Als Chat-Nachricht versenden",
-    "minutes": "Min"
+    "minutes": "Min",
+    "recorder": "Protokollant"
   },
   "stateMessages" : {
     "0" : "<b>Ziele der Start-Phase:</b><br /> Sammlung von “Material” (Probleme/ Herausforderungen) von Gruppenmitgliedern, Priorisierung und Problemselektion sowie  Rollenzuteilung für die kommende Sitzung (Absprachen vorab sind sinnvoll!)",
