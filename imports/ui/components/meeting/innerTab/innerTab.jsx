@@ -18,6 +18,8 @@ import MeetingTimeActions from '../../../../reflux/actions/meetingTimeActions';
 import MeetingTimeStore from '../../../../reflux/stores/meetingTimeStore';
 import UserActions from '../../../../reflux/actions/userActions';
 import UserStore from '../../../../reflux/stores/userStore';
+import LoadingActions from '../../../../reflux/actions/loadingActions';
+import LoadingStore from '../../../../reflux/stores/loadingStore';
 
 import truncate from '../../../../util/truncate';
 
@@ -90,7 +92,7 @@ class InnerTab extends Reflux.Component {
 		//document.getElementById('timerTotal').innerHTML = this.props.currentMeeting.time_total.toString();
 		this.updateScroll();
 		new Clipboard('.clipboard');
-	}
+  }
 	componentWillUnmount() {
 		UserActions.unsetActiveMeeting();
 		MeetingTimeActions.killTimer();
@@ -376,7 +378,7 @@ export default createContainer(({stageId}) => {
   Meteor.subscribe("currentMeeting", meetingId);
   Meteor.subscribe("meetingParticipants", meetingId);
   Meteor.subscribe("currentChatMessages", meetingId);
-  Meteor.subscribe("currentResult", meetingId);
+  let resultHandle = Meteor.subscribe("currentResult", meetingId);
   Meteor.subscribe("stages");
   Meteor.subscribe("stageMessages");
 
@@ -392,12 +394,17 @@ export default createContainer(({stageId}) => {
       Streamy.join(currentMeetingId);
     }
   }
+
+  if(resultHandle.ready()) {
+    LoadingActions.unsetLoading();
+  }
+
   return {
     currentMeeting: currentMeeting,
     currentChatMessages: ChatMessageCollection.find().fetch(),
     currentStage: StageCollection.find({stage_id: stageId}).fetch()[0],
     roleMaterial: MaterialCollection.find().fetch(),
-		currentResult: ResultCollection.find().fetch()[0],
+    currentResult: ResultCollection.find().fetch()[0],
     participants: Meteor.users.find().fetch()
-  };
+  }
 },InnerTab);
