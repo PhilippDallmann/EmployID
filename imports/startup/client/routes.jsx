@@ -118,48 +118,8 @@ loggedIn.route('/editProfile', {
 */
 loggedIn.route("/meeting/:meetingId", {
   name: "meeting",
-  subscriptions: function(params) {
-    LoadingActions.setLoading();
-    var subsReady = 0;
-    var subs = 6;
-    this.register("currentMeeting", Meteor.subscribe("currentMeeting", params.meetingId, {
-      onReady: function() {
-        subsReady = subsReady + 1;
-        checkIfSubsAreReady(subs, subsReady);
-      }
-    }));
-    this.register("meetingParticipants", Meteor.subscribe("meetingParticipants", params.meetingId, {
-      onReady: function() {
-        subsReady = subsReady + 1;
-        checkIfSubsAreReady(subs, subsReady);
-      }
-    }));
-    this.register("currentChatMessages", Meteor.subscribe("currentChatMessages", params.meetingId, {
-      onReady: function() {
-        subsReady = subsReady + 1;
-        checkIfSubsAreReady(subs, subsReady);
-      }
-    }));
-    this.register("currentResult", Meteor.subscribe("currentResult", params.meetingId, {
-      onReady: function() {
-        subsReady = subsReady + 1;
-        checkIfSubsAreReady(subs, subsReady)
-      }
-    }));
-    this.register("stages", Meteor.subscribe("stages", {
-      onReady: function() {
-        subsReady = subsReady + 1;
-        checkIfSubsAreReady(subs, subsReady);
-      }
-    }));
-    this.register("stageMessages", Meteor.subscribe("stageMessages", {
-      onReady: function() {
-        subsReady = subsReady + 1;
-        checkIfSubsAreReady(subs, subsReady);
-      }
-    }));
-  },
   action: function() {
+    LoadingActions.setLoading();
     mount(App, {
       children: [<Header />, <Meeting />]
     });

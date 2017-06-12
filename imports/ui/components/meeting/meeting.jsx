@@ -49,6 +49,9 @@ Meeting.propTypes = {
 };
 
 export default createContainer(() => {
+  //subscriptions
+  Meteor.subscribe("currentMeeting", FlowRouter.getParam('meetingId'));
+
   var currentMeeting = MeetingCollection.find().fetch()[0];
 
   // #hack if current meeting changes, getMeteorData is called

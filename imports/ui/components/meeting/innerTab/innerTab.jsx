@@ -370,6 +370,16 @@ InnerTab.propTypes = {
 
 export default createContainer(({stageId}) => {
 
+  let meetingId = FlowRouter.getParam("meetingId");
+
+	//subscriptions
+  Meteor.subscribe("currentMeeting", meetingId);
+  Meteor.subscribe("meetingParticipants", meetingId);
+  Meteor.subscribe("currentChatMessages", meetingId);
+  Meteor.subscribe("currentResult", meetingId);
+  Meteor.subscribe("stages");
+  Meteor.subscribe("stageMessages");
+
   var currentMeeting = MeetingCollection.find().fetch()[0];
   if (currentMeeting) {
     if (!currentMeetingId) {
