@@ -5,6 +5,11 @@ import GroupCollection from './groups';
 
 if(Meteor.isServer) {
   Meteor.methods({
+    /**
+     * Creates a group
+     * @param {object) group - contains all infromation about the group (name, description, users, owner
+     * @param {object} languageKey - used to create a notification in the users language
+     * */
     createGroup: function(group, languageKey) {
       if(!Meteor.userId()) {
         throw new Meteor.Error(500, "Access denied");
@@ -30,6 +35,10 @@ if(Meteor.isServer) {
         }
       }
     },
+    /**
+     * Edits a group
+     * @param {object} group - contains the changed values (name, description, users
+     * */
     editGroup: function(group) {
       GroupCollection.update(group._id, {
         $set: {
@@ -39,6 +48,10 @@ if(Meteor.isServer) {
         }
       });
     },
+    /**
+     * Deletes a group
+     * @param {object} group - contains the id of the group
+     * */
     deleteGroup: function(group) {
       if(group.owner!==Meteor.userId()) {
         throw new Meteor.Error(500, "Access denied");
@@ -46,6 +59,10 @@ if(Meteor.isServer) {
         GroupCollection.remove(group._id);
       }
     },
+    /**
+     * Validates the userlist of a createGroup request
+     * @param {array} users - contains the userIDs
+     * */
     validateUsernameList: function(users) {
       var result = [];
       for(var i=0;i<users.length;i++) {
@@ -58,6 +75,10 @@ if(Meteor.isServer) {
       }
       return result;
     },
+    /**
+     *Creates a list of usernames given a list of userIds
+     * @param {array} users - list of userIds
+     * */
     getIdUsernameList: function(users) {
       var result = [];
       for(var i=0;i<users.length;i++) {
@@ -68,6 +89,11 @@ if(Meteor.isServer) {
       }
       return result;
     },
+    /**
+     *Removes a user from a group
+     * @param {String} groupId - ID of the group
+     * @param {String} userId - ID of the user to be removed
+     * */
     removeUserFromGroup: function(groupId, userId) {
       GroupCollection.update(groupId, {
         $pull: {users: userId}
