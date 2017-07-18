@@ -3,8 +3,9 @@ import NotificationCollection from './notifications';
 
 Meteor.methods({
   /**
-   *Creates a new notification
-   * @param {object} notification - contaions all necessary information (text, type, owner, groupId, timestamp, needsConformation, conformedBy)
+   * @summary Creates a new notification
+   * @isMethod true
+   * @param {Object} notification - Contains all necessary information (text, type, owner, groupId, timestamp, needsConformation, conformedBy)
    * */
   "createNotification": function(notification) {
     NotificationCollection.insert({
@@ -18,9 +19,10 @@ Meteor.methods({
     });
   },
   /**
-   * Adds a user to the array of confirmed users in a notification
-   * @param {string} notificationId - ID of the notification that gets updated
-   * @param {string} userId -  ID of the user that confirmed
+   * @summary Adds a user to the array of confirmed users in a notification
+   * @isMethod true
+   * @param {String} notificationId - ID of the notification that gets updated
+   * @param {String} userId -  ID of the user that confirmed
    * */
   "addConfirmation": function(notificationId, userId) {
     NotificationCollection.update(notificationId, {

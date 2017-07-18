@@ -6,9 +6,10 @@ import GroupCollection from './groups';
 if(Meteor.isServer) {
   Meteor.methods({
     /**
-     * Creates a group
-     * @param {object) group - contains all infromation about the group (name, description, users, owner
-     * @param {object} languageKey - used to create a notification in the users language
+     * @summary Creates a group
+     * @isMethod true
+     * @param {Object) group - contains all infromation about the group (name, description, users, owner
+     * @param {Object} languageKey - used to create a notification in the users language
      * */
     createGroup: function(group, languageKey) {
       if(!Meteor.userId()) {
@@ -36,8 +37,9 @@ if(Meteor.isServer) {
       }
     },
     /**
-     * Edits a group
-     * @param {object} group - contains the changed values (name, description, users
+     * @summary Edits a group
+     * @isMethod true
+     * @param {Object} group - contains the changed values (name, description, users
      * */
     editGroup: function(group) {
       GroupCollection.update(group._id, {
@@ -49,8 +51,9 @@ if(Meteor.isServer) {
       });
     },
     /**
-     * Deletes a group
-     * @param {object} group - contains the id of the group
+     * @summary Deletes a group
+     * @isMethod true
+     * @param {Object} group - contains the id of the group
      * */
     deleteGroup: function(group) {
       if(group.owner!==Meteor.userId()) {
@@ -60,9 +63,10 @@ if(Meteor.isServer) {
       }
     },
     /**
-     * Validates the userlist of a createGroup request
-     * @param {array} users - contains the userIDs
-     * @return {array} Array of the validated userIds
+     * @summary Validates the userlist of a createGroup request
+     * @isMethod true
+     * @param {Array} users - contains the userIDs
+     * @return {Array} Array of the validated userIds
      * */
     validateUsernameList: function(users) {
       var result = [];
@@ -77,9 +81,10 @@ if(Meteor.isServer) {
       return result;
     },
     /**
-     *Creates a list of usernames given a list of userIds
-     * @param {array} users - list of userIds
-     * @return {array} Array of usernames
+     * @summary Creates a list of usernames given a list of userIds
+     * @isMethod true
+     * @param {Array} users - list of userIds
+     * @return {Array} Array of usernames
      * */
     getIdUsernameList: function(users) {
       var result = [];
@@ -92,7 +97,8 @@ if(Meteor.isServer) {
       return result;
     },
     /**
-     *Removes a user from a group
+     * @summary Removes a user from a group
+     * @isMethod true
      * @param {String} groupId - ID of the group
      * @param {String} userId - ID of the user to be removed
      * */

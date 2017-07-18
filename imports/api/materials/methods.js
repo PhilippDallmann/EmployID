@@ -3,8 +3,9 @@ import MaterialCollection from './materials';
 
 Meteor.methods({
   /**
-   * Saves changes made to materials
-   * @param {array} materials - list of materials that have been edited
+   * @summary Saves changes made to materials
+   * @isMethod true
+   * @param {Array} materials - list of materials that have been edited
    * */
   "editMaterials": function(materials) {
     console.log(materials);
@@ -15,7 +16,8 @@ Meteor.methods({
     }
   },
   /**
-   * Toggle the heading-status of a material
+   * @summary Toggle the heading-status of a material
+   * @isMethod true
    * @param {String} materialId - ID of the material that has changed
    * */
   "toggleHeading": function(materialId) {

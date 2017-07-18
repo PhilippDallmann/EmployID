@@ -6,9 +6,10 @@ let WPAPI = require('wpapi');
 
 Meteor.methods({
   /**
-   *Creates a chat message
-   * @param {object} message - contains all information about the message (userId, username, timestamp, text, isBotMessage)
-   * @param {string} chatId - id of the chat it belongs to
+   * @summary Creates a chat message
+   * @isMethod true
+   * @param {Object} message - Contains all information about the message (userId, username, timestamp, text, isBotMessage)
+   * @param {String} chatId - ID of the chat it belongs to
    * */
   "createChatMessage": function(message, chatId) {
 

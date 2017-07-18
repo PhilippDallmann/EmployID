@@ -23,10 +23,11 @@ if(Meteor.isServer) {
 
   Meteor.methods({
     /**
-     * Creates a meeting
-     * @param {object} meeting - contains all necessary information (topic, description, start_date,owner,group,client,
+     * @summary Creates a meeting
+     * @isMethod true
+     * @param {Object} meeting - contains all necessary information (topic, description, start_date,owner,group,client,
      *                            result_id,facilitator,chat, active_stage_id,status_code,current_stage_time_remaining, time_total)
-     * @param {string} languageKey - used to create a notification in the users language
+     * @param {String} languageKey - used to create a notification in the users language
      * */
     "createMeeting": function(meeting, languageKey) {
       var loggedInUser = Meteor.user();
@@ -65,8 +66,9 @@ if(Meteor.isServer) {
       }
     },
     /**
-     * Saves changes made to a meeting
-     * @param {object} - contains the editable fields (topic, description, start_date, group, client, facilitator)
+     * @summary Saves changes made to a meeting
+     * @isMethod true
+     * @param {Object} - contains the editable fields (topic, description, start_date, group, client, facilitator)
      * */
     "editMeeting": function(meeting) {
       MeetingCollection.update(meeting._id, {
@@ -83,8 +85,9 @@ if(Meteor.isServer) {
       });
     },
     /**
-     * Deletes a meeting
-     * @param {object} meeting - contains the information about the meeting
+     * @summary Deletes a meeting
+     * @isMethod true
+     * @param {Object} meeting - contains the information about the meeting
      * */
     "deleteMeeting": function(meeting) {
       if(meeting.owner!==Meteor.userId()) {
@@ -94,10 +97,11 @@ if(Meteor.isServer) {
       }
     },
     /**
-     *changes the active stage of a meeting
-     * @param {string} meetingId - id of the meeting
-     * @param {number} newStage - number representation of the new stage
-     * @param {number} currentStageEndTime - remaining time in stage in seconds
+     * @summary changes the active stage of a meeting
+     * @isMethod true
+     * @param {String} meetingId - id of the meeting
+     * @param {Number} newStage - number representation of the new stage
+     * @param {Number} currentStageEndTime - remaining time in stage in seconds
      * */
     "updateMeetingStageAndSetStageActive" : function(meetingId, newStage, currentStageEndtime) {
       MeetingCollection.update(meetingId, {
@@ -110,10 +114,11 @@ if(Meteor.isServer) {
       });
     },
     /**
-     *change the status of a meetingstage and set the remaining time
-     * @param {string} meetingId - ID of  the meeting
-     * @param {number} statusCode - 0 for inactive 1 for active
-     * @param {number} currentStageTimeRemaining - remaining time in stage
+     * @summary change the status of a meetingstage and set the remaining time
+     * @isMethod true
+     * @param {String} meetingId - ID of  the meeting
+     * @param {Number} statusCode - 0 for inactive 1 for active
+     * @param {Number} currentStageTimeRemaining - remaining time in stage
      * */
     "updateMeetingStatusWithTimeRemaining" : function(meetingId, statusCode, currentStageTimeRemaining, currentStageEndtime) {
       MeetingCollection.update(meetingId, {

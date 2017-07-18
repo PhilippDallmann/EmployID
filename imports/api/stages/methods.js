@@ -4,9 +4,10 @@ import MaterialCollection from '../materials/materials';
 
 Meteor.methods({
   /**
-   * adds a new material for a specific stage and role
-   * @param  {string} stageID - id of the stage
-   * @param {object} material -  contains all information about the new material (text, role, position, languageKey, isHeading)
+   * @summary adds a new material for a specific stage and role
+   * @isMethod true
+   * @param  {String} stageID - id of the stage
+   * @param {Object} material -  contains all information about the new material (text, role, position, languageKey, isHeading)
    * */
   "addMaterial": function(stageId, material) {
     var newMaterial = MaterialCollection.insert({
@@ -22,9 +23,10 @@ Meteor.methods({
     });
   },
   /**
-   * deletes a material
-   * @param {string} stageId - ID of the stage
-   * @param {string} materialID - ID of the material to be deleted
+   * @summary deletes a material
+   * @isMethod true
+   * @param {String} stageId - ID of the stage
+   * @param {String} materialID - ID of the material to be deleted
    * */
   "deleteMaterial": function(stageId, materialId) {
     StageCollection.update({stage_id: stageId},{

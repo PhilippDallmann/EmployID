@@ -5,9 +5,10 @@ import ResultCollection from '../results/results';
 if(Meteor.isServer) {
   Meteor.methods({
     /**
-     * updates the result
-     * @param {string} resultId - ID of the result to be updated
-     * @param {string} value - value of the new result field
+     * @summary updates the result
+     * @isMethod true
+     * @param {String} resultId - ID of the result to be updated
+     * @param {String} value - Value of the new result field
      * */
     "updateResult": function(resultId, value) {
         ResultCollection.update(resultId, {

@@ -2,9 +2,10 @@ import {Meteor} from 'meteor/meteor';
 
 Meteor.methods({
   /**
-   * Give a user a new set of roles
-   * @param {string} userId - ID of the user
-   * @param {array} roles - new roles of the user
+   * @summary Give a user a new set of roles
+   * @isMethod true
+   * @param {String} userId - ID of the user
+   * @param {Array} roles - new roles of the user
    * */
   "updateRolesOfUser": function(userId, roles) {
     var loggedInUser = Meteor.user();
