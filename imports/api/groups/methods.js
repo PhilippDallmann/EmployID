@@ -62,6 +62,7 @@ if(Meteor.isServer) {
     /**
      * Validates the userlist of a createGroup request
      * @param {array} users - contains the userIDs
+     * @return {array} Array of the validated userIds
      * */
     validateUsernameList: function(users) {
       var result = [];
@@ -78,6 +79,7 @@ if(Meteor.isServer) {
     /**
      *Creates a list of usernames given a list of userIds
      * @param {array} users - list of userIds
+     * @return {array} Array of usernames
      * */
     getIdUsernameList: function(users) {
       var result = [];

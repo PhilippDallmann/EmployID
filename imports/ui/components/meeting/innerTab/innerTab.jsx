@@ -28,7 +28,7 @@ import ResultEditor from "./resultEditor";
 import MaterialArea from "./materialArea";
 
 let Reflux = require('reflux');
-let Clipboard = require("clipboard");
+let Clipboard = require('clipboard');
 
 let Grid = require('react-bootstrap').Grid;
 let Row = require('react-bootstrap').Row;
@@ -112,7 +112,6 @@ class InnerTab extends Reflux.Component {
 		}
 	}
 	createChatMessage() {
-
 		var chatMessageText = document.getElementById('chatMessageTextInput').value;
 
 		var message = {
