@@ -1,3 +1,13 @@
+/**
+ * @summary initializes the Group Collection
+ *          name: name of the group
+ *          description: description of the group
+ *          users: array of all users in group
+ *          owner: creator of the group
+ * @type {SimpleSchema}
+ * @locus Collection
+ * */
+
 const GroupCollection = new Mongo.Collection("Groups");
 
 let GroupSchema = new SimpleSchema({

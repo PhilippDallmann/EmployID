@@ -1,3 +1,16 @@
+/**
+ * @summary initializes the Notification Collection
+ *          text: text of notification
+ *          type: defines whether it's a Invitation or a Creation of a meeting
+ *          owner: contains username and id of creator
+ *          group_id: id of the group the notification belongs to
+ *          timestamp: timestamp of creation
+ *          needs_confirmation: group invitations need confirmation of the invited users
+ *          confirmed_by: array of users that confirmed the group invitation
+ * @type {SimpleSchema}
+ * @locus Collection
+ * */
+
 const NotificationCollection = new Mongo.Collection("Notifications");
 
 let NotificationSchema = new SimpleSchema({

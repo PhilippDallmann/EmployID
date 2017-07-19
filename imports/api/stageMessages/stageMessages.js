@@ -1,3 +1,12 @@
+/**
+ * @summary initializes the StageMessage Collection
+ *          language_key: language of message
+ *          stage: number representation of the stage the message belongs to
+ *          message: text of message
+ * @type {SimpleSchema}
+ * @locus Collection
+ * */
+
 const StageMessagesCollection = new Mongo.Collection("StageMessages");
 
 let StageMessagesSchema = new SimpleSchema({

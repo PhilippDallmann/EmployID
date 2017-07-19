@@ -8,7 +8,7 @@ if(Meteor.isServer) {
     /**
      * @summary Creates a group
      * @isMethod true
-     * @param {Object) group - contains all infromation about the group (name, description, users, owner
+     * @param {Object} group - contains all infromation about the group (name, description, users, owner
      * @param {Object} languageKey - used to create a notification in the users language
      * */
     createGroup: function(group, languageKey) {

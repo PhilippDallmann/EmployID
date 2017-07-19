@@ -1,3 +1,13 @@
+/**
+ * @summary initializes the Stage Collection
+ *          stage_id: number reprensentation of stage
+ *          description: description of stage
+ *          material: array of all materials belonging to this stage
+ *          duration: number of seconds the stage lasts
+ * @type {SimpleSchema}
+ * @locus Collection
+ * */
+
 const StageCollection = new Mongo.Collection("Stages");
 
 let StageSchema = new SimpleSchema({

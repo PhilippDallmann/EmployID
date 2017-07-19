@@ -1,3 +1,10 @@
+/**
+ * @summary initializes the Chat Collection
+ *          chat_messages: array of all messages inside of the chat
+ * @type {SimpleSchema}
+ * @locus Collection
+ * */
+
 const ChatCollection = new Mongo.Collection("Chats");
 
 let ChatSchema = new SimpleSchema({

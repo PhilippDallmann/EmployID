@@ -68,7 +68,7 @@ if(Meteor.isServer) {
     /**
      * @summary Saves changes made to a meeting
      * @isMethod true
-     * @param {Object} - contains the editable fields (topic, description, start_date, group, client, facilitator)
+     * @param {Object} meeting - contains the editable fields (topic, description, start_date, group, client, facilitator)
      * */
     "editMeeting": function(meeting) {
       MeetingCollection.update(meeting._id, {

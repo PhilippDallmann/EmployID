@@ -1,3 +1,23 @@
+/**
+ * @summary initializes the Message Collection
+ *          topic: topic of meeting
+ *          description: description of meeting
+ *          start_date: date of meeting
+ *          owner: creator of meeting
+ *          group: group the meeting belongs to
+ *          client: the one who wants to talk about a problem
+ *          facilitator: the one who guids the meeting
+ *          chat: id of the chat that belongs to the meeting
+ *          result_id: id of the result that belongs to the meeting
+ *          active_stage_id: id of the current stage
+ *          status_code: 1 for meeting is active 0 for not active
+ *          current_stage-Time_remaining: remaining time in current stage
+ *          current_stage_endtime: endtime of current stage
+ *          time_total: total time of the meeting beeing active
+ * @type {SimpleSchema}
+ * @locus Collection
+ * */
+
 const MeetingCollection = new Mongo.Collection("Meetings");
 
 let MeetingSchema = new SimpleSchema({

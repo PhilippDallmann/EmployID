@@ -1,3 +1,14 @@
+/**
+ * @summary initializes the ChatMessage Collection
+ *          user_id: id of the sender
+ *          user_name: name of the sender
+ *          timestamp: timestamp of message creation
+ *          text: value of the message
+ *          is_bot_message: Defines whether the message is automatically generated or user generated
+ * @type {SimpleSchema}
+ * @locus Collection
+ * */
+
 const ChatMessageCollection = new Mongo.Collection("ChatMessages");
 
 let ChatMessageSchema = new SimpleSchema({

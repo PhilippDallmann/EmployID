@@ -1,3 +1,10 @@
+/**
+ * @summary initializes the Result Collection
+ *          text: value of the result
+ * @type {SimpleSchema}
+ * @locus Collection
+ * */
+
 const ResultCollection = new Mongo.Collection("Results");
 
 let ChatMessageSchema = new SimpleSchema({
