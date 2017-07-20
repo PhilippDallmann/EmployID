@@ -4,6 +4,11 @@ import ChatCollection from '../../chats/chats';
 import ChatMessageCollection from '../chatMessages';
 
 if (Meteor.isServer) {
+  /**
+   * @summary Publishes ChatMessages belonging to a meetings chat
+   * @param {String} meetingId - id of the meeting the chat belongs to
+   * @locus Publication
+   * */
   Meteor.publish('currentChatMessages', function (meetingId) {
     this.autorun(function (computation) {
       var meeting = MeetingCollection.findOne(meetingId, {fields: {chat: 1}});

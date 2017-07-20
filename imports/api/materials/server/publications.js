@@ -4,6 +4,12 @@ import MaterialCollection from '../materials';
 import StageCollection from '../../stages/stages';
 
 if (Meteor.isServer) {
+  /**
+   * @summary Publishes role specific materials in the wanted language
+   * @param {String} meetingId - id of the meeting used to look up the role of the current user
+   * @param {String} languageKey - represents the wanted language
+   * @locus Publication
+   * */
   Meteor.publish('materials', function (meetingId, languageKey) {
     this.autorun(function (computation) {
       var meeting = MeetingCollection.findOne(meetingId, {fields: {client: 1, facilitator: 1}});
@@ -16,9 +22,20 @@ if (Meteor.isServer) {
       }
     });
   });
+  /**
+   * @summary Publishes all materials
+   * @locus Publication
+   * */
   Meteor.publish('allMaterials', function() {
     return MaterialCollection.find({});
   });
+  /**
+   * @summary Publishes the materials beloning to a stage, role and language
+   * @param {String} stageId - id of the stage
+   * @param {String} roleId - id of the role
+   * @param {String} languageKey - represents the wanted language
+   * @locus Publication
+   * */
   Meteor.publish('editorMaterial', function (stageId, roleId, languageKey) {
     this.autorun(function (computation) {
       var stage = StageCollection.findOne({stage_id: stageId}, {fields: {material: 1}});

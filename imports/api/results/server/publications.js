@@ -3,6 +3,11 @@ import MeetingCollection from '../../meetings/meetings';
 import ResultCollection from '../../results/results';
 
 if (Meteor.isServer) {
+  /**
+   * @summary Publishes the result belonging to a meeting
+   * @param {String} meetingId - id of the meeting
+   * @locus Publication
+   * */
   Meteor.publish('currentResult', function (meetingId) {
     this.autorun(function (computation) {
       var meeting = MeetingCollection.findOne(meetingId, {fields: {result_id: 1}});

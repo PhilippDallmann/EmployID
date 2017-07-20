@@ -3,6 +3,11 @@ import GroupCollection from '../../groups/groups'
 import MeetingCollection from '../meetings'
 
 if (Meteor.isServer) {
+  /**
+   * @summary Publishes all meetings a user is part of
+   * @param {String} currentUserId - id of the current user
+   * @locus Publication
+   * */
   Meteor.publish('userSpecificMeetings', function (currentUserId) {
     this.autorun(function (computation) {
       var userGroups = _.uniq(GroupCollection.find({ 'users': currentUserId })
@@ -12,9 +17,19 @@ if (Meteor.isServer) {
       return MeetingCollection.find({ 'group': { $in: userGroups } });
     });
   });
+  /**
+   * @summary Publishes a meeting
+   * @param {String} meetingId - id of the meeting
+   * @locus Publication
+   * */
   Meteor.publish('currentMeeting', function (meetingId) {
     return MeetingCollection.find({_id: meetingId});
   });
+  /**
+   * @summary Publishes the participants of a meeting
+   * @param {String} meetingId - id of the meeting
+   * @locus Publication
+   * */
   Meteor.publish('meetingParticipants', function (meetingId) {
     this.autorun(function (computation) {
       var meeting = MeetingCollection.findOne(meetingId, {fields: {group: 1}});

@@ -3,6 +3,11 @@ import GroupCollection from '../../groups/groups';
 import NotificationCollection from '../notifications';
 
 if (Meteor.isServer) {
+  /**
+   * @summary Publishes all notifications of the current user
+   * @param {String} currentUserId - id of the current user
+   * @locus Publication
+   * */
   Meteor.publish('notificationsOfCurrentUser', function(currentUserId) {
     this.autorun(function (computation) {
       var userGroups = _.uniq(GroupCollection.find({'users': currentUserId})
