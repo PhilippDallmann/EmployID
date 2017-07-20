@@ -28,6 +28,7 @@ if(Meteor.isServer) {
      * @param {Object} meeting - contains all necessary information (topic, description, start_date,owner,group,client,
      *                            result_id,facilitator,chat, active_stage_id,status_code,current_stage_time_remaining, time_total)
      * @param {String} languageKey - used to create a notification in the users language
+     * @locus Method
      * */
     "createMeeting": function(meeting, languageKey) {
       var loggedInUser = Meteor.user();
@@ -69,6 +70,7 @@ if(Meteor.isServer) {
      * @summary Saves changes made to a meeting
      * @isMethod true
      * @param {Object} meeting - contains the editable fields (topic, description, start_date, group, client, facilitator)
+     * @locus Method
      * */
     "editMeeting": function(meeting) {
       MeetingCollection.update(meeting._id, {
@@ -88,6 +90,7 @@ if(Meteor.isServer) {
      * @summary Deletes a meeting
      * @isMethod true
      * @param {Object} meeting - contains the information about the meeting
+     * @locus Method
      * */
     "deleteMeeting": function(meeting) {
       if(meeting.owner!==Meteor.userId()) {
@@ -102,6 +105,7 @@ if(Meteor.isServer) {
      * @param {String} meetingId - id of the meeting
      * @param {Number} newStage - number representation of the new stage
      * @param {Number} currentStageEndTime - remaining time in stage in seconds
+     * @locus Method
      * */
     "updateMeetingStageAndSetStageActive" : function(meetingId, newStage, currentStageEndtime) {
       MeetingCollection.update(meetingId, {
@@ -119,6 +123,7 @@ if(Meteor.isServer) {
      * @param {String} meetingId - ID of  the meeting
      * @param {Number} statusCode - 0 for inactive 1 for active
      * @param {Number} currentStageTimeRemaining - remaining time in stage
+     * @locus Method
      * */
     "updateMeetingStatusWithTimeRemaining" : function(meetingId, statusCode, currentStageTimeRemaining, currentStageEndtime) {
       MeetingCollection.update(meetingId, {

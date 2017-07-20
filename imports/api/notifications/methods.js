@@ -6,6 +6,7 @@ Meteor.methods({
    * @summary Creates a new notification
    * @isMethod true
    * @param {Object} notification - Contains all necessary information (text, type, owner, groupId, timestamp, needsConformation, conformedBy)
+   * @locus Method
    * */
   "createNotification": function(notification) {
     NotificationCollection.insert({
@@ -23,6 +24,7 @@ Meteor.methods({
    * @isMethod true
    * @param {String} notificationId - ID of the notification that gets updated
    * @param {String} userId -  ID of the user that confirmed
+   * @locus Method
    * */
   "addConfirmation": function(notificationId, userId) {
     NotificationCollection.update(notificationId, {

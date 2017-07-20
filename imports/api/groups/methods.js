@@ -10,6 +10,7 @@ if(Meteor.isServer) {
      * @isMethod true
      * @param {Object} group - contains all infromation about the group (name, description, users, owner
      * @param {Object} languageKey - used to create a notification in the users language
+     * @locus Method
      * */
     createGroup: function(group, languageKey) {
       if(!Meteor.userId()) {
@@ -40,6 +41,7 @@ if(Meteor.isServer) {
      * @summary Edits a group
      * @isMethod true
      * @param {Object} group - contains the changed values (name, description, users
+     * @locus Method
      * */
     editGroup: function(group) {
       GroupCollection.update(group._id, {
@@ -54,6 +56,7 @@ if(Meteor.isServer) {
      * @summary Deletes a group
      * @isMethod true
      * @param {Object} group - contains the id of the group
+     * @locus Method
      * */
     deleteGroup: function(group) {
       if(group.owner!==Meteor.userId()) {
@@ -67,6 +70,7 @@ if(Meteor.isServer) {
      * @isMethod true
      * @param {Array} users - contains the userIDs
      * @return {Array} Array of the validated userIds
+     * @locus Method
      * */
     validateUsernameList: function(users) {
       var result = [];
@@ -85,6 +89,7 @@ if(Meteor.isServer) {
      * @isMethod true
      * @param {Array} users - list of userIds
      * @return {Array} Array of usernames
+     * @locus Method
      * */
     getIdUsernameList: function(users) {
       var result = [];
@@ -101,6 +106,7 @@ if(Meteor.isServer) {
      * @isMethod true
      * @param {String} groupId - ID of the group
      * @param {String} userId - ID of the user to be removed
+     * @locus Method
      * */
     removeUserFromGroup: function(groupId, userId) {
       GroupCollection.update(groupId, {

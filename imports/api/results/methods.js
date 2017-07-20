@@ -9,6 +9,7 @@ if(Meteor.isServer) {
      * @isMethod true
      * @param {String} resultId - ID of the result to be updated
      * @param {String} value - Value of the new result field
+     * @locus Method
      * */
     "updateResult": function(resultId, value) {
         ResultCollection.update(resultId, {

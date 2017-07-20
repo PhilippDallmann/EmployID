@@ -8,6 +8,7 @@ Meteor.methods({
    * @isMethod true
    * @param  {String} stageID - id of the stage
    * @param {Object} material -  contains all information about the new material (text, role, position, languageKey, isHeading)
+   * @locus Method
    * */
   "addMaterial": function(stageId, material) {
     var newMaterial = MaterialCollection.insert({
@@ -27,6 +28,7 @@ Meteor.methods({
    * @isMethod true
    * @param {String} stageId - ID of the stage
    * @param {String} materialID - ID of the material to be deleted
+   * @locus Method
    * */
   "deleteMaterial": function(stageId, materialId) {
     StageCollection.update({stage_id: stageId},{

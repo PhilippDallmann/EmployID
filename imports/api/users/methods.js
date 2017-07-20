@@ -6,6 +6,7 @@ Meteor.methods({
    * @isMethod true
    * @param {String} userId - ID of the user
    * @param {Array} roles - new roles of the user
+   * @locus Method
    * */
   "updateRolesOfUser": function(userId, roles) {
     var loggedInUser = Meteor.user();

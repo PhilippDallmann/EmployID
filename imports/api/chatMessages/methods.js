@@ -10,6 +10,7 @@ Meteor.methods({
    * @isMethod true
    * @param {Object} message - Contains all information about the message (userId, username, timestamp, text, isBotMessage)
    * @param {String} chatId - ID of the chat it belongs to
+   * @locus Method
    * */
   "createChatMessage": function(message, chatId) {
 
