@@ -1,8 +1,8 @@
 /**
  * @summary initializes the StageMessage Collection
- *          language_key: language of message
- *          stage: number representation of the stage the message belongs to
- *          message: text of message
+ * @param language_key - language of message
+ * @param stage - number representation of the stage the message belongs to
+ * @param message - text of message
  * @type {SimpleSchema}
  * @locus Collection
  * */

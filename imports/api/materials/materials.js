@@ -1,10 +1,10 @@
 /**
  * @summary initializes the Material Collection
- *          text: text of material
- *          language_key: language of material
- *          role: material can belong to roles client, facilitator or participant
- *          position: allows showing the materials in right order
- *          is_heading: materials can be heading and are shown bold
+ * @param text - text of material
+ * @param language_key - language of material
+ * @param role - material can belong to roles client, facilitator or participant
+ * @param position - allows showing the materials in right order
+ * @param is_heading - materials can be heading and are shown bold
  * @type {SimpleSchema}
  * @locus Collection
  * */

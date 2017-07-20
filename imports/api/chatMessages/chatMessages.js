@@ -1,10 +1,10 @@
 /**
  * @summary initializes the ChatMessage Collection
- *          user_id: id of the sender
- *          user_name: name of the sender
- *          timestamp: timestamp of message creation
- *          text: value of the message
- *          is_bot_message: Defines whether the message is automatically generated or user generated
+ * @param user_id - id of the sender
+ * @param user_name - name of the sender
+ * @param timestamp - timestamp of message creation
+ * @param text - value of the message
+ * @param is_bot_message - Defines whether the message is automatically generated or user generated
  * @type {SimpleSchema}
  * @locus Collection
  * */

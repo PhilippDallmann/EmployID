@@ -1,6 +1,6 @@
 /**
  * @summary initializes the Chat Collection
- *          chat_messages: array of all messages inside of the chat
+ * @param chat_messages - array of all messages inside of the chat
  * @type {SimpleSchema}
  * @locus Collection
  * */

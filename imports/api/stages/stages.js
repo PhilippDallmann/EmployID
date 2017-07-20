@@ -1,9 +1,9 @@
 /**
  * @summary initializes the Stage Collection
- *          stage_id: number reprensentation of stage
- *          description: description of stage
- *          material: array of all materials belonging to this stage
- *          duration: number of seconds the stage lasts
+ * @param stage_id - number reprensentation of stage
+ * @param description - description of stage
+ * @param material - array of all materials belonging to this stage
+ * @param duration - number of seconds the stage lasts
  * @type {SimpleSchema}
  * @locus Collection
  * */

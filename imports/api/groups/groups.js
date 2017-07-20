@@ -1,9 +1,9 @@
 /**
  * @summary initializes the Group Collection
- *          name: name of the group
- *          description: description of the group
- *          users: array of all users in group
- *          owner: creator of the group
+ * @param name - name of the group
+ * @param description - description of the group
+ * @param users - array of all users in group
+ * @param owner - creator of the group
  * @type {SimpleSchema}
  * @locus Collection
  * */

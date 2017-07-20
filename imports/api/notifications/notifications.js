@@ -1,12 +1,12 @@
 /**
  * @summary initializes the Notification Collection
- *          text: text of notification
- *          type: defines whether it's a Invitation or a Creation of a meeting
- *          owner: contains username and id of creator
- *          group_id: id of the group the notification belongs to
- *          timestamp: timestamp of creation
- *          needs_confirmation: group invitations need confirmation of the invited users
- *          confirmed_by: array of users that confirmed the group invitation
+ * @param text - text of notification
+ * @param type - defines whether it's a Invitation or a Creation of a meeting
+ * @param owner - contains username and id of creator
+ * @param group_id - id of the group the notification belongs to
+ * @param timestamp - timestamp of creation
+ * @param needs_confirmation - group invitations need confirmation of the invited users
+ * @param confirmed_by - array of users that confirmed the group invitation
  * @type {SimpleSchema}
  * @locus Collection
  * */

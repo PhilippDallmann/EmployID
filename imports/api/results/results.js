@@ -1,6 +1,6 @@
 /**
  * @summary initializes the Result Collection
- *          text: value of the result
+ * @param text - value of the result
  * @type {SimpleSchema}
  * @locus Collection
  * */
