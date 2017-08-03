@@ -17,6 +17,7 @@ import Login from '../../ui/components/login/login';
 import Home from '../../ui/components/home/home';
 import Meeting from "../../ui/components/meeting/meeting";
 import Editor from "../../ui/components/editor/editor";
+import Result from '../../ui/components/result/result';
 
 
 import LoadingActions from '../../reflux/actions/loadingActions';
@@ -122,6 +123,16 @@ loggedIn.route("/meeting/:meetingId", {
     LoadingActions.setLoading();
     mount(App, {
       children: [<Header />, <Meeting />]
+    });
+  }
+});
+
+loggedIn.route('/result/:resultId', {
+  name: 'result',
+  action: function() {
+    LoadingActions.setLoading();
+    mount(App, {
+      children: [<Header/>, <Result/>]
     });
   }
 });
