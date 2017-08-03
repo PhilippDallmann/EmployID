@@ -64,6 +64,9 @@
     "minutes": "Min",
     "recorder": "Protokollant"
   },
+  "result" : {
+    "settingsHeader" : "Settings"
+  },
   "stateMessages" : {
     "0" : "<b>Ziele der Start-Phase:</b><br /> Sammlung von “Material” (Probleme/ Herausforderungen) von Gruppenmitgliedern, Priorisierung und Problemselektion sowie  Rollenzuteilung für die kommende Sitzung (Absprachen vorab sind sinnvoll!)",
     "1" : "<b>Ziele der Problem-Phase:</b><br /> Analyse der Problemsituation und Formulierung eines Satzes mit der Problembeschreibung.",

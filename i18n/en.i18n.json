@@ -64,6 +64,9 @@
     "minutes": "min",
     "recorder": "recorder"
   },
+  "result" : {
+    "settingsHeader" : "Settings"
+  },
   "stateMessages" : {
     "0" : "<b>Goals of the start phase:</b><br /> Collect issues of the group members, prioritize & select problem(s), role assignment for next sessions, (schedule next sessions).",
     "1" : "<b>Goals of the problem phase:</b><br /> Analysis of problem situation and phrasing a single sentence with the core problem description.",

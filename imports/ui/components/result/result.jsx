@@ -15,7 +15,7 @@ import MeetingStore from "../../../reflux/stores/meetingStore";
 
 let Tabs = require("react-bootstrap").Tabs;
 let Tab = require("react-bootstrap").Tab;
-let Grid = require('react-bootstrap').Grid;
+let Panel = require('react-bootstrap').Panel;
 let Row = require('react-bootstrap').Row;
 let Col = require('react-bootstrap').Col;
 
@@ -28,11 +28,13 @@ class Result extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="result-page">
         <Col sm={12} md={3} lg={4}>
-          <div/>
+          <Panel className="result-settings-panel" header={TAPi18n.__("result.settingsHeader")}>
+            <div>Hallo</div>
+          </Panel>
         </Col>
-        <Col sm={12} md={9} lg={8}>
+        <Col className="" sm={12} md={9} lg={8}>
           <ResultEditor/>
         </Col>
       </div>
