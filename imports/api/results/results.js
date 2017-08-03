@@ -1,6 +1,7 @@
 /**
  * @summary initializes the Result Collection
  * @param text - value of the result
+ * @param sharing - sharing setting: can be shared publicly or with group only (allowed values: group, public)
  * @type {SimpleSchema}
  * @locus Collection
  * */
@@ -8,9 +9,14 @@
 const ResultCollection = new Mongo.Collection("Results");
 
 let ChatMessageSchema = new SimpleSchema({
-  "text": {
+  'text': {
     type: String,
     optional: true
+  },
+  'sharing': {
+    type: String,
+    optional: true,
+    allowedValues: ['group', 'public']
   }
 });
 
