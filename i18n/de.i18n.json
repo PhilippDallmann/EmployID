@@ -65,7 +65,11 @@
     "recorder": "Protokollant"
   },
   "result" : {
-    "settingsHeader" : "Settings"
+    "settingsHeader" : "Einstellungen",
+    "sharingSettings" : "Freigabe Einstellungen",
+    "share1" : "Make this result public",
+    "share2" : "Share this result with the group",
+    "share3" : "Delete this result"
   },
   "stateMessages" : {
     "0" : "<b>Ziele der Start-Phase:</b><br /> Sammlung von “Material” (Probleme/ Herausforderungen) von Gruppenmitgliedern, Priorisierung und Problemselektion sowie  Rollenzuteilung für die kommende Sitzung (Absprachen vorab sind sinnvoll!)",
