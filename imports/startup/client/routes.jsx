@@ -127,7 +127,7 @@ loggedIn.route("/meeting/:meetingId", {
   }
 });
 
-loggedIn.route('/result/:resultId', {
+loggedIn.route('/result/:meetingId', {
   name: 'result',
   action: function() {
     LoadingActions.setLoading();

@@ -79,7 +79,6 @@ Result.propTypes = {
 };
 
 export default createContainer(() => {
-  console.log(FlowRouter.getParam('meetingId'))
   //subscriptions
   Meteor.subscribe("currentMeeting", FlowRouter.getParam('meetingId'));
   Meteor.subscribe('currentResult', FlowRouter.getParam('meetingId'));
