@@ -3,7 +3,7 @@
 **Table of Contents**
 
 - [Deployment](#deployment)
-- [JS-Doc](#js-doc)
+- [JSDoc](#jsdoc)
 
 ## Deployment
 The recommended way to deploy the tool is by using [meteor-up](https://github.com/zodern/meteor-up).
@@ -59,4 +59,13 @@ If the windows script host gives you 'module' is undefined errors try running th
     mup.cmd setup
     mup.cmd deploy
 
-## JS-Doc
+## JSDoc
+The Api of this project is documented with [JSDoc](http://usejsdoc.org/index.html) comments.
+
+To use the automated JSDoc generation install [meteor-jsdoc](https://www.npmjs.com/package/meteor-jsdoc).
+
+With meteor-jsdoc installed open a terminal in the project folder
+
+    meteor-jsdoc init //adds jsdoc config files to your project
+    meteor-jsdoc build //builds the docs
+    meteor-jsdoc start //starts the doc server with default adress: localhost:3333
