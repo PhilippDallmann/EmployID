@@ -63,6 +63,7 @@ class InnerTab extends Reflux.Component {
     let time = new Date();
     this.state = {
       stageId: this.props.stageId,
+      recorder: this.props.currentMeeting ? this.props.currentMeeting.recorder : null,
       time: ('0' + time.getHours()).slice(-2) + ":" + ('0' + time.getMinutes()).slice(-2)
     };
     this.time = MeetingTimeStore;
@@ -73,8 +74,9 @@ class InnerTab extends Reflux.Component {
     this.onNextStageButtonClick = this.onNextStageButtonClick.bind(this);
     this.onPauseButtonClick = this.onPauseButtonClick.bind(this);
     this.showOnlyIfFacilitator = this.showOnlyIfFacilitator.bind(this);
-    this.isClient = this.isClient.bind(this);
+    this.isFacilitator = this.isFacilitator.bind(this);
     this.getRole = this.getRole.bind(this);
+    this.onRecorderSelect = this.onRecorderSelect.bind(this);
   }
 	shouldComponentUpdate(nextProps, nextState) {
     if(nextProps.currentChatMessages!==this.props.currentChatMessages || nextProps.currentResult!==this.props.currentResult) {
@@ -160,15 +162,21 @@ class InnerTab extends Reflux.Component {
 		MeetingActions.updateMeetingStageAndSetStageActive(this.props.currentMeeting, newStageId);
 		MeetingActions.createBotChatMessage(newStageId, this.props.currentMeeting.chat);
 	}
+	onRecorderSelect(event) {
+    Meteor.call('updateRecorder', this.props.currentMeeting._id, event.target.value);
+    this.setState({
+      recorder: event.target.value
+    });
+  }
 	showOnlyIfFacilitator() {
 		var style = {};
 		style.display = (this.props.currentMeeting && this.props.currentMeeting.facilitator == Meteor.userId()) ? null : 'none';
 		return style;
 	}
-	isClient() {
-
-		return this.props.currentMeeting && Meteor.userId()== this.props.currentMeeting.client;
-	}
+	isFacilitator() {
+    console.log(this.props.currentMeeting && Meteor.userId()== this.props.currentMeeting.facilitator);
+    return this.props.currentMeeting && Meteor.userId()== this.props.currentMeeting.facilitator;
+  }
 	getRole(userId) {
 			if(this.props.currentMeeting && this.props.currentMeeting.facilitator == userId) {
 				return " (" + TAPi18n.__("roles.facilitator") + ")";
@@ -179,8 +187,6 @@ class InnerTab extends Reflux.Component {
 			}
 	}
 	render() {
-    console.debug(this.props.participants);
-    //TODO: decide whether client needs specific page or not
 		const supportPanelHeading = (
 			<Row>
 				<div className="title-panel pull-left">
@@ -203,7 +209,7 @@ class InnerTab extends Reflux.Component {
         <div className="pull-right">
           <FormGroup className="recorder-select form-inline" controlId="formControlsSelect">
             <ControlLabel>{TAPi18n.__('meeting.recorder')}</ControlLabel>
-            <FormControl componentClass="select" placeholder="select">
+            <FormControl disabled={!this.isFacilitator()} componentClass="select" value={this.props.currentMeeting ? this.props.currentMeeting.recorder : null} onChange={this.onRecorderSelect}>
               {this.props.participants.map((user, index) => {
                 return (<option value={user._id}>{user.username}</option>);
               })}
@@ -212,15 +218,12 @@ class InnerTab extends Reflux.Component {
         </div>
 			</Row>
 		);
-		let clientPage = (
-      <ResultEditor facilitator={this.props.currentMeeting ? this.props.currentMeeting.facilitator : null} meetingId={this.props.currentMeeting? this.props.currentMeeting._id : null} result={this.props.currentResult? this.props.currentResult.text : null}/>
-		);
 		let regularPage = (
 			<div>
 				<Panel className="support-panel" header={supportPanelHeading}>
 					<MaterialArea stageId= {this.state.stageId} chatId={this.props.currentMeeting ? this.props.currentMeeting.chat : null} stage={this.props.currentStage ? this.props.currentStage : null}/>
 				</Panel>
-          <ResultEditor facilitator={this.props.currentMeeting ? this.props.currentMeeting.facilitator : null} resultId={this.props.currentMeeting? this.props.currentMeeting.result_id : null} result={this.props.currentResult? this.props.currentResult.text : null}/>
+          <ResultEditor recorder={this.props.currentMeeting ? this.props.currentMeeting.recorder : null} resultId={this.props.currentMeeting? this.props.currentMeeting.result_id : null} result={this.props.currentResult? this.props.currentResult.text : null}/>
 			</div>
 		);
 		return (

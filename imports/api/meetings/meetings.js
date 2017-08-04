@@ -7,6 +7,7 @@
  * @param group - group the meeting belongs to
  * @param client - the one who wants to talk about a problem
  * @param facilitator - the one who guids the meeting
+ * @param recorder - the one who takes notes in the meeting
  * @param chat - id of the chat that belongs to the meeting
  * @param result_id - id of the result that belongs to the meeting
  * @param active_stage_id - id of the current stage
@@ -40,6 +41,9 @@ let MeetingSchema = new SimpleSchema({
     type: String
   },
   "facilitator": {
+    type: String
+  },
+  "recorder": {
     type: String
   },
   "chat": {

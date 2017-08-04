@@ -50,6 +50,7 @@ if(Meteor.isServer) {
           client: meeting.client,
           result_id: resultId,
           facilitator: meeting.facilitator,
+          recorder: meeting.facilitator,
           chat: chatId,
           active_stage_id: 0,
           status_code: 0,
@@ -80,7 +81,8 @@ if(Meteor.isServer) {
           start_date: meeting.start_date,
           group: meeting.group,
           client: meeting.client,
-          facilitator: meeting.facilitator
+          facilitator: meeting.facilitator,
+          recorder: meeting.facilitator
         },
       }, function(err, result) {
         return result;
@@ -133,6 +135,19 @@ if(Meteor.isServer) {
           current_stage_endtime: currentStageEndtime
         }
       });
+    },
+    /**
+     * @summary change the recorder of the meeting
+     * @isMethod true
+     * @param {String} meetingId - id of meeting
+     * @param {String} userId - id of the new recorder
+     * */
+    "updateRecorder" : function(meetingId, userId) {
+      MeetingCollection.update(meetingId, {
+        $set: {
+          recorder: userId
+        }
+      })
     }
   });
 }
