@@ -62,7 +62,7 @@
     "addToResult" : "In die Zwischenablage kopieren",
     "sendAsChatMessage" : "Als Chat-Nachricht versenden",
     "minutes": "Min",
-    "recorder": "Protokollant"
+    "recorder": "Protokollant:"
   },
   "result" : {
     "settingsHeader" : "Einstellungen",

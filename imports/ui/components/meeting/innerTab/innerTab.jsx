@@ -36,6 +36,7 @@ let Col = require('react-bootstrap').Col;
 let Panel = require('react-bootstrap').Panel;
 let FormGroup = require('react-bootstrap').FormGroup;
 let FormControl = require('react-bootstrap').FormControl;
+let ControlLabel = require('react-bootstrap').ControlLabel;
 let Button = require('react-bootstrap').Button;
 let DropdownButton = require('react-bootstrap').DropdownButton;
 let OverlayTrigger = require('react-bootstrap').OverlayTrigger;
@@ -199,13 +200,16 @@ class InnerTab extends Reflux.Component {
 					disabled={this.props.currentMeeting ? (this.props.currentMeeting.active_stage_id >= 6 || this.props.currentMeeting.active_stage_id == 0) : true}>
 					<span className="glyph glyphicon glyphicon-forward"></span>
 				</Button>
-
-        <DropdownButton className="recorder-button" title={TAPi18n.__("meeting.recorder")} style={this.showOnlyIfFacilitator()}>
-          {this.props.participants.map((user, index) => {
-            console.debug(index);
-            <MenuItem eventKey={index} id={index}>{user.username}</MenuItem>
-          })}
-        </DropdownButton>
+        <div className="pull-right">
+          <FormGroup className="recorder-select form-inline" controlId="formControlsSelect">
+            <ControlLabel>{TAPi18n.__('meeting.recorder')}</ControlLabel>
+            <FormControl componentClass="select" placeholder="select">
+              {this.props.participants.map((user, index) => {
+                return (<option value={user._id}>{user.username}</option>);
+              })}
+            </FormControl>
+          </FormGroup>
+        </div>
 			</Row>
 		);
 		let clientPage = (
