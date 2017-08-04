@@ -174,7 +174,6 @@ class InnerTab extends Reflux.Component {
 		return style;
 	}
 	isFacilitator() {
-    console.log(this.props.currentMeeting && Meteor.userId()== this.props.currentMeeting.facilitator);
     return this.props.currentMeeting && Meteor.userId()== this.props.currentMeeting.facilitator;
   }
 	getRole(userId) {

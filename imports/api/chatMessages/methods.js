@@ -2,8 +2,6 @@ import {Meteor} from 'meteor/meteor';
 import ChatCollection from "../chats/chats";
 import ChatMessageCollection from "./chatMessages";
 
-let WPAPI = require('wpapi');
-
 Meteor.methods({
   /**
    * @summary Creates a chat message
@@ -37,26 +35,5 @@ Meteor.methods({
     ChatCollection.update({_id: chatId}, {
       $push: {chat_messages: newMessage}
     })
-
-    let wp = new WPAPI({
-      endpoint: 'http://localhost/wordpress/wp-json',
-      username: 'philipp',
-      password: 'Mapex280391',
-      auth: true
-    });
-    wp.posts().then(function( data ) {
-      console.log(data);
-    }).catch(function( err ) {
-      console.log(err);
-    });
-    wp.users().create({
-      username: 'xy',
-      email: 'y@y.de',
-      password: 'hello'
-    }).then(function(response) {
-      console.log(response);
-    }).catch(function(err) {
-      console.log(err);
-    });
   }
 });
