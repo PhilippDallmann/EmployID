@@ -19,3 +19,4 @@ import '../../api/notifications/methods';
 import '../../api/stageMessages/methods';
 import '../../api/stages/methods';
 import '../../api/results/methods';
+import '../../api/users/methods';

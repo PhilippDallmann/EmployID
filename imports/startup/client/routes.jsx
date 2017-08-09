@@ -7,18 +7,17 @@ import {mount} from 'react-mounter';
 
 import App from '../../ui/App';
 
-/*import NotFound from "./components/notFound";
-import EditProfile from "./components/editProfile/editProfile";
-import Users from "./components/users/users";
-import UserProfile from "./components/users/userProfile";
-*/
+//import NotFound from "./components/notFound";
+//import Users from "./components/users/users";
+//import UserProfile from "./components/users/userProfile";
+
 import Header from '../../ui/components/header/header';
 import Login from '../../ui/components/login/login';
 import Home from '../../ui/components/home/home';
 import Meeting from "../../ui/components/meeting/meeting";
 import Editor from "../../ui/components/editor/editor";
 import Result from '../../ui/components/result/result';
-
+import EditProfile from "../../ui/components/editProfile/editProfile";
 
 import LoadingActions from '../../reflux/actions/loadingActions';
 import LoadingStore from '../../reflux/stores/loadingStore';
@@ -107,16 +106,16 @@ loggedIn.route('/home', {
     });
   }
 });
-/*
+
 loggedIn.route('/editProfile', {
   name: "editProfile",
   action: function() {
-    ReactLayout.render(App, {
+    mount(App, {
       children: [<Header />, <EditProfile />]
     });
   }
 });
-*/
+
 loggedIn.route("/meeting/:meetingId", {
   name: "meeting",
   action: function() {

@@ -15,5 +15,22 @@ Meteor.methods({
     } else {
       Roles.setUserRoles(userId, roles);
     }
+  },
+  /**
+   * @summary Update a users profile
+   * @isMethod true
+   * @param {String} userId - ID of the user
+   * @param {Array} fieldValueArray - contains the fields to be changed and the corresponding values
+   * @locus Method
+   * */
+  "updateUserProfile": function(userId, fieldValueArray) {
+    var update_query = {};
+    for (var f in fieldValueArray) {
+      update_query[fieldValueArray[f][0]]= fieldValueArray[f][1];
+    }
+
+    Meteor.users.update(userId,
+      {$set: update_query}
+    );
   }
 });
