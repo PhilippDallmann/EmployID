@@ -15,7 +15,7 @@ class ChatUserBar extends Reflux.Component {
   constructor(props) {
     super(props);
 
-    this.state = {}
+    this.state = {};
     this.store = ChatStore;
   }
   render() {
