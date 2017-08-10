@@ -62,7 +62,8 @@
     "addToResult" : "Copy to clipboard",
     "sendAsChatMessage" : "Send as Chat Message",
     "minutes": "min",
-    "recorder": "Recorder:"
+    "recorder": "Recorder:",
+    "recorderMessage": " is now recording!"
   },
   "result" : {
     "settingsHeader" : "Settings",
