@@ -71,6 +71,7 @@ export default class EditorState extends Component {
     this.handleStageMessageChange = this.handleStageMessageChange.bind(this);
     this.onSaveStateMessagesButtonClick = this.onSaveStateMessagesButtonClick.bind(this);
     this.deleteMaterial = this.deleteMaterial.bind(this);
+    this.onImportClick = this.onImportClick.bind(this);
   }
   componentWillMount() {
       document.title = TAPi18n.__("editor.documentTitle");
@@ -140,7 +141,9 @@ export default class EditorState extends Component {
       Meteor.call("updateStageMessage", i, this.state.activeLanguage, currentText);
     }
   }
+  onImportClick() {
 
+  }
   deleteMaterial(materialId) {
     EditorActions.deleteMaterial(this.state.activeStageId, materialId);
   }
@@ -161,6 +164,7 @@ export default class EditorState extends Component {
         handleStageMessageChange = {this.handleStageMessageChange.bind(this)}
         deleteMaterial = {this.deleteMaterial.bind(this)}
         toggleHeading = {this.toggleHeading.bind(this)}
+        onImportClick = {this.onImportClick.bind(this)}
       />
     );
   }
@@ -232,6 +236,7 @@ class Editor extends Component {
     const editMaterialHeader = (
       <div className="title-panel">
         <div className="pull-left">{TAPi18n.__("editor.editMaterials")}</div>
+        <Button onClick={this.props.onImportClick}>{TAPi18n.__('editor.import')}</Button>
         <div className="pull-right">
           <DropdownButton id="languageDropdown" title={this.props.state.activeLanguage}>
             {this.props.state.availableLanguages.map(function(languageKey, index) {

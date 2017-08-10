@@ -108,7 +108,6 @@ export default class CreateMeetingModalState extends Component {
     });
   }
   updateDate(value) {
-    console.log(value);
     this.setState({
       date: value
     });

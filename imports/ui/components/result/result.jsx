@@ -8,18 +8,12 @@ import MeetingCollection from '../../../api/meetings/meetings';
 import ResultCollection from '../../../api/results/results';
 import ResultEditor from '../meeting/innerTab/resultEditor';
 
-import MeetingTimeActions from '../../../reflux/actions/meetingTimeActions';
-import MeetingTimeStore from '../../../reflux/stores/meetingTimeStore';
-import MeetingActions from "../../../reflux/actions/meetingActions";
-import MeetingStore from "../../../reflux/stores/meetingStore";
-
 let FormGroup = require("react-bootstrap").FormGroup;
 let FormControl = require("react-bootstrap").FormControl;
 let ControlLabel = require("react-bootstrap").ControlLabel;
 let Radio = require('react-bootstrap').Radio;
 let Well = require("react-bootstrap").Well;
 let Panel = require('react-bootstrap').Panel;
-let Row = require('react-bootstrap').Row;
 let Col = require('react-bootstrap').Col;
 let Button = require('react-bootstrap').Button;
 
@@ -84,7 +78,6 @@ class Result extends Component {
         <Button className='pull-right' disabled={this.state.saveButtonDisabled} onClick={this.onSaveButtonClick}><span className="glyphicon glyphicon-floppy-disk"/></Button>
       </div>
     );
-    console.log(this.props);
     return (
       <div className="result-page">
         <Col sm={12} md={3} lg={4}>

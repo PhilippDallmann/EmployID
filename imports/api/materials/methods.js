@@ -9,10 +9,8 @@ Meteor.methods({
    * @locus Method
    * */
   "editMaterials": function(materials) {
-    console.log(materials);
     for(var i=0; i<materials.length;i++) {
       var m = materials[i];
-      console.log(m);
       MaterialCollection.update({_id: m.id}, {$set: {text: m.text}});
     }
   },

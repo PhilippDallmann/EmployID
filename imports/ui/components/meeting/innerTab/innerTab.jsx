@@ -13,15 +13,10 @@ import MaterialCollection from '../../../../api/materials/materials';
 import ResultCollection from '../../../../api/results/results';
 
 import MeetingActions from '../../../../reflux/actions/meetingActions';
-import MeetingStore from '../../../../reflux/stores/meetingStore';
 import MeetingTimeActions from '../../../../reflux/actions/meetingTimeActions';
 import MeetingTimeStore from '../../../../reflux/stores/meetingTimeStore';
 import UserActions from '../../../../reflux/actions/userActions';
-import UserStore from '../../../../reflux/stores/userStore';
 import LoadingActions from '../../../../reflux/actions/loadingActions';
-import LoadingStore from '../../../../reflux/stores/loadingStore';
-
-import truncate from '../../../../util/truncate';
 
 import ChatUserBar from './chat/chatUserBar';
 import ResultEditor from "./resultEditor";
@@ -54,7 +49,6 @@ const emojifyButtonOptions = {
 };
 var messageChangeCount = 0;
 var currentMeetingId = null;
-// {TAPi18n.__("meeting.timeRemainingTotal")}<div id="timerTotal">{this.props&&this.props.currentMeeting ? this.props.currentMeeting.time_total + " " +  TAPi18n._("meeting.minutes") : "0"}</div>
 
 class InnerTab extends Reflux.Component {
   constructor(props) {
@@ -91,7 +85,6 @@ class InnerTab extends Reflux.Component {
 	}
 	componentDidMount() {
 		require("../../../../../node_modules/clipboard/dist/clipboard.js");
-		//document.getElementById('timerTotal').innerHTML = this.props.currentMeeting.time_total.toString();
 		this.updateScroll();
 		new Clipboard('.clipboard');
   }

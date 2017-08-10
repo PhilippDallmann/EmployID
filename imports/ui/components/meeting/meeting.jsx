@@ -9,9 +9,6 @@ import MeetingCollection from "../../../api/meetings/meetings";
 import InnerTab from "./innerTab/innerTab";
 
 import MeetingTimeActions from '../../../reflux/actions/meetingTimeActions';
-import MeetingTimeStore from '../../../reflux/stores/meetingTimeStore';
-import MeetingActions from "../../../reflux/actions/meetingActions";
-import MeetingStore from "../../../reflux/stores/meetingStore";
 
 let Tabs = require("react-bootstrap").Tabs;
 let Tab = require("react-bootstrap").Tab;
