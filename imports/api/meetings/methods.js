@@ -149,6 +149,23 @@ if(Meteor.isServer) {
           recorder: userId
         }
       })
+    },
+    /**
+     * @summary Update specific fields of a meeting
+     * @isMethod true
+     * @param {String} userId - ID of the meeting
+     * @param {Array} fieldValueArray - contains the fields to be changed and the corresponding values
+     * @locus Method
+     * */
+    "updateMeeting": function(meetingId, fieldValueArray) {
+      var update_query = {};
+      for (var f in fieldValueArray) {
+        update_query[fieldValueArray[f][0]]= fieldValueArray[f][1];
+      }
+
+      MeetingCollection.update(userId,
+        {$set: update_query}
+      );
     }
   });
 }
