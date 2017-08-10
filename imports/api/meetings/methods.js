@@ -163,7 +163,7 @@ if(Meteor.isServer) {
         update_query[fieldValueArray[f][0]]= fieldValueArray[f][1];
       }
 
-      MeetingCollection.update(userId,
+      MeetingCollection.update(meetingId,
         {$set: update_query}
       );
     }

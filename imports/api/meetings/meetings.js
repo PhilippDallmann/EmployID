@@ -78,12 +78,12 @@ MeetingCollection.allow({
     return userId;
   },
   update: function (userId, doc, fields, modifier) {
-    // can only change your own documents
-    return doc.owner === userId;
+    // can only change your own documents and client can change it
+    return doc.owner === userId || doc.client === userId;
   },
   remove: function (userId, doc) {
-    // can only remove your own documents
-    return doc.owner === userId;
+    // can only remove your own documents and client can
+    return doc.owner === userId || doc.client === userId;
   }
 });
 

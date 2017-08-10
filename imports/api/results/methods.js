@@ -31,7 +31,7 @@ if(Meteor.isServer) {
         update_query[fieldValueArray[f][0]]= fieldValueArray[f][1];
       }
 
-      ResultCollection.update(userId,
+      ResultCollection.update(resultId,
         {$set: update_query}
       );
     }
