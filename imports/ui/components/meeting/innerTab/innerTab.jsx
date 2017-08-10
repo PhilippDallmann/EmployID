@@ -63,7 +63,6 @@ class InnerTab extends Reflux.Component {
     let time = new Date();
     this.state = {
       stageId: this.props.stageId,
-      recorder: this.props.currentMeeting ? this.props.currentMeeting.recorder : null,
       time: ('0' + time.getHours()).slice(-2) + ":" + ('0' + time.getMinutes()).slice(-2)
     };
     this.time = MeetingTimeStore;
@@ -164,9 +163,14 @@ class InnerTab extends Reflux.Component {
 	}
 	onRecorderSelect(event) {
     Meteor.call('updateRecorder', this.props.currentMeeting._id, event.target.value);
-    this.setState({
-      recorder: event.target.value
-    });
+    var u = this.props.participants.find(function(p) {return p._id===event.target.value});
+		var message = {
+			userId: Meteor.userId(),
+			userName: Meteor.user().username,
+			text: '<b>' + u.username + '</b>' + TAPi18n.__('meeting.recorderMessage'),
+			isBotMessage: true
+		};
+		MeetingActions.createChatMessage(message, this.props.currentMeeting.chat);
   }
 	showOnlyIfFacilitator() {
 		var style = {};
