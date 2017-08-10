@@ -34,38 +34,19 @@ class ResultEditor extends Component{
     super(props);
 
     this.state = {
-      result: this.props.result,
-      resultId: this.props.resultId,
-      value: this.props.result,
       isRecorder: this.props.recorder==Meteor.userId(),
-      isResultLoaded: false
     };
     this.onChange = this.onChange.bind(this);
   }
   componentWillReceiveProps(nextProps) {
-    if(!this.state.isResultLoaded || this.state.result==null) {
-      this.setState({
-        result: nextProps.result,
-        resultId: nextProps.resultId,
-        isRecorder: nextProps.recorder==Meteor.userId()
-      });
-    } else {
-      this.setState({
-        result: nextProps.result,
-        value: nextProps.result,
-        resultId: nextProps.resultId,
-        isRecorder: nextProps.recorder==Meteor.userId(),
-        isResultLoaded: true
-      });
-    }
+    this.setState({
+      isRecorder: this.props.recorder==Meteor.userId()
+    });
   }
   componentDidMount() {
     require('../../../../../node_modules/react-quill/dist/quill.snow.css');
   }
   onChange(value) {
-    this.setState({
-      value: value
-    });
     Meteor.call('updateResultText', this.props.resultId, value);
   }
   render() {
@@ -75,7 +56,7 @@ class ResultEditor extends Component{
             <CustomToolbar />
             <ReactQuill
               theme='snow'
-              value={this.state.value}
+              value={this.props.result}
               onChange={this.onChange}
               modules={ResultEditor.modules}
               readOnly={false}
@@ -89,7 +70,7 @@ class ResultEditor extends Component{
             <CustomToolbar />
             <ReactQuill
               theme='snow'
-              value={this.state.result}
+              value={this.props.result}
               modules={ResultEditor.modules}
               readOnly={true}
             >

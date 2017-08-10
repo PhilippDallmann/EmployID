@@ -84,6 +84,7 @@ class Result extends Component {
         <Button className='pull-right' disabled={this.state.saveButtonDisabled} onClick={this.onSaveButtonClick}><span className="glyphicon glyphicon-floppy-disk"/></Button>
       </div>
     );
+    console.log(this.props);
     return (
       <div className="result-page">
         <Col sm={12} md={3} lg={4}>
@@ -118,7 +119,7 @@ class Result extends Component {
           </Panel>
         </Col>
         <Col className="" sm={12} md={9} lg={8}>
-          <ResultEditor facilitator={this.props.currentMeeting ? this.props.currentMeeting.facilitator : null}
+          <ResultEditor recorder={this.props.currentMeeting ? this.props.currentMeeting.client : null}
                         meetingId={this.props.currentMeeting? this.props.currentMeeting._id : null}
                         resultId={this.props.currentMeeting? this.props.currentMeeting.result_id : null}
                         result={this.props.currentResult? this.props.currentResult.text : null}/>
