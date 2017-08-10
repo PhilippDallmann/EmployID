@@ -25,9 +25,41 @@ let Col = require('react-bootstrap').Col;
 class Result extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      shareValue: this.props.currentResult && this.props.currentResult.sharing,
+      topic: this.props.currentMeeting && this.props.currentMeeting.topic,
+      description: this.props.currentMeeting && this.props.currentMeeting.description
+    };
+
+    this.onSharingChange = this.onSharingChange.bind(this);
+    this.onTopicChange = this.onTopicChange.bind(this);
+    this.onDescriptionChange = this.onDescriptionChange.bind(this);
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      shareValue: nextProps.currentResult && nextProps.currentResult.sharing,
+      topic: nextProps.currentMeeting && nextProps.currentMeeting.topic,
+      description: nextProps.currentMeeting && nextProps.currentMeeting.description
+    });
   }
   componentWillMount() {
     document.title = TAPi18n.__("meeting.documentTitle");
+  }
+  onSharingChange(event) {
+    this.setState({
+      shareValue: event.target.value
+    });
+  }
+  onTopicChange(event) {
+    this.setState({
+      topic: event.target.value
+    });
+  }
+  onDescriptionChange(event) {
+    this.setState({
+      description: event.target.value
+    });
   }
   render() {
     return (
@@ -38,23 +70,24 @@ class Result extends Component {
               <Well>
                 <FormGroup controlId="formInlineName">
                   <ControlLabel>{TAPi18n.__('createMeetingModal.topic')}</ControlLabel>
-                  <FormControl type="text"/>
+                  <FormControl type="text" value={this.state.topic} onChange={this.onTopicChange}/>
                   <ControlLabel>{TAPi18n.__('createMeetingModal.description')}</ControlLabel>
-                  <FormControl type="text"/>
-                  <ControlLabel>{TAPi18n.__('createMeetingModal.group')}</ControlLabel>
-                  <FormControl type="text"/>
+                  <FormControl type="text" value={this.state.description} onChange={this.onDescriptionChange}/>
                 </FormGroup>
               </Well>
               <Well>
-                <label for="formInlineName" class="control-label">{TAPi18n.__("result.sharingSettings")}</label>
-                <FormGroup>
-                  <Radio name="radioGroup">
+                <label className="control-label">{TAPi18n.__("result.sharingSettings")}</label>
+                <FormGroup onChange={this.onSharingChange}>
+                  <Radio name="radioGroup" value='public' checked={this.state.shareValue==='public'}>
                     {TAPi18n.__("result.share1")}
                   </Radio>
-                  <Radio name="radioGroup">
+                  <Radio name="radioGroup" value='group' checked={this.state.shareValue==='group'}>
                     {TAPi18n.__("result.share2")}
                   </Radio>
-                  <Radio name="radioGroup">
+                  <Radio name="radioGroup" value='self' checked={this.state.shareValue==='self'}>
+                    {TAPi18n.__("result.share4")}
+                  </Radio>
+                  <Radio name="radioGroup" value='delete' checked={this.state.shareValue==='delete'}>
                     {TAPi18n.__("result.share3")}
                   </Radio>
                 </FormGroup>

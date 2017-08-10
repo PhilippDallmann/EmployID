@@ -16,7 +16,7 @@ let ChatMessageSchema = new SimpleSchema({
   'sharing': {
     type: String,
     optional: true,
-    allowedValues: ['group', 'public']
+    allowedValues: ['self', 'group', 'public']
   }
 });
 

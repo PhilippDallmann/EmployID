@@ -69,7 +69,8 @@
     "sharingSettings" : "Sharing Settings",
     "share1" : "Make this result public",
     "share2" : "Share this result with the group",
-    "share3" : "Delete this result"
+    "share3" : "Delete this result",
+    "share4" : "Keep it for myself only"
   },
   "stateMessages" : {
     "0" : "<b>Goals of the start phase:</b><br /> Collect issues of the group members, prioritize & select problem(s), role assignment for next sessions, (schedule next sessions).",
@@ -103,7 +104,8 @@
     "4" : "Setting goals",
     "5" : "Solution",
     "6" : "Feedback",
-    "saveChanges": "Save changes"
+    "saveChanges": "Save changes",
+    "import" : "Import from Json"
   },
   "createMeetingModal": {
     "title" : "Create a meeting",

@@ -39,7 +39,8 @@ if(Meteor.isServer) {
           chat_messages: []
         });
         var resultId = ResultCollection.insert({
-          text: "Insert your results!"
+          text: 'Insert your results!',
+          sharing: 'self'
         });
         var meetingId = MeetingCollection.insert({
           topic: meeting.topic,
