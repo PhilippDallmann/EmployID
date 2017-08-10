@@ -21,6 +21,7 @@ let Well = require("react-bootstrap").Well;
 let Panel = require('react-bootstrap').Panel;
 let Row = require('react-bootstrap').Row;
 let Col = require('react-bootstrap').Col;
+let Button = require('react-bootstrap').Button;
 
 class Result extends Component {
   constructor(props) {
@@ -29,12 +30,15 @@ class Result extends Component {
     this.state = {
       shareValue: this.props.currentResult && this.props.currentResult.sharing,
       topic: this.props.currentMeeting && this.props.currentMeeting.topic,
-      description: this.props.currentMeeting && this.props.currentMeeting.description
+      description: this.props.currentMeeting && this.props.currentMeeting.description,
+
+      saveButtonDisabled: true
     };
 
     this.onSharingChange = this.onSharingChange.bind(this);
     this.onTopicChange = this.onTopicChange.bind(this);
     this.onDescriptionChange = this.onDescriptionChange.bind(this);
+    this.onSaveButtonClick = this.onSaveButtonClick.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -48,24 +52,42 @@ class Result extends Component {
   }
   onSharingChange(event) {
     this.setState({
-      shareValue: event.target.value
+      shareValue: event.target.value,
+      saveButtonDisabled: false
     });
   }
   onTopicChange(event) {
     this.setState({
-      topic: event.target.value
+      topic: event.target.value,
+      saveButtonDisabled: false
     });
   }
   onDescriptionChange(event) {
     this.setState({
-      description: event.target.value
+      description: event.target.value,
+      saveButtonDisabled: false
+    });
+  }
+  onSaveButtonClick() {
+    Meteor.call('updateMeeting',
+      this.props.currentMeeting._id,
+      [['topic', this.state.topic], ['description', this.state.description]]);
+    Meteor.call('updateResult', this.props.currentResult._id, [['sharing',this.state.shareValue]]);
+    this.setState({
+      saveButtonDisabled: true
     });
   }
   render() {
+    const settingsPanelHeader = (
+      <div>
+        <span className="settings-panel-header pull-left">{TAPi18n.__("result.settingsHeader")}</span>
+        <Button className='pull-right' disabled={this.state.saveButtonDisabled} onClick={this.onSaveButtonClick}><span className="glyphicon glyphicon-floppy-disk"/></Button>
+      </div>
+    );
     return (
       <div className="result-page">
         <Col sm={12} md={3} lg={4}>
-          <Panel className="result-settings-panel" header={TAPi18n.__("result.settingsHeader")}>
+          <Panel className="result-settings-panel" header={settingsPanelHeader}>
             <div className='result-settings-panel-body'>
               <Well>
                 <FormGroup controlId="formInlineName">
