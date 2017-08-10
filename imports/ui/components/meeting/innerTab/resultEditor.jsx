@@ -10,20 +10,20 @@ const CustomToolbar = () => (
     <div className="result-panel-header">{TAPi18n.__("meeting.resultPanelHeader")}</div>
     <div className="toolbar-buttons">
       <select className="ql-header">
-        <option value="1"></option>
-        <option value="2"></option>
-        <option selected></option>
+        <option value="1"/>
+        <option value="2"/>
+        <option selected/>
       </select>
-      <button className="ql-bold"></button>
-      <button className="ql-italic"></button>
+      <button className="ql-bold"/>
+      <button className="ql-italic"/>
       <select className="ql-color">
-        <option value="red"></option>
-        <option value="green"></option>
-        <option value="blue"></option>
-        <option value="orange"></option>
-        <option value="violet"></option>
-        <option value="#d0d1d2"></option>
-        <option selected></option>
+        <option value="red"/>
+        <option value="green"/>
+        <option value="blue"/>
+        <option value="orange"/>
+        <option value="violet"/>
+        <option value="#d0d1d2"/>
+        <option selected/>
       </select>
     </div>
   </div>
@@ -35,23 +35,26 @@ class ResultEditor extends Component{
 
     this.state = {
       result: this.props.result,
+      resultId: this.props.resultId,
       value: this.props.result,
-      isFacilitator: this.props.facilitator==Meteor.userId(),
+      isRecorder: this.props.recorder==Meteor.userId(),
       isResultLoaded: false
     };
     this.onChange = this.onChange.bind(this);
   }
   componentWillReceiveProps(nextProps) {
-    if(this.state.isResultLoaded || this.state.result==null) {
+    if(!this.state.isResultLoaded || this.state.result==null) {
       this.setState({
         result: nextProps.result,
-        isFacilitator: nextProps.facilitator==Meteor.userId()
+        resultId: nextProps.resultId,
+        isRecorder: nextProps.recorder==Meteor.userId()
       });
     } else {
       this.setState({
         result: nextProps.result,
         value: nextProps.result,
-        isFacilitator: nextProps.facilitator==Meteor.userId(),
+        resultId: nextProps.resultId,
+        isRecorder: nextProps.recorder==Meteor.userId(),
         isResultLoaded: true
       });
     }
@@ -63,10 +66,10 @@ class ResultEditor extends Component{
     this.setState({
       value: value
     });
-    Meteor.call('updateResult', this.props.resultId, value);
+    Meteor.call('updateResultText', this.props.resultId, value);
   }
   render() {
-      if(this.state.isFacilitator) {
+      if(this.state.isRecorder) {
         return (
           <div className="text-editor">
             <CustomToolbar />
