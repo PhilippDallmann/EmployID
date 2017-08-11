@@ -4,15 +4,14 @@ import {createContainer} from 'meteor/react-meteor-data';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import {TAPi18n} from 'meteor/tap:i18n';
 import lodash from 'lodash';
+import swal from 'sweetalert';
 
 import StageCollection from '../../../api/stages/stages';
 import MaterialCollection from '../../../api/materials/materials';
 import StageMessagesCollection from '../../../api/stageMessages/stageMessages';
 
-import MeetingActions from '../../../reflux/actions/meetingActions';
-import MeetingStore from '../../../reflux/stores/meetingStore';
+import LoadingActions from '../../../reflux/actions/loadingActions';
 import EditorActions from '../../../reflux/actions/editorActions';
-import EditorStore from '../../../reflux/stores/editorStore';
 
 let Button = require('react-bootstrap').Button;
 let FormGroup = require('react-bootstrap').FormGroup;
@@ -142,6 +141,42 @@ export default class EditorState extends Component {
     }
   }
   onImportClick() {
+
+    swal({
+      title: TAPi18n.__("swal.areYouSure"),
+      text: TAPi18n.__("swal.importInfo"),
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: TAPi18n.__("swal.importConfirmation"),
+      closeOnConfirm: true,
+      html: false
+    }, function(){
+      LoadingActions.setLoading();
+      Meteor.call('deleteAllMaterials');
+      $.getJSON('defaultMaterials.json', function(json) {
+        for(var lang in json) {
+          var langs = json[lang];
+          for(var stage in langs) {
+            var stages = langs[stage];
+            for(var role in stages) {
+              var roles = stages[role];
+              for(var material in roles) {
+                var newMaterial = {
+                  text: roles[material].text,
+                  role: roles[material].role,
+                  position: roles[material].position,
+                  languageKey: lang,
+                  isHeading: roles[material].is_heading
+                };
+                Meteor.call('addMaterialGivenStageDescription', stage, newMaterial);
+              }
+            }
+          }
+        }
+        LoadingActions.unsetLoading();
+      });
+    });
 
   }
   deleteMaterial(materialId) {
@@ -328,8 +363,12 @@ Editor.propTypes = {
 
 let EditorContainer = createContainer((props) => {
   var materialHandle = Meteor.subscribe("editorMaterial", props.state.activeStageId, props.state.activeRole, props.state.activeLanguage);
+  if(materialHandle.ready()) {
+    LoadingActions.unsetLoading();
+  }
+
   return {
     currentStage: StageCollection.find({stage_id: props.state.activeStageId}).fetch()[0],
-    currentMaterial: MaterialCollection.find().fetch()
+    currentMaterial: MaterialCollection.find({},{sort: {position: 1}}).fetch()
   };
 }, Editor);

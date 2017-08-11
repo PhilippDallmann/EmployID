@@ -23,6 +23,19 @@ Meteor.methods({
       $addToSet: {material: newMaterial}
     });
   },
+  "addMaterialGivenStageDescription": function(stage, material) {
+    var newMaterial = MaterialCollection.insert({
+      text: material.text,
+      role: material.role,
+      position: material.position,
+      language_key: material.languageKey,
+      is_heading: material.isHeading
+    });
+
+    StageCollection.update({description: stage}, {
+      $addToSet: {material: newMaterial}
+    });
+  },
   /**
    * @summary deletes a material
    * @isMethod true
@@ -35,5 +48,14 @@ Meteor.methods({
       $pull: {material: materialId}
     });
     MaterialCollection.remove({_id: materialId});
+  },
+  "deleteAllMaterials": function() {
+    StageCollection.update({}, {
+      $set: {material: []},
+    }, {
+      multi: true
+      }
+    );
+    MaterialCollection.remove({});
   }
 });

@@ -148,7 +148,9 @@
   "swal": {
     "areYouSure" : "Are you sure?",
     "deleteInfo" : "You will not be able to recover these changes",
-    "deleteConfirmation" : "Delete it!"
+    "deleteConfirmation" : "Delete it!",
+    "importInfo" : "This will delete all existing materials and imports all materials specified in /public/defaultMaterials.json",
+    "importConfirmation" : "Import"
   },
   "tcomb" : {
     "add" : "Add",
