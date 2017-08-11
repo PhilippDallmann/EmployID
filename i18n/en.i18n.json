@@ -9,7 +9,6 @@
     "home" : "Home",
     "help" : "Help",
     "editProfile" : "Edit Profile",
-    "userList" : "User List",
     "logout" : "Logout"
   },
   "login": {

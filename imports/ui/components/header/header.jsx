@@ -66,9 +66,6 @@ let Header = React.createClass({
                           <MenuItem href={location.origin + "/editProfile"}>
                               {TAPi18n.__("header.editProfile")}
                           </MenuItem>
-                          <MenuItem href={location.origin + "/users"}>
-                              {TAPi18n.__("header.userList")}
-                          </MenuItem>
                           <MenuItem onSelect={this.logout}>
                               {TAPi18n.__("header.logout")}
                           </MenuItem>
