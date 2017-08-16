@@ -1,4 +1,6 @@
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+
 import MaterialCollection from './materials';
 
 Meteor.methods({
@@ -8,10 +10,11 @@ Meteor.methods({
    * @param {Array} materials - list of materials that have been edited
    * @locus Method
    * */
-  "editMaterials": function(materials) {
-    for(var i=0; i<materials.length;i++) {
-      var m = materials[i];
-      MaterialCollection.update({_id: m.id}, {$set: {text: m.text}});
+  editMaterials(materials) {
+    check(materials, Array);
+    for (let i = 0; i < materials.length; i++) {
+      const m = materials[i];
+      MaterialCollection.update({ _id: m.id }, { $set: { text: m.text } });
     }
   },
   /**
@@ -20,8 +23,9 @@ Meteor.methods({
    * @param {String} materialId - ID of the material that has changed
    * @locus Method
    * */
-  "toggleHeading": function(materialId) {
-    var mat = MaterialCollection.findOne(materialId, {fields: {is_heading: 1}});
-    MaterialCollection.update({_id: materialId}, {$set: {is_heading: !mat.is_heading}});
-  }
+  toggleHeading(materialId) {
+    check(materialId, String);
+    const mat = MaterialCollection.findOne(materialId, { fields: { is_heading: 1 } });
+    MaterialCollection.update({ _id: materialId }, { $set: { is_heading: !mat.is_heading } });
+  },
 });

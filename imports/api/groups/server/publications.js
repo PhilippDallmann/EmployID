@@ -7,7 +7,7 @@ if (Meteor.isServer) {
    * @locus Publication
    * */
   Meteor.publish('groupsOfCurrentUser', function () {
-    return GroupCollection.find({users: this.userId});
+    return GroupCollection.find({ users: this.userId });
   });
 }
 /**
@@ -16,11 +16,13 @@ if (Meteor.isServer) {
  * @locus Publication
  * */
 Meteor.publish('usersOfGroup', function (groupId) {
-  if(groupId) {
-    this.autorun(function (computation) {
-      var group = GroupCollection.findOne(groupId, {fields: {users: 1}});
+  if (groupId) {
+    this.autorun(() => {
+      const group = GroupCollection.findOne(groupId, { fields: { users: 1 } });
 
-      return Meteor.users.find({_id: {$in: group.users}}, {fields: {_id: 1, username: 1}});
+      return Meteor.users.find(
+        { _id: { $in: group.users } }, { fields: { _id: 1, username: 1 } },
+      );
     });
   }
 });

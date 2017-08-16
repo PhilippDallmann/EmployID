@@ -1,37 +1,40 @@
+/* global Mongo, SimpleSchema */
+
 /**
  * @summary initializes the Result Collection
  * @param text - value of the result
- * @param sharing - sharing setting: can be shared publicly or with group only (allowed values: group, public)
+ * @param sharing - sharing setting: can be shared publicly or with group only
+ *                                              (allowed values: group, public)
  * @type {SimpleSchema}
  * @locus Collection
  * */
 
-const ResultCollection = new Mongo.Collection("Results");
+const ResultCollection = new Mongo.Collection('Results');
 
-let ChatMessageSchema = new SimpleSchema({
-  'text': {
-    type: String,
-    optional: true
-  },
-  'sharing': {
+const ChatMessageSchema = new SimpleSchema({
+  text: {
     type: String,
     optional: true,
-    allowedValues: ['self', 'group', 'public']
-  }
+  },
+  sharing: {
+    type: String,
+    optional: true,
+    allowedValues: ['self', 'group', 'public'],
+  },
 });
 
 ResultCollection.attachSchema(ChatMessageSchema);
 
 ResultCollection.allow({
-  insert: function (userId, doc) {
+  insert(userId) {
     return userId;
   },
-  update: function (userId, doc, fields, modifier) {
+  update(userId) {
     return userId;
   },
-  remove: function (userId, doc) {
+  remove(userId) {
     return userId;
-  }
+  },
 });
 
 export default ResultCollection;

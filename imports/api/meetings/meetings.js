@@ -1,3 +1,5 @@
+/* global Mongo, SimpleSchema */
+
 /**
  * @summary initializes the Message Collection
  * @param topic - topic of meeting
@@ -19,72 +21,72 @@
  * @locus Collection
  * */
 
-const MeetingCollection = new Mongo.Collection("Meetings");
+const MeetingCollection = new Mongo.Collection('Meetings');
 
-let MeetingSchema = new SimpleSchema({
-  "topic": {
-    type: String
-  },
-  "description": {
-    type: String
-  },
-  "start_date": {
-    type: String
-  },
-  "owner": {
-    type: String
-  },
-  "group": {
-    type: String
-  },
-  "client": {
-    type: String
-  },
-  "facilitator": {
-    type: String
-  },
-  "recorder": {
-    type: String
-  },
-  "chat": {
-    type: String
-  },
-  "result_id": {
-    type: String
-  },
-  "active_stage_id": {
-    type: Number
-  },
-  "status_code": {
-    type: Number
-  },
-  "current_stage_time_remaining": {
+const MeetingSchema = new SimpleSchema({
+  topic: {
     type: String,
-    optional: true
   },
-  "current_stage_endtime": {
+  description: {
     type: String,
-    optional: true
   },
-  "time_total": {
-    type: Number
-  }
+  start_date: {
+    type: String,
+  },
+  owner: {
+    type: String,
+  },
+  group: {
+    type: String,
+  },
+  client: {
+    type: String,
+  },
+  facilitator: {
+    type: String,
+  },
+  recorder: {
+    type: String,
+  },
+  chat: {
+    type: String,
+  },
+  result_id: {
+    type: String,
+  },
+  active_stage_id: {
+    type: Number,
+  },
+  status_code: {
+    type: Number,
+  },
+  current_stage_time_remaining: {
+    type: String,
+    optional: true,
+  },
+  current_stage_endtime: {
+    type: String,
+    optional: true,
+  },
+  time_total: {
+    type: Number,
+  },
 });
 
 MeetingCollection.attachSchema(MeetingSchema);
 
 MeetingCollection.allow({
-  insert: function (userId, doc) {
+  insert(userId) {
     return userId;
   },
-  update: function (userId, doc, fields, modifier) {
+  update(userId, doc) {
     // can only change your own documents and client can change it
     return doc.owner === userId || doc.client === userId;
   },
-  remove: function (userId, doc) {
+  remove(userId, doc) {
     // can only remove your own documents and client can
     return doc.owner === userId || doc.client === userId;
-  }
+  },
 });
 
 export default MeetingCollection;

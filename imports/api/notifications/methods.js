@@ -1,5 +1,6 @@
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
 import NotificationCollection from './notifications';
+import { check } from 'meteor/check';
 
 Meteor.methods({
   /**
@@ -8,7 +9,19 @@ Meteor.methods({
    * @param {Object} notification - Contains all necessary information (text, type, owner, groupId, timestamp, needsConformation, conformedBy)
    * @locus Method
    * */
-  "createNotification": function(notification) {
+  createNotification(notification) {
+    check(notification, {
+      text: String,
+      type: String,
+      owner: {
+        _id: String,
+        username: String,
+      },
+      groupId: String,
+      timestamp: String,
+      needsConfirmation: Boolean,
+      confirmedBy: Array,
+    });
     NotificationCollection.insert({
       text: notification.text,
       type: notification.type,
@@ -16,7 +29,7 @@ Meteor.methods({
       group_id: notification.groupId,
       timestamp: notification.timestamp,
       needs_confirmation: notification.needsConfirmation,
-      confirmed_by: notification.confirmedBy
+      confirmed_by: notification.confirmedBy,
     });
   },
   /**
@@ -26,9 +39,11 @@ Meteor.methods({
    * @param {String} userId -  ID of the user that confirmed
    * @locus Method
    * */
-  "addConfirmation": function(notificationId, userId) {
+  addConfirmation(notificationId, userId) {
+    check(notificationId, String);
+    check(userId, String);
     NotificationCollection.update(notificationId, {
-      $addToSet: {confirmed_by: userId}
+      $addToSet: { confirmed_by: userId },
     });
-  }
+  },
 });

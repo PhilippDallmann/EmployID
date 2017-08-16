@@ -1,3 +1,5 @@
+/* global Mongo, SimpleSchema, Roles */
+
 /**
  * @summary initializes the Stage Collection
  * @param stage_id - number reprensentation of stage
@@ -8,35 +10,35 @@
  * @locus Collection
  * */
 
-const StageCollection = new Mongo.Collection("Stages");
+const StageCollection = new Mongo.Collection('Stages');
 
-let StageSchema = new SimpleSchema({
-  "stage_id": {
-    type: Number
+const StageSchema = new SimpleSchema({
+  stage_id: {
+    type: Number,
   },
-  "description": {
-    type: String
+  description: {
+    type: String,
   },
-  "material": {
-    type: [String]
+  material: {
+    type: [String],
   },
-  "duration": {
-    type: Number
-  }
+  duration: {
+    type: Number,
+  },
 });
 
 StageCollection.attachSchema(StageSchema);
 
 StageCollection.allow({
-  insert: function (userId, doc) {
+  insert() {
     return false;
   },
-  update: function (userId, doc, fields, modifier) {
-    return Roles.userIsInRole(userId, ["admin", "editor"]);
+  update(userId) {
+    return Roles.userIsInRole(userId, ['admin', 'editor']);
   },
-  remove: function (userId, doc) {
+  remove() {
     return false;
-  }
+  },
 });
 
 

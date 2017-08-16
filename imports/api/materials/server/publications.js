@@ -11,36 +11,36 @@ if (Meteor.isServer) {
    * @locus Publication
    * */
   Meteor.publish('materials', function (meetingId, languageKey) {
-    this.autorun(function (computation) {
-      var meeting = MeetingCollection.findOne(meetingId, {fields: {client: 1, facilitator: 1}});
-      if (meeting.facilitator == this.userId) {
-        return MaterialCollection.find({role: 'facilitator', language_key: languageKey});
-      }else if (meeting.client == this.userId) {
-        return MaterialCollection.find({role: 'client', language_key: languageKey});
-      } else {
-        return MaterialCollection.find({role: 'participant', language_key: languageKey});
+    this.autorun(function () {
+      const meeting = MeetingCollection.findOne(meetingId, { fields: { client: 1, facilitator: 1 } });
+      if (meeting.facilitator === this.userId) {
+        return MaterialCollection.find({ role: 'facilitator', language_key: languageKey });
+      } else if (meeting.client === this.userId) {
+        return MaterialCollection.find({ role: 'client', language_key: languageKey });
       }
+      return MaterialCollection.find({ role: 'participant', language_key: languageKey });
     });
   });
   /**
    * @summary Publishes all materials
    * @locus Publication
    * */
-  Meteor.publish('allMaterials', function() {
-    return MaterialCollection.find({});
-  });
+  Meteor.publish('allMaterials', () => MaterialCollection.find({}));
   /**
-   * @summary Publishes the materials beloning to a stage, role and language
+   * @summary Publishes the materials belonging to a stage, role and language
    * @param {String} stageId - id of the stage
    * @param {String} roleId - id of the role
    * @param {String} languageKey - represents the wanted language
    * @locus Publication
    * */
   Meteor.publish('editorMaterial', function (stageId, roleId, languageKey) {
-    this.autorun(function (computation) {
-      var stage = StageCollection.findOne({stage_id: stageId}, {fields: {material: 1}});
+    this.autorun(() => {
+      const stage = StageCollection.findOne({ stage_id: stageId }, { fields: { material: 1 } });
 
-      return MaterialCollection.find({_id: {$in: stage.material}, role: roleId, language_key: languageKey}, {sort: {position: 1}});
+      return MaterialCollection.find(
+        { _id: { $in: stage.material }, role: roleId, language_key: languageKey },
+        { sort: { position: 1 } },
+      );
     });
   });
 }

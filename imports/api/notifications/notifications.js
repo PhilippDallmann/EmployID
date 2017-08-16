@@ -1,3 +1,5 @@
+/* global Mongo, SimpleSchema */
+
 /**
  * @summary initializes the Notification Collection
  * @param text - text of notification
@@ -11,52 +13,52 @@
  * @locus Collection
  * */
 
-const NotificationCollection = new Mongo.Collection("Notifications");
+const NotificationCollection = new Mongo.Collection('Notifications');
 
-let NotificationSchema = new SimpleSchema({
-  "text": {
-    type: String
-  },
-  "type" : {
+const NotificationSchema = new SimpleSchema({
+  text: {
     type: String,
-    allowedValues: ["groupInvitation", "meetingCreation"]
   },
-  "owner": {
-    type: Object
+  type: {
+    type: String,
+    allowedValues: ['groupInvitation', 'meetingCreation'],
   },
-  "owner._id": {
-    type: String
+  owner: {
+    type: Object,
   },
-  "owner.username": {
-    type: String
+  'owner._id': {
+    type: String,
   },
-  "group_id": {
-    type: String
+  'owner.username': {
+    type: String,
   },
-  "timestamp": {
-    type: String
+  group_id: {
+    type: String,
   },
-  "needs_confirmation": {
-    type: Boolean
+  timestamp: {
+    type: String,
   },
-  "confirmed_by": {
+  needs_confirmation: {
+    type: Boolean,
+  },
+  confirmed_by: {
     type: [String],
-    optional: true
-  }
+    optional: true,
+  },
 });
 
 NotificationCollection.attachSchema(NotificationSchema);
 
 NotificationCollection.allow({
-  insert: function (userId, doc) {
+  insert() {
     return false;
   },
-  update: function (userId, doc, fields, modifier) {
+  update() {
     return false;
   },
-  remove: function (userId, doc) {
+  remove() {
     return false;
-  }
+  },
 });
 
 

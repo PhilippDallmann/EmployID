@@ -1,4 +1,6 @@
-import {Meteor} from 'meteor/meteor';
+/* global Roles */
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 
 Meteor.methods({
   /**
@@ -8,10 +10,13 @@ Meteor.methods({
    * @param {Array} roles - new roles of the user
    * @locus Method
    * */
-  "updateRolesOfUser": function(userId, roles) {
-    var loggedInUser = Meteor.user();
-    if(!loggedInUser || !Roles.userIsInRole(loggedInUser, ["admin"])){
-      throw new Meteor.Error(403, "Access denied");
+  updateRolesOfUser(userId, roles) {
+    check(userId, String);
+    check(roles, Array);
+
+    const loggedInUser = Meteor.user();
+    if (!loggedInUser || !Roles.userIsInRole(loggedInUser, ['admin'])) {
+      throw new Meteor.Error(403, 'Access denied');
     } else {
       Roles.setUserRoles(userId, roles);
     }
@@ -23,14 +28,18 @@ Meteor.methods({
    * @param {Array} fieldValueArray - contains the fields to be changed and the corresponding values
    * @locus Method
    * */
-  "updateUserProfile": function(userId, fieldValueArray) {
-    var update_query = {};
-    for (var f in fieldValueArray) {
-      update_query[fieldValueArray[f][0]]= fieldValueArray[f][1];
+  updateUserProfile(userId, fieldValueArray) {
+    check(userId, String);
+    check(fieldValueArray, Array);
+
+    const updateQuery = {};
+
+    for (const f in fieldValueArray) {
+      updateQuery[fieldValueArray[f][0]] = fieldValueArray[f][1];
     }
 
     Meteor.users.update(userId,
-      {$set: update_query}
+      { $set: updateQuery },
     );
-  }
+  },
 });

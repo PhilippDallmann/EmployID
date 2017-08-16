@@ -1,8 +1,9 @@
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 
 import ResultCollection from '../results/results';
 
-if(Meteor.isServer) {
+if (Meteor.isServer) {
   Meteor.methods({
     /**
      * @summary updates the result
@@ -11,29 +12,33 @@ if(Meteor.isServer) {
      * @param {String} value - Value of the new result field
      * @locus Method
      * */
-    "updateResultText": function(resultId, value) {
-        ResultCollection.update(resultId, {
-          $set: {
-            text: value
-          }
-        });
+    updateResultText(resultId, value) {
+      check(resultId, String);
+      check(value, String);
+      ResultCollection.update(resultId, {
+        $set: {
+          text: value,
+        },
+      });
     },
     /**
      * @summary Update specific fields of a result
      * @isMethod true
-     * @param {String} userId - ID of the result
+     * @param {String} resultId - ID of the result
      * @param {Array} fieldValueArray - contains the fields to be changed and the corresponding values
      * @locus Method
      * */
-    "updateResult": function(resultId, fieldValueArray) {
-      var update_query = {};
-      for (var f in fieldValueArray) {
-        update_query[fieldValueArray[f][0]]= fieldValueArray[f][1];
+    updateResult(resultId, fieldValueArray) {
+      check(resultId, String);
+      check(fieldValueArray, Array);
+      const updateQuery = {};
+      for (const f in fieldValueArray) {
+        updateQuery[fieldValueArray[f][0]] = fieldValueArray[f][1];
       }
 
       ResultCollection.update(resultId,
-        {$set: update_query}
+        { $set: updateQuery },
       );
-    }
+    },
   });
 }

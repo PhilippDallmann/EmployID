@@ -1,4 +1,6 @@
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+
 import StageMessagesCollection from './stageMessages';
 
 Meteor.methods({
@@ -9,9 +11,12 @@ Meteor.methods({
    * @param {String} message - value of the message
    * @locus Method
    * */
-  "updateStageMessage": function(stage, languageKey, message) {
-    StageMessagesCollection.update({stage: stage, language_key: languageKey}, {
-      $set: {message: message}
+  updateStageMessage(stage, languageKey, message) {
+    check(stage, Number);
+    check(languageKey, String);
+    check(message, String);
+    StageMessagesCollection.update({ stage, language_key: languageKey }, {
+      $set: { message },
     });
-  }
+  },
 });

@@ -1,3 +1,5 @@
+/* global Mongo, SimpleSchema */
+
 /**
  * @summary initializes the Group Collection
  * @param name - name of the group
@@ -8,38 +10,38 @@
  * @locus Collection
  * */
 
-const GroupCollection = new Mongo.Collection("Groups");
+const GroupCollection = new Mongo.Collection('Groups');
 
-let GroupSchema = new SimpleSchema({
-  "name": {
-    type: String
-  },
-  "description": {
+const GroupSchema = new SimpleSchema({
+  name: {
     type: String,
-    optional: true
   },
-  "users": {
-    type: [String]
+  description: {
+    type: String,
+    optional: true,
   },
-  "owner": {
-    type: String
-  }
+  users: {
+    type: [String],
+  },
+  owner: {
+    type: String,
+  },
 });
 
 GroupCollection.attachSchema(GroupSchema);
 
 GroupCollection.allow({
-  insert: function (userId, doc) {
+  insert(userId) {
     return userId;
   },
-  update: function (userId, doc, fields, modifier) {
+  update(userId, doc) {
     // can only change your own documents
     return doc.owner === userId;
   },
-  remove: function (userId, doc) {
+  remove(userId, doc) {
     // can only remove your own documents
     return doc.owner === userId;
-  }
+  },
 });
 
 

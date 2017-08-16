@@ -1,3 +1,5 @@
+/* global Mongo, SimpleSchema */
+
 /**
  * @summary initializes the Chat Collection
  * @param chat_messages - array of all messages inside of the chat
@@ -5,26 +7,26 @@
  * @locus Collection
  * */
 
-const ChatCollection = new Mongo.Collection("Chats");
+const ChatCollection = new Mongo.Collection('Chats');
 
-let ChatSchema = new SimpleSchema({
-  "chat_messages": {
-    type: [String]
-  }
+const ChatSchema = new SimpleSchema({
+  chat_messages: {
+    type: [String],
+  },
 });
 
 ChatCollection.attachSchema(ChatSchema);
 
 ChatCollection.allow({
-  insert: function (userId, doc) {
+  insert() {
     return false;
   },
-  update: function (userId, doc, fields, modifier) {
+  update() {
     return false;
   },
-  remove: function (userId, doc) {
+  remove() {
     return false;
-  }
+  },
 });
 
 

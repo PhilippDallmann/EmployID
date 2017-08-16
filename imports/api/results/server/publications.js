@@ -9,8 +9,8 @@ if (Meteor.isServer) {
    * @locus Publication
    * */
   Meteor.publish('currentResult', function (meetingId) {
-    this.autorun(function (computation) {
-      var meeting = MeetingCollection.findOne(meetingId, {fields: {result_id: 1}});
+    this.autorun(() => {
+      const meeting = MeetingCollection.findOne(meetingId, { fields: { result_id: 1 } });
       return ResultCollection.find(meeting.result_id);
     });
   });

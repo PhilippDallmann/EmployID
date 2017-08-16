@@ -6,7 +6,5 @@ if (Meteor.isServer) {
    * @summary Publishes all StageMessages
    * @locus Publication
    * */
-  Meteor.publish('stageMessages', function () {
-    return StageMessagesCollection.find();
-  });
+  Meteor.publish('stageMessages', () => StageMessagesCollection.find());
 }

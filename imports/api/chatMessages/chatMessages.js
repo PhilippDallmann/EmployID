@@ -1,3 +1,5 @@
+/* global Mongo, SimpleSchema */
+
 /**
  * @summary initializes the ChatMessage Collection
  * @param user_id - id of the sender
@@ -9,38 +11,38 @@
  * @locus Collection
  * */
 
-const ChatMessageCollection = new Mongo.Collection("ChatMessages");
+const ChatMessageCollection = new Mongo.Collection('ChatMessages');
 
-let ChatMessageSchema = new SimpleSchema({
-  "user_id": {
-    type: String
+const ChatMessageSchema = new SimpleSchema({
+  user_id: {
+    type: String,
   },
-  "user_name": {
-    type: String
+  user_name: {
+    type: String,
   },
-  "timestamp": {
-    type: Date
+  timestamp: {
+    type: Date,
   },
-  "text": {
-    type: String
+  text: {
+    type: String,
   },
   is_bot_message: {
-    type: Boolean
-  }
+    type: Boolean,
+  },
 });
 
 ChatMessageCollection.attachSchema(ChatMessageSchema);
 
 ChatMessageCollection.allow({
-  insert: function (userId, doc) {
+  insert(userId) {
     return userId;
   },
-  update: function (userId, doc, fields, modifier) {
+  update() {
     return false;
   },
-  remove: function (userId, doc) {
+  remove() {
     return false;
-  }
+  },
 });
 
 export default ChatMessageCollection;

@@ -1,40 +1,47 @@
-import {Meteor} from 'meteor/meteor';
-import {TAPi18n} from 'meteor/tap:i18n';
+import { Meteor } from 'meteor/meteor';
+import { TAPi18n } from 'meteor/tap:i18n';
+import { check, Match } from 'meteor/check';
 
 import GroupCollection from './groups';
 
-if(Meteor.isServer) {
+if (Meteor.isServer) {
   Meteor.methods({
     /**
      * @summary Creates a group
      * @isMethod true
-     * @param {Object} group - contains all infromation about the group (name, description, users, owner
+     * @param {Object} group - contains all infromation about the group
+     *                          (name, description, users, owner
      * @param {Object} languageKey - used to create a notification in the users language
      * @locus Method
      * */
-    createGroup: function(group, languageKey) {
-      if(!Meteor.userId()) {
-        throw new Meteor.Error(500, "Access denied");
+    createGroup(group, languageKey) {
+      check(group, {
+        name: String,
+        description: String,
+        users: Array,
+        owner: String,
+      });
+      check(languageKey, String);
+      if (!Meteor.userId()) {
+        throw new Meteor.Error(500, 'Access denied');
+      } else if (group.users.length <= 0) {
+        throw new Meteor.Error(500, 'UserArray cannot be empty');
       } else {
-        if(group.users.length<=0) {
-          throw new Meteor.Error(500, "UserArray cannot be empty");
-        } else {
-          var groupId = GroupCollection.insert({
-            name: group.name,
-            description: group.description,
-            users: group.users,
-            owner: group.owner
-          });
-          Meteor.call("createNotification", {
-            text: TAPi18n.__("notifications.groupInvitation", {}, languageKey) + group.name,
-            type: "groupInvitation",
-            owner: {_id: Meteor.userId(), username: Meteor.user().username},
-            groupId: groupId,
-            timestamp: new Date().toISOString(),
-            needsConfirmation: true,
-            confirmedBy: [Meteor.userId()]
-          });
-        }
+        const groupId = GroupCollection.insert({
+          name: group.name,
+          description: group.description,
+          users: group.users,
+          owner: group.owner,
+        });
+        Meteor.call('createNotification', {
+          text: TAPi18n.__('notifications.groupInvitation', {}, languageKey) + group.name,
+          type: 'groupInvitation',
+          owner: { _id: Meteor.userId(), username: Meteor.user().username },
+          groupId,
+          timestamp: new Date().toISOString(),
+          needsConfirmation: true,
+          confirmedBy: [Meteor.userId()],
+        });
       }
     },
     /**
@@ -43,13 +50,18 @@ if(Meteor.isServer) {
      * @param {Object} group - contains the changed values (name, description, users
      * @locus Method
      * */
-    editGroup: function(group) {
+    editGroup(group) {
+      check(group, {
+        name: String,
+        description: String,
+        users: Array,
+      });
       GroupCollection.update(group._id, {
         $set: {
           name: group.name,
           description: group.description,
-          users: group.users
-        }
+          users: group.users,
+        },
       });
     },
     /**
@@ -58,9 +70,13 @@ if(Meteor.isServer) {
      * @param {Object} group - contains the id of the group
      * @locus Method
      * */
-    deleteGroup: function(group) {
-      if(group.owner!==Meteor.userId()) {
-        throw new Meteor.Error(500, "Access denied");
+    deleteGroup(group) {
+      check(group, {
+        _id: String,
+        owner: String,
+      });
+      if (group.owner !== Meteor.userId()) {
+        throw new Meteor.Error(500, 'Access denied');
       } else {
         GroupCollection.remove(group._id);
       }
@@ -72,14 +88,15 @@ if(Meteor.isServer) {
      * @return {Array} Array of the validated userIds
      * @locus Method
      * */
-    validateUsernameList: function(users) {
-      var result = [];
-      for(var i=0;i<users.length;i++) {
-        var user = Accounts.findUserByUsername(users[i]);
-        if(user) {
+    validateUsernameList(users) {
+      check(users, Array);
+      const result = [];
+      for (let i = 0; i < users.length; i++) {
+        const user = Accounts.findUserByUsername(users[i]);
+        if (user) {
           result.push(user._id);
         } else {
-          throw new Meteor.Error(500, 'Error 500: Not found', 'user with username "' + users[i] + '" not found');
+          throw new Meteor.Error(500, 'Error 500: Not found', `user with username ${users[i]} not found`);
         }
       }
       return result;
@@ -91,11 +108,12 @@ if(Meteor.isServer) {
      * @return {Array} Array of usernames
      * @locus Method
      * */
-    getIdUsernameList: function(users) {
-      var result = [];
-      for(var i=0;i<users.length;i++) {
-        var user = Meteor.users.findOne(users[i], {fields: {username: 1}});
-        if(user) {
+    getIdUsernameList(users) {
+      check(users, Array);
+      const result = [];
+      for (let i = 0; i < users.length; i++) {
+        const user = Meteor.users.findOne(users[i], { fields: { username: 1 } });
+        if (user) {
           result.push(user.username);
         }
       }
@@ -108,10 +126,12 @@ if(Meteor.isServer) {
      * @param {String} userId - ID of the user to be removed
      * @locus Method
      * */
-    removeUserFromGroup: function(groupId, userId) {
+    removeUserFromGroup(groupId, userId) {
+      check(groupId, String);
+      check(userId, String);
       GroupCollection.update(groupId, {
-        $pull: {users: userId}
+        $pull: { users: userId },
       });
-    }
+    },
   });
 }

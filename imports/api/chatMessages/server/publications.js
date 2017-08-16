@@ -10,11 +10,11 @@ if (Meteor.isServer) {
    * @locus Publication
    * */
   Meteor.publish('currentChatMessages', function (meetingId) {
-    this.autorun(function (computation) {
-      var meeting = MeetingCollection.findOne(meetingId, {fields: {chat: 1}});
-      var chat = ChatCollection.findOne(meeting.chat, {fields: {chat_messages: 1}});
+    this.autorun(() => {
+      const meeting = MeetingCollection.findOne(meetingId, { fields: { chat: 1 } });
+      const chat = ChatCollection.findOne(meeting.chat, { fields: { chat_messages: 1 } });
 
-      return ChatMessageCollection.find({_id: {$in: chat.chat_messages}}, {'sort': ['timestamp', 'asc']});
+      return ChatMessageCollection.find({ _id: { $in: chat.chat_messages } }, { sort: ['timestamp', 'asc'] });
     });
   });
 }
