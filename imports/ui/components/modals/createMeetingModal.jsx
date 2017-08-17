@@ -3,6 +3,7 @@ import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import {TAPi18n} from 'meteor/tap:i18n';
 import {createContainer} from 'meteor/react-meteor-data';
+import swal from 'sweetalert2';
 
 import GroupCollection from '../../../api/groups/groups';
 import CreateMeetingModalActions from '../../../reflux/actions/createMeetingModalActions';
@@ -169,9 +170,8 @@ export default class CreateMeetingModalState extends Component {
       showCancelButton: true,
       confirmButtonColor: "#DD6B55",
       confirmButtonText: TAPi18n.__("swal.deleteConfirmation"),
-      closeOnConfirm: true,
       html: false
-    }, function(){
+    }).then( function(){
       Meteor.call("deleteMeeting", me.props.meeting, function(error, result) {
         if(!error) {
           me.close();

@@ -3,7 +3,7 @@ import { Accounts } from 'meteor/accounts-base';
 import {TAPi18n} from 'meteor/tap:i18n';
 import {createContainer} from 'meteor/react-meteor-data';
 import React, {PropTypes, Component} from 'react';
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 
 let Reflux = require("reflux");
 import LoadingActions from "../../../reflux/actions/loadingActions";

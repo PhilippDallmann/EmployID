@@ -4,7 +4,7 @@ import {createContainer} from 'meteor/react-meteor-data';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import {TAPi18n} from 'meteor/tap:i18n';
 import lodash from 'lodash';
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 
 import StageCollection from '../../../api/stages/stages';
 import MaterialCollection from '../../../api/materials/materials';
@@ -141,7 +141,6 @@ export default class EditorState extends Component {
     }
   }
   onImportClick() {
-
     swal({
       title: TAPi18n.__("swal.areYouSure"),
       text: TAPi18n.__("swal.importInfo"),
@@ -149,9 +148,8 @@ export default class EditorState extends Component {
       showCancelButton: true,
       confirmButtonColor: "#DD6B55",
       confirmButtonText: TAPi18n.__("swal.importConfirmation"),
-      closeOnConfirm: true,
-      html: false
-    }, function(){
+      html: false,
+    }).then( function(){
       LoadingActions.setLoading();
       Meteor.call('deleteAllMaterials');
       $.getJSON('defaultMaterials.json', function(json) {

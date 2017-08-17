@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor';
 import React from 'react';
 import {TAPi18n} from 'meteor/tap:i18n';
-import swal from 'sweetalert';
+import swal from 'sweetalert2';
 
 import HomeActions from "../../../reflux/actions/homeActions";
 import t from 'tcomb-form';
@@ -152,9 +152,8 @@ let CreateGroupModal = React.createClass({
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
         confirmButtonText: TAPi18n.__("swal.deleteConfirmation"),
-        closeOnConfirm: true,
         html: false
-      }, function(){
+      }).then( function(){
         Meteor.call("deleteGroup", me.props.group, function(error, result) {
           if(!error) {
             me.close();

@@ -4,7 +4,7 @@
     "allowImportExportEverywhere": true
   },
   "plugins": [
-    "meteor"
+    "meteor", "react"
   ],
   "extends": [
     "airbnb",
