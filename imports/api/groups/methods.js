@@ -1,6 +1,8 @@
+/* global Accounts */
+
 import { Meteor } from 'meteor/meteor';
 import { TAPi18n } from 'meteor/tap:i18n';
-import { check, Match } from 'meteor/check';
+import { check } from 'meteor/check';
 
 import GroupCollection from './groups';
 
@@ -91,7 +93,7 @@ if (Meteor.isServer) {
     validateUsernameList(users) {
       check(users, Array);
       const result = [];
-      for (let i = 0; i < users.length; i++) {
+      for (let i = 0; i < users.length; i += 1) {
         const user = Accounts.findUserByUsername(users[i]);
         if (user) {
           result.push(user._id);
@@ -111,7 +113,7 @@ if (Meteor.isServer) {
     getIdUsernameList(users) {
       check(users, Array);
       const result = [];
-      for (let i = 0; i < users.length; i++) {
+      for (let i = 0; i < users.length; i += 1) {
         const user = Meteor.users.findOne(users[i], { fields: { username: 1 } });
         if (user) {
           result.push(user.username);

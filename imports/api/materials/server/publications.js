@@ -1,4 +1,6 @@
 import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
+
 import MeetingCollection from '../../meetings/meetings';
 import MaterialCollection from '../materials';
 import StageCollection from '../../stages/stages';
@@ -10,9 +12,13 @@ if (Meteor.isServer) {
    * @param {String} languageKey - represents the wanted language
    * @locus Publication
    * */
-  Meteor.publish('materials', function (meetingId, languageKey) {
-    this.autorun(function () {
-      const meeting = MeetingCollection.findOne(meetingId, { fields: { client: 1, facilitator: 1 } });
+  Meteor.publish('materials', function materials(meetingId, languageKey) {
+    check(meetingId, String);
+    check(languageKey, String);
+    this.autorun(() => {
+      const meeting = MeetingCollection.findOne(meetingId, {
+        fields: { client: 1, facilitator: 1 },
+      });
       if (meeting.facilitator === this.userId) {
         return MaterialCollection.find({ role: 'facilitator', language_key: languageKey });
       } else if (meeting.client === this.userId) {
@@ -33,7 +39,10 @@ if (Meteor.isServer) {
    * @param {String} languageKey - represents the wanted language
    * @locus Publication
    * */
-  Meteor.publish('editorMaterial', function (stageId, roleId, languageKey) {
+  Meteor.publish('editorMaterial', function editorMaterial(stageId, roleId, languageKey) {
+    check(stageId, String);
+    check(roleId, String);
+    check(languageKey, String);
     this.autorun(() => {
       const stage = StageCollection.findOne({ stage_id: stageId }, { fields: { material: 1 } });
 

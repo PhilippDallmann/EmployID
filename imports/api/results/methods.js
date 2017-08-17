@@ -32,9 +32,9 @@ if (Meteor.isServer) {
       check(resultId, String);
       check(fieldValueArray, Array);
       const updateQuery = {};
-      for (const f in fieldValueArray) {
-        updateQuery[fieldValueArray[f][0]] = fieldValueArray[f][1];
-      }
+      fieldValueArray.forEach((element) => {
+        updateQuery[element[0]] = element[1];
+      });
 
       ResultCollection.update(resultId,
         { $set: updateQuery },

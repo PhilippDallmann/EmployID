@@ -71,7 +71,8 @@ if (Meteor.isServer) {
     /**
      * @summary Saves changes made to a meeting
      * @isMethod true
-     * @param {Object} meeting - contains the editable fields (topic, description, start_date, group, client, facilitator)
+     * @param {Object} meeting - contains the editable fields
+     *                          (topic, description, start_date, group, client, facilitator)
      * @locus Method
      * */
     editMeeting(meeting) {
@@ -139,20 +140,20 @@ if (Meteor.isServer) {
      * @isMethod true
      * @param {String} meetingId - ID of  the meeting
      * @param {Number} statusCode - 0 for inactive 1 for active
-     * @param {Number} currentStageTimeRemaining - remaining time in stage
-     * @param {Number} currentStageEndTime - endtime
+     * @param {Number} timeRemaining - remaining time in stage
+     * @param {Number} endTime - endtime
      * @locus Method
      * */
-    updateMeetingStatusWithTimeRemaining(meetingId, statusCode, currentStageTimeRemaining, currentStageEndTime) {
+    updateMeetingStatusWithTimeRemaining(meetingId, statusCode, timeRemaining, endTime) {
       check(meetingId, String);
       check(statusCode, Number);
-      check(currentStageTimeRemaining, Number);
-      check(currentStageEndTime, Number);
+      check(timeRemaining, Number);
+      check(endTime, Number);
       MeetingCollection.update(meetingId, {
         $set: {
           status_code: statusCode,
-          current_stage_time_remaining: currentStageTimeRemaining,
-          current_stage_endtime: currentStageEndTime,
+          current_stage_time_remaining: timeRemaining,
+          current_stage_endtime: endTime,
         },
       });
     },
@@ -182,10 +183,9 @@ if (Meteor.isServer) {
       check(meetingId, String);
       check(fieldValueArray, Array);
       const updateQuery = {};
-      for (const f in fieldValueArray) {
-        updateQuery[fieldValueArray[f][0]] = fieldValueArray[f][1];
-      }
-
+      fieldValueArray.forEach((element) => {
+        updateQuery[element[0]] = element[1];
+      });
       MeetingCollection.update(meetingId,
         { $set: updateQuery },
       );

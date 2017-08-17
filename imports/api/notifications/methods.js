@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
-import NotificationCollection from './notifications';
 import { check } from 'meteor/check';
+
+import NotificationCollection from './notifications';
 
 Meteor.methods({
   /**

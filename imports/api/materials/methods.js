@@ -12,7 +12,7 @@ Meteor.methods({
    * */
   editMaterials(materials) {
     check(materials, Array);
-    for (let i = 0; i < materials.length; i++) {
+    for (let i = 0; i < materials.length; i += 1) {
       const m = materials[i];
       MaterialCollection.update({ _id: m.id }, { $set: { text: m.text } });
     }
