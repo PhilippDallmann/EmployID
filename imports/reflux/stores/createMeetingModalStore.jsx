@@ -1,18 +1,17 @@
-import {Meteor} from 'meteor/meteor';
-import {TAPi18n} from 'meteor/tap:i18n';
+import { Meteor } from 'meteor/meteor';
+import { TAPi18n } from 'meteor/tap:i18n';
+import CreateMeetingModalActions from '../actions/createMeetingModalActions';
 
-let Reflux = require("reflux");
+const Reflux = require('reflux');
 
-import CreateMeetingModalActions from "../actions/createMeetingModalActions";
-
-let CreateMeetingModalStore = Reflux.createStore({
-    listenables: [CreateMeetingModalActions],
-    onCreateMeeting: function(meeting) {
-        Meteor.call("createMeeting", meeting, TAPi18n.getLanguage());
-    },
-    onEditMeeting: function(meeting) {
-      Meteor.call("editMeeting", meeting);
-    }
+const CreateMeetingModalStore = Reflux.createStore({
+  listenables: [CreateMeetingModalActions],
+  onCreateMeeting(meeting) {
+    Meteor.call('createMeeting', meeting, TAPi18n.getLanguage());
+  },
+  onEditMeeting(meeting) {
+    Meteor.call('editMeeting', meeting);
+  },
 });
 
 export default CreateMeetingModalStore;

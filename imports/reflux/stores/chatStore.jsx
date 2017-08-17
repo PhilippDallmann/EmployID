@@ -1,39 +1,37 @@
-import {Meteor} from 'meteor/meteor';
-import {Streamy} from 'meteor/yuukan:streamy';
+import { Streamy } from 'meteor/yuukan:streamy';
+import ChatActions from '../actions/chatActions';
 
-let Reflux = require("reflux");
+const Reflux = require('reflux');
 
-import ChatActions from "../actions/chatActions";
+class ChatStore extends Reflux.Store {
+  constructor() {
+    super();
+    this.state = {
+      typingUserArray: [],
+    };
+    this.listenables = ChatActions;
 
-class ChatStore extends Reflux.Store{
-    constructor() {
-      super();
-      this.state = {
-        typingUserArray: []
-      };
-      this.listenables = ChatActions;
-
-      Streamy.on("isTyping", function(data) {
-        ChatActions.updateTypingUsers(data.username);
-      });
+    Streamy.on('isTyping', (data) => {
+      ChatActions.updateTypingUsers(data.username);
+    });
+  }
+  onUpdateTypingUsers(username) {
+    const index = this.state.typingUserArray.indexOf(username);
+    if (index === -1) {
+      this.state.typingUserArray.push(username);
+      ChatActions.deleteArrayItem(this.state.typingUserArray.length - 1);
     }
-    onUpdateTypingUsers(username) {
-        var index = this.state.typingUserArray.indexOf(username);
-        if(index === -1) {
-            this.state.typingUserArray.push(username);
-            ChatActions.deleteArrayItem(this.state.typingUserArray.length - 1);
-        }
-        this.trigger(this.state);
+    this.trigger(this.state);
+  }
+  onDeleteArrayItem(index) {
+    const me = this;
+    setTimeout(() => {
+      // TODO: check if the long array could be an issue, old version: me.state.typingUserArray.splice(index, 1);
+      delete me.state.typingUserArray[index];
+      me.trigger(me.state);
     }
-    onDeleteArrayItem(index) {
-        var me = this;
-        setTimeout(function() {
-          //TODO: check if the long array could be an issue, old version: me.state.typingUserArray.splice(index, 1);
-          delete me.state.typingUserArray[index];
-          me.trigger(me.state);
-        }
-        ,3000);
-    }
+      , 3000);
+  }
 }
 
 export default ChatStore;

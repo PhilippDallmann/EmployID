@@ -40,7 +40,7 @@ if (Meteor.isServer) {
    * @locus Publication
    * */
   Meteor.publish('editorMaterial', function editorMaterial(stageId, roleId, languageKey) {
-    check(stageId, String);
+    check(stageId, Number);
     check(roleId, String);
     check(languageKey, String);
     this.autorun(() => {

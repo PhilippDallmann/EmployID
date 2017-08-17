@@ -1,17 +1,17 @@
-import {Meteor} from 'meteor/meteor';
-let Reflux = require("reflux");
+import { Meteor } from 'meteor/meteor';
+import AdminActions from '../actions/adminActions';
 
-import AdminActions from "../actions/adminActions";
+const Reflux = require('reflux');
 
-let AdminStore = Reflux.createStore({
-    listenables: [AdminActions],
-    onSaveRoleChanges: function(userId, roleValuePairs) {
-      var roles = [];
-      for(var i = 0;i<roleValuePairs.length;i++) {
-        roles[i] = roleValuePairs[i].value;
-      }
-      Meteor.call("updateRolesOfUser", userId, roles);
+const AdminStore = Reflux.createStore({
+  listenables: [AdminActions],
+  onSaveRoleChanges(userId, roleValuePairs) {
+    const roles = [];
+    for (let i = 0; i < roleValuePairs.length; i += 1) {
+      roles[i] = roleValuePairs[i].value;
     }
+    Meteor.call('updateRolesOfUser', userId, roles);
+  },
 });
 
 export default AdminStore;
