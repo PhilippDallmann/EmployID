@@ -1,139 +1,135 @@
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import React from 'react';
-import ReactDOM from 'react-dom'
-import {mount} from 'react-mounter';
+import { mount } from 'react-mounter';
 
 
-import App from '../../ui/App';
-
-//import NotFound from "./components/notFound";
-//import Users from "./components/users/users";
-//import UserProfile from "./components/users/userProfile";
-
-import Header from '../../ui/components/header/header';
-import Login from '../../ui/components/login/login';
-import Home from '../../ui/components/home/home';
-import Meeting from "../../ui/components/meeting/meeting";
-import Editor from "../../ui/components/editor/editor";
-import Result from '../../ui/components/result/result';
-import EditProfile from "../../ui/components/editProfile/editProfile";
+import App from '../../ui/App.jsx';
+import Header from '../../ui/components/header/header.jsx';
+import Login from '../../ui/components/login/login.jsx';
+import Home from '../../ui/components/home/home.jsx';
+import Meeting from '../../ui/components/meeting/meeting.jsx';
+import Editor from '../../ui/components/editor/editor.jsx';
+import Result from '../../ui/components/result/result.jsx';
+import EditProfile from '../../ui/components/editProfile/editProfile.jsx';
 
 import LoadingActions from '../../reflux/actions/loadingActions';
-import LoadingStore from '../../reflux/stores/loadingStore';
+
+// import NotFound from "./components/notFound";
+// import Users from "./components/users/users";
+// import UserProfile from "./components/users/userProfile";
 
 const authenticatedRedirect = () => {
-  if(!Meteor.loggingIn() && !Meteor.userId()) {
-    FlowRouter.go("login");
+  if (!Meteor.loggingIn() && !Meteor.userId()) {
+    FlowRouter.go('login');
   }
-}
+};
 
 const publicRedirect = () => {
-  if ( Meteor.userId() ) {
-    FlowRouter.go("home");
+  if (Meteor.userId()) {
+    FlowRouter.go('home');
   }
-}
+};
 
-function checkIfSubsAreReady (subs, subsReady) {
-  if(subsReady === subs) {
+function checkIfSubsAreReady(subs, subsReady) {
+  if (subsReady === subs) {
     LoadingActions.unsetLoading();
   }
 }
 
-/*FlowRouter.notFound = {
+/* FlowRouter.notFound = {
   action(params) {
     ReactLayout.render(App, {
       children: [<Header />, <NotFound />]
     });
   }
-}*/
+} */
 
-var exposed = FlowRouter.group({
-    name: "public",
-    triggersEnter: [publicRedirect]
-  }
+const exposed = FlowRouter.group({
+  name: 'public',
+  triggersEnter: [publicRedirect],
+},
 );
 
 exposed.route('/login', {
-  name: "login",
-  action: function() {
-    const containerElement = document.getElementById("render-target");
-    mount(App, {children: <Login />});
-  }
+  name: 'login',
+  action() {
+    mount(App, { children: <Login /> });
+  },
 });
 
-var loggedIn = FlowRouter.group({
-    name: "authenticated",
-    triggersEnter: [authenticatedRedirect]
-  }
+const loggedIn = FlowRouter.group({
+  name: 'authenticated',
+  triggersEnter: [authenticatedRedirect],
+},
 );
 
-FlowRouter.route("/", {
-  name: "landing",
-  action: function() {
-    FlowRouter.go("home");
-  }
+FlowRouter.route('/', {
+  name: 'landing',
+  action() {
+    FlowRouter.go('home');
+  },
 });
 
 loggedIn.route('/home', {
-  name: "home",
-  subscriptions: function(params) {
+  name: 'home',
+  subscriptions() {
     LoadingActions.setLoading();
-    var subsReady = 0;
-    var subs = 3;
-    this.register("userSpecificMeetings", Meteor.subscribe("userSpecificMeetings", Meteor.userId(), {
-      onReady: function() {
-        subsReady = subsReady + 1;
+    let subsReady = 0;
+    const subs = 3;
+    this.register('userSpecificMeetings', Meteor.subscribe('userSpecificMeetings', Meteor.userId(), {
+      onReady() {
+        subsReady += 1;
         checkIfSubsAreReady(subs, subsReady);
-      }
+      },
     }));
-    this.register("groupsOfCurrentUser", Meteor.subscribe("groupsOfCurrentUser", {
-      onReady: function() {
-        subsReady = subsReady + 1;
+    this.register('groupsOfCurrentUser', Meteor.subscribe('groupsOfCurrentUser', {
+      onReady() {
+        subsReady += 1;
         checkIfSubsAreReady(subs, subsReady);
-      }
+      },
     }));
-    this.register("notificationsOfCurrentUser", Meteor.subscribe("notificationsOfCurrentUser", Meteor.userId(),{
-      onReady: function() {
-        subsReady = subsReady + 1;
+    this.register('notificationsOfCurrentUser', Meteor.subscribe('notificationsOfCurrentUser', Meteor.userId(), {
+      onReady() {
+        subsReady += 1;
         checkIfSubsAreReady(subs, subsReady);
-      }
+      },
     }));
   },
-  action: function() {
+  action() {
     mount(App, {
-      children: [<Header />, <Home />]
+      children: [<Header />, <Home />],
     });
-  }
+  },
 });
 
 loggedIn.route('/editProfile', {
-  name: "editProfile",
-  action: function() {
+  name: 'editProfile',
+  action() {
     mount(App, {
-      children: [<Header />, <EditProfile />]
+      children: [<Header />, <EditProfile />],
     });
-  }
+  },
 });
 
-loggedIn.route("/meeting/:meetingId", {
-  name: "meeting",
-  action: function() {
+loggedIn.route('/meeting/:meetingId', {
+  name: 'meeting',
+  action() {
     LoadingActions.setLoading();
     mount(App, {
-      children: [<Header />, <Meeting />]
+      children: [<Header />, <Meeting />],
     });
-  }
+  },
 });
 
 loggedIn.route('/result/:meetingId', {
   name: 'result',
-  action: function() {
+  action() {
     LoadingActions.setLoading();
     mount(App, {
-      children: [<Header/>, <Result/>]
+      children: [<Header />, <Result />],
     });
-  }
+  },
 });
 /*
 loggedIn.route('/users', {
@@ -156,28 +152,28 @@ loggedIn.route('/users/:username', {
   }
 });
 */
-loggedIn.route("/editor", {
-  name: "editor",
-  subscriptions: function(params) {
+loggedIn.route('/editor', {
+  name: 'editor',
+  subscriptions() {
     LoadingActions.setLoading();
-    var subsReady = 0;
-    var subs = 2;
-    this.register("stages", Meteor.subscribe("stages", {
-      onReady: function() {
-        subsReady = subsReady + 1;
+    let subsReady = 0;
+    const subs = 2;
+    this.register('stages', Meteor.subscribe('stages', {
+      onReady() {
+        subsReady += 1;
         checkIfSubsAreReady(subs, subsReady);
-      }
+      },
     }));
-    this.register("stageMessages", Meteor.subscribe("stageMessages", {
-      onReady: function() {
-        subsReady = subsReady + 1;
+    this.register('stageMessages', Meteor.subscribe('stageMessages', {
+      onReady() {
+        subsReady += 1;
         checkIfSubsAreReady(subs, subsReady);
-      }
+      },
     }));
   },
-  action: function() {
+  action() {
     mount(App, {
-      children: [<Header />, <Editor />]
-    })
-  }
+      children: [<Header />, <Editor />],
+    });
+  },
 });

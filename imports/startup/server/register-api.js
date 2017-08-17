@@ -1,4 +1,4 @@
-//register all publications
+// register all publications
 import '../../api/chatMessages/server/publications';
 import '../../api/chats/server/publications';
 import '../../api/groups/server/publications';
@@ -9,7 +9,7 @@ import '../../api/stageMessages/server/publications';
 import '../../api/stages/server/publications';
 import '../../api/results/server/publications';
 
-//register all methods
+// register all methods
 import '../../api/chatMessages/methods';
 import '../../api/chats/methods';
 import '../../api/groups/methods';

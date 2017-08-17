@@ -2,8 +2,8 @@
 // as an API to the client.
 import './register-api';
 
-//startup logic on serverside
+// startup logic on serverside
 import './startup';
 
-//listeners
+// listeners
 import './listeners';
