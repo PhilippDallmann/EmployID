@@ -172,7 +172,7 @@ export default class CreateMeetingModalState extends Component {
       confirmButtonText: TAPi18n.__("swal.deleteConfirmation"),
       html: false
     }).then( function(){
-      Meteor.call("deleteMeeting", me.props.meeting, function(error, result) {
+      Meteor.call("deleteMeeting", { owner: me.props.meeting.owner, _id: me.props.meeting._id }, function(error, result) {
         if(!error) {
           me.close();
         }
