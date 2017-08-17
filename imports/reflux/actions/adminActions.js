@@ -1,7 +1,7 @@
-let Reflux = require("reflux");
+const Reflux = require('reflux');
 
-let AdminActions = Reflux.createActions([
-    "saveRoleChanges"
+const AdminActions = Reflux.createActions([
+  'saveRoleChanges',
 ]);
 
 module.exports = AdminActions;

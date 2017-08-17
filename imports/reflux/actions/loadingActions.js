@@ -1,8 +1,8 @@
-let Reflux = require("reflux");
+const Reflux = require('reflux');
 
-let LoadingActions = Reflux.createActions([
-    "setLoading",
-    "unsetLoading"
+const LoadingActions = Reflux.createActions([
+  'setLoading',
+  'unsetLoading',
 ]);
 
 export default LoadingActions;

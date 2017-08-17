@@ -1,8 +1,8 @@
-let Reflux = require("reflux");
+const Reflux = require('reflux');
 
-let CreateMeetingModalActions = Reflux.createActions([
-    "createMeeting",
-    "editMeeting"
+const CreateMeetingModalActions = Reflux.createActions([
+  'createMeeting',
+  'editMeeting',
 ]);
 
 export default CreateMeetingModalActions;

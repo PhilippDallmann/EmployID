@@ -1,12 +1,12 @@
-let Reflux = require('reflux');
+const Reflux = require('reflux');
 
-let MeetingTimeActions = Reflux.createActions([
-	'setStartDate',
-	'setInterval',
-	'startTimer',
-	'pauseTimer',
-	'meetingDataHasChanged',
-	'killTimer'
+const MeetingTimeActions = Reflux.createActions([
+  'setStartDate',
+  'setInterval',
+  'startTimer',
+  'pauseTimer',
+  'meetingDataHasChanged',
+  'killTimer',
 ]);
 
 module.exports = MeetingTimeActions;

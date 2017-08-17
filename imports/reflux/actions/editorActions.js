@@ -1,10 +1,10 @@
-let Reflux = require("reflux");
+const Reflux = require('reflux');
 
-let EditorActions = Reflux.createActions([
-    "addMaterial",
-    "deleteMaterial",
-    "editMaterials",
-    "toggleHeading"
+const EditorActions = Reflux.createActions([
+  'addMaterial',
+  'deleteMaterial',
+  'editMaterials',
+  'toggleHeading',
 ]);
 
 module.exports = EditorActions;

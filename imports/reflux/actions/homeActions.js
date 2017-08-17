@@ -1,13 +1,13 @@
-let Reflux = require("reflux");
+const Reflux = require('reflux');
 
-let HomeActions = Reflux.createActions([
-    "openCreateMeeting",
-    "openEditMeeting",
-    "openCreateGroup",
-    "openEditGroup",
-    "createGroup",
-    "editGroup",
-    "setUserArray"
+const HomeActions = Reflux.createActions([
+  'openCreateMeeting',
+  'openEditMeeting',
+  'openCreateGroup',
+  'openEditGroup',
+  'createGroup',
+  'editGroup',
+  'setUserArray',
 ]);
 
 export default HomeActions;

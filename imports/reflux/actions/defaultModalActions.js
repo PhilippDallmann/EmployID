@@ -1,9 +1,9 @@
-let Reflux = require("reflux");
+const Reflux = require('reflux');
 
-let DefaultModalActions = Reflux.createActions([
-    "showError",
-    "showInfo",
-    "showWarning"
+const DefaultModalActions = Reflux.createActions([
+  'showError',
+  'showInfo',
+  'showWarning',
 ]);
 
 module.exports = DefaultModalActions;

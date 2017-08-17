@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "meteor run",
-    "lint": "eslint ./imports/api --fix",
+    "lint": "eslint ./imports/reflux/stores --fix",
     "pretest": "npm run lint --silent"
   },
   "dependencies": {
