@@ -100,7 +100,7 @@ class EditProfile extends Reflux.Component {
     var me = this;
     var fieldValueArray = [["profile.avatar",this.state.userAvatar]];
     Meteor.call('updateUserProfile', this.props.currentUser._id, fieldValueArray, function(error) {
-      if(err) {
+      if (error) {
         LoadingActions.unsetLoading();
 ;        swal({
           title: "Error",

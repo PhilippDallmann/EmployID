@@ -2,7 +2,7 @@
 
 import { Meteor } from 'meteor/meteor';
 import { TAPi18n } from 'meteor/tap:i18n';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 
 import MeetingCollection from './meetings';
 import ChatCollection from '../chats/chats';
@@ -147,8 +147,8 @@ if (Meteor.isServer) {
     updateMeetingStatusWithTimeRemaining(meetingId, statusCode, timeRemaining, endTime) {
       check(meetingId, String);
       check(statusCode, Number);
-      check(timeRemaining, Number);
-      check(endTime, Number);
+      check(timeRemaining, Match.Maybe(Number));
+      check(endTime, Match.Maybe(Number));
       MeetingCollection.update(meetingId, {
         $set: {
           status_code: statusCode,
