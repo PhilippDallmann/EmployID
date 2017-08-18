@@ -61,7 +61,7 @@ let Header = React.createClass({
                   <Navbar.Collapse>
                   <Nav pullRight>
                       <NavItem style={this.getNavbarStyle()} href={location.origin + "/home"}>{TAPi18n.__("header.home")}</NavItem>
-                      <NavItem style={this.getNavbarStyle()} href={"https://help.learnenv.com/help/peercoaching"}>{TAPi18n.__("header.help")}</NavItem>
+                      <NavItem style={this.getNavbarStyle()} target="_blank" href={"https://www.youtube.com/channel/UC-75SHpmUsxCYs1Q_dOeekA"}>{TAPi18n.__("header.help")}</NavItem>
                       <NavDropdown style={this.getNavbarStyle()} id="nav-dropdown" title={this.state.username}>
                           <MenuItem href={location.origin + "/editProfile"}>
                               {TAPi18n.__("header.editProfile")}
