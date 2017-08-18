@@ -154,7 +154,7 @@ let CreateGroupModal = React.createClass({
         confirmButtonText: TAPi18n.__("swal.deleteConfirmation"),
         html: false
       }).then( function(){
-        Meteor.call("deleteGroup", me.props.group, function(error, result) {
+        Meteor.call("deleteGroup", {_id: me.props.group._id, owner: me.props.group.owner}, function(error, result) {
           if(!error) {
             me.close();
           }

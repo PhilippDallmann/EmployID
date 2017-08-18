@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 
 import NotificationCollection from './notifications';
 
@@ -21,7 +21,7 @@ Meteor.methods({
       groupId: String,
       timestamp: String,
       needsConfirmation: Boolean,
-      confirmedBy: Array,
+      confirmedBy: Match.Maybe(Array),
     });
     NotificationCollection.insert({
       text: notification.text,

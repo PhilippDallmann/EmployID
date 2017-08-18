@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 
 import GroupCollection from '../groups';
 
@@ -18,7 +18,7 @@ if (Meteor.isServer) {
  * @locus Publication
  * */
 Meteor.publish('usersOfGroup', function usersOfGroup(groupId) {
-  check(groupId, String);
+  check(groupId, Match.Maybe(String));
   this.autorun(() => {
     const group = GroupCollection.findOne(groupId, { fields: { users: 1 } });
 

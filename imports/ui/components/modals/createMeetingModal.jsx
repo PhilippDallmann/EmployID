@@ -277,7 +277,9 @@ CreateMeetingModal.propTypes = {
 };
 
 let CreateMeetingModalContainer = createContainer((props) => {
-  Meteor.subscribe('usersOfGroup', props.value.group);
+  if (props.value && props.value.group) {
+    Meteor.subscribe('usersOfGroup', props.value.group);
+  }
 
   return {
     groups: GroupCollection.find().fetch(),
