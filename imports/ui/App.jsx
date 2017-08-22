@@ -7,7 +7,7 @@ App = React.createClass({
         {this.props.children}
       </div>
     );
-  }
+  },
 });
 
 export default App;

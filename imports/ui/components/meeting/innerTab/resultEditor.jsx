@@ -1,46 +1,46 @@
-import {Meteor} from 'meteor/meteor';
-import React, {Component, PropTypes} from 'react';
+import { Meteor } from 'meteor/meteor';
+import React, { Component, PropTypes } from 'react';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import ReactQuill from 'react-quill';
-import {TAPi18n} from 'meteor/tap:i18n';
-import {createContainer} from 'meteor/react-meteor-data';
+import { TAPi18n } from 'meteor/tap:i18n';
+import { createContainer } from 'meteor/react-meteor-data';
 
 const CustomToolbar = () => (
   <div id="toolbar">
-    <div className="result-panel-header">{TAPi18n.__("meeting.resultPanelHeader")}</div>
+    <div className="result-panel-header">{TAPi18n.__('meeting.resultPanelHeader')}</div>
     <div className="toolbar-buttons">
       <select className="ql-header">
-        <option value="1"/>
-        <option value="2"/>
-        <option selected/>
+        <option value="1" />
+        <option value="2" />
+        <option selected />
       </select>
-      <button className="ql-bold"/>
-      <button className="ql-italic"/>
+      <button className="ql-bold" />
+      <button className="ql-italic" />
       <select className="ql-color">
-        <option value="red"/>
-        <option value="green"/>
-        <option value="blue"/>
-        <option value="orange"/>
-        <option value="violet"/>
-        <option value="#d0d1d2"/>
-        <option selected/>
+        <option value="red" />
+        <option value="green" />
+        <option value="blue" />
+        <option value="orange" />
+        <option value="violet" />
+        <option value="#d0d1d2" />
+        <option selected />
       </select>
     </div>
   </div>
 );
 
-class ResultEditor extends Component{
+class ResultEditor extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isRecorder: this.props.recorder==Meteor.userId(),
+      isRecorder: this.props.recorder == Meteor.userId(),
     };
     this.onChange = this.onChange.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     this.setState({
-      isRecorder: this.props.recorder==Meteor.userId()
+      isRecorder: this.props.recorder == Meteor.userId(),
     });
   }
   componentDidMount() {
@@ -50,34 +50,31 @@ class ResultEditor extends Component{
     Meteor.call('updateResultText', this.props.resultId, value);
   }
   render() {
-      if(this.state.isRecorder) {
-        return (
-          <div className="text-editor">
-            <CustomToolbar />
-            <ReactQuill
-              theme='snow'
-              value={this.props.result}
-              onChange={this.onChange}
-              modules={ResultEditor.modules}
-              readOnly={false}
-            >
-            </ReactQuill>
-          </div>
-        )
-      } else {
-        return (
-          <div className="text-editor">
-            <CustomToolbar />
-            <ReactQuill
-              theme='snow'
-              value={this.props.result}
-              modules={ResultEditor.modules}
-              readOnly={true}
-            >
-            </ReactQuill>
-          </div>
-        )
-      }
+    if (this.state.isRecorder) {
+      return (
+        <div className="text-editor">
+          <CustomToolbar />
+          <ReactQuill
+            theme="snow"
+            value={this.props.result}
+            onChange={this.onChange}
+            modules={ResultEditor.modules}
+            readOnly={false}
+          />
+        </div>
+      );
+    }
+    return (
+      <div className="text-editor">
+        <CustomToolbar />
+        <ReactQuill
+          theme="snow"
+          value={this.props.result}
+          modules={ResultEditor.modules}
+          readOnly
+        />
+      </div>
+    );
   }
 }
 
@@ -87,8 +84,8 @@ class ResultEditor extends Component{
  */
 ResultEditor.modules = {
   toolbar: {
-    container: "#toolbar",
-  }
+    container: '#toolbar',
+  },
 };
 
 /*
@@ -100,6 +97,6 @@ ResultEditor.formats = [
   'bold', 'italic', 'underline', 'strike', 'blockquote',
   'list', 'bullet', 'indent',
   'link', 'image', 'color',
-]
+];
 
 export default ResultEditor;

@@ -1,8 +1,9 @@
-import {Meteor} from 'meteor/meteor';
-import React, {Component, PropTypes} from 'react';
-import {createContainer} from 'meteor/react-meteor-data';
-import { FlowRouter } from 'meteor/kadira:flow-router';
-import {TAPi18n} from 'meteor/tap:i18n';
+/* global document, $ */
+
+import { Meteor } from 'meteor/meteor';
+import React, { Component, PropTypes } from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
+import { TAPi18n } from 'meteor/tap:i18n';
 import lodash from 'lodash';
 import swal from 'sweetalert2';
 
@@ -13,37 +14,31 @@ import StageMessagesCollection from '../../../api/stageMessages/stageMessages';
 import LoadingActions from '../../../reflux/actions/loadingActions';
 import EditorActions from '../../../reflux/actions/editorActions';
 
-let Button = require('react-bootstrap').Button;
-let FormGroup = require('react-bootstrap').FormGroup;
-let FormControl = require('react-bootstrap').FormControl;
-let InputGroup = require('react-bootstrap').InputGroup;
-let Col = require('react-bootstrap').Col;
-let Panel = require('react-bootstrap').Panel;
-let ListGroup = require('react-bootstrap').ListGroup;
-let ListGroupItem = require('react-bootstrap').ListGroupItem;
-let Grid = require('react-bootstrap').Grid;
-let DropdownButton = require("react-bootstrap").DropdownButton;
-let MenuItem = require("react-bootstrap").MenuItem;
-let Table = require('react-bootstrap').Table;
+const Button = require('react-bootstrap').Button;
+const FormGroup = require('react-bootstrap').FormGroup;
+const FormControl = require('react-bootstrap').FormControl;
+const InputGroup = require('react-bootstrap').InputGroup;
+const Panel = require('react-bootstrap').Panel;
+const ListGroup = require('react-bootstrap').ListGroup;
+const ListGroupItem = require('react-bootstrap').ListGroupItem;
+const Grid = require('react-bootstrap').Grid;
+const DropdownButton = require('react-bootstrap').DropdownButton;
+const MenuItem = require('react-bootstrap').MenuItem;
 
+const placeholder = document.createElement('li');
+placeholder.className = 'placeholder';
 
-let Nav = require("react-bootstrap").Nav;
-let NavItem = require("react-bootstrap").NavItem;
-
-var placeholder = document.createElement("li");
-placeholder.className = "placeholder";
-
-var stages = ['start', 'problem', 'vision', 'resources', 'setting goals', 'solution', 'feedback'];
+const stages = ['start', 'problem', 'vision', 'resources', 'setting goals', 'solution', 'feedback'];
 
 export default class EditorState extends Component {
   constructor(props) {
     super(props);
 
-    var langObject = TAPi18n.getLanguages();
-    var languages = [];
-    for(var index in langObject) {
-      languages.push(index);
-    }
+    const langObject = TAPi18n.getLanguages();
+    const languages = [];
+    Object.keys(langObject).forEach((key) => {
+      languages.push(key);
+    });
 
     this.state = {
       date: new Date(),
@@ -56,11 +51,11 @@ export default class EditorState extends Component {
       materialsHaveNewOrder: false,
 
       availableLanguages: languages,
-      activeLanguage: "en",
+      activeLanguage: 'en',
       currentStageMessages: [],
       saveStagesButtonDisabled: true,
-      saveMaterialButtonDisabled: true
-    }
+      saveMaterialButtonDisabled: true,
+    };
     this.handleStageChange = this.handleStageChange.bind(this);
     this.handleRoleChange = this.handleRoleChange.bind(this);
     this.handleNewMaterialText = this.handleNewMaterialText.bind(this);
@@ -70,102 +65,95 @@ export default class EditorState extends Component {
     this.handleStageMessageChange = this.handleStageMessageChange.bind(this);
     this.onSaveStateMessagesButtonClick = this.onSaveStateMessagesButtonClick.bind(this);
     this.deleteMaterial = this.deleteMaterial.bind(this);
-    this.onImportClick = this.onImportClick.bind(this);
   }
   componentWillMount() {
-      document.title = TAPi18n.__("editor.documentTitle");
+    document.title = TAPi18n.__('editor.documentTitle');
   }
-  handleStageChange(eventKey) {
-		this.setState({
-			activeStageId: parseInt(eventKey)
-		});
-	}
-	handleRoleChange(role) {
-		this.setState({
-			activeRole: role
-		});
-	}
-	handleNewMaterialText(event) {
-		this.setState({
-			newMaterialText: event.target.value
-		});
-	}
+  handleRoleChange(role) {
+    this.setState({
+      activeRole: role,
+    });
+  }
+  handleNewMaterialText(event) {
+    this.setState({
+      newMaterialText: event.target.value,
+    });
+  }
   handleLanguageChange(languageKey) {
-    var stageMessages = StageMessagesCollection.find({language_key: languageKey}).fetch();
-    if(stageMessages) {
+    const stageMessages = StageMessagesCollection.find({ language_key: languageKey }).fetch();
+    if (stageMessages) {
       this.setState({
         currentStageMessages: stageMessages,
-        activeLanguage: languageKey
+        activeLanguage: languageKey,
       });
     }
   }
   handleMaterialChange(event) {
-    var newMaterial = {id: event.target.id, text: event.target.value};
-    var array = this.state.editedMaterials;
-    var findIndex = lodash.findIndex(array, {id: newMaterial.id});
-    if(findIndex !== -1) {
+    const newMaterial = { id: event.target.id, text: event.target.value };
+    const array = this.state.editedMaterials;
+    const findIndex = lodash.findIndex(array, { id: newMaterial.id });
+    if (findIndex !== -1) {
       array[findIndex] = newMaterial;
       this.setState({
         saveMaterialButtonDisabled: false,
-        editedMaterials: array
+        editedMaterials: array,
       });
     } else {
       array.push(newMaterial);
       this.setState({
         saveMaterialButtonDisabled: false,
-        editedMaterials: array
+        editedMaterials: array,
       });
     }
-
   }
   onSaveMaterialButtonClick() {
-    EditorActions.editMaterials(this.state.editedMaterials)
+    EditorActions.editMaterials(this.state.editedMaterials);
     this.setState({
       saveMaterialButtonDisabled: true,
-      editedMaterials: []
+      editedMaterials: [],
     });
   }
-  handleStageMessageChange(event){
+  handleStageMessageChange() {
     this.setState({
-      saveStagesButtonDisabled: false
+      saveStagesButtonDisabled: false,
     });
   }
   onSaveStateMessagesButtonClick() {
     this.setState({
-      saveStagesButtonDisabled: true
+      saveStagesButtonDisabled: true,
     });
     // TODO not optimal performance, bad
-    for(var i = 0; i < 7; i++) {
-      var currentText = document.getElementById('message-' + i).value;
-      Meteor.call("updateStageMessage", i, this.state.activeLanguage, currentText);
+    for (let i = 0; i < 7; i += 1) {
+      const currentText = document.getElementById(`message-${i}`).value;
+      Meteor.call('updateStageMessage', i, this.state.activeLanguage, currentText);
     }
   }
   onImportClick() {
     swal({
-      title: TAPi18n.__("swal.areYouSure"),
-      text: TAPi18n.__("swal.importInfo"),
-      type: "warning",
+      title: TAPi18n.__('swal.areYouSure'),
+      text: TAPi18n.__('swal.importInfo'),
+      type: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#DD6B55",
-      confirmButtonText: TAPi18n.__("swal.importConfirmation"),
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: TAPi18n.__('swal.importConfirmation'),
       html: false,
-    }).then( function(){
+    }).then(() => {
       LoadingActions.setLoading();
       Meteor.call('deleteAllMaterials');
-      $.getJSON('defaultMaterials.json', function(json) {
-        for(var lang in json) {
-          var langs = json[lang];
-          for(var stage in langs) {
-            var stages = langs[stage];
-            for(var role in stages) {
-              var roles = stages[role];
-              for(var material in roles) {
-                var newMaterial = {
+      $.getJSON('defaultMaterials.json', (json) => {
+        for (const lang in json) {
+          const langs = json[lang];
+          for (const stage in langs) {
+            const stages = langs[stage];
+            for (const role in stages) {
+              const roles = stages[role];
+              for (const material in roles) {
+                const newMaterial = {
                   text: roles[material].text,
                   role: roles[material].role,
                   position: roles[material].position,
                   languageKey: lang,
-                  isHeading: roles[material].is_heading
+                  isHeading: roles[material].is_heading,
                 };
                 Meteor.call('addMaterialGivenStageDescription', stage, newMaterial);
               }
@@ -175,7 +163,11 @@ export default class EditorState extends Component {
         LoadingActions.unsetLoading();
       });
     });
-
+  }
+  handleStageChange(eventKey) {
+    this.setState({
+      activeStageId: parseInt(eventKey),
+    });
   }
   deleteMaterial(materialId) {
     EditorActions.deleteMaterial(this.state.activeStageId, materialId);
@@ -184,76 +176,83 @@ export default class EditorState extends Component {
     EditorActions.toggleHeading(materialId);
   }
   render() {
-    return(
+    return (
       <EditorContainer
-        state = {this.state}
-        handleStageChange = {this.handleStageChange.bind(this)}
-        handleRoleChange = {this.handleRoleChange.bind(this)}
-        handleNewMaterialText = {this.handleNewMaterialText.bind(this)}
-        handleLanguageChange = {this.handleLanguageChange.bind(this)}
-        handleMaterialChange = {this.handleMaterialChange.bind(this)}
-        onSaveMaterialButtonClick = {this.onSaveMaterialButtonClick.bind(this)}
-        onSaveStateMessagesButtonClick = {this.onSaveStateMessagesButtonClick.bind(this)}
-        handleStageMessageChange = {this.handleStageMessageChange.bind(this)}
-        deleteMaterial = {this.deleteMaterial.bind(this)}
-        toggleHeading = {this.toggleHeading.bind(this)}
-        onImportClick = {this.onImportClick.bind(this)}
+        state={this.state}
+        handleStageChange={this.handleStageChange.bind(this)}
+        handleRoleChange={this.handleRoleChange.bind(this)}
+        handleNewMaterialText={this.handleNewMaterialText.bind(this)}
+        handleLanguageChange={this.handleLanguageChange.bind(this)}
+        handleMaterialChange={this.handleMaterialChange.bind(this)}
+        onSaveMaterialButtonClick={this.onSaveMaterialButtonClick.bind(this)}
+        onSaveStateMessagesButtonClick={this.onSaveStateMessagesButtonClick.bind(this)}
+        handleStageMessageChange={this.handleStageMessageChange.bind(this)}
+        deleteMaterial={this.deleteMaterial.bind(this)}
+        toggleHeading={this.toggleHeading.bind(this)}
+        onImportClick={this.onImportClick.bind(this)}
       />
     );
   }
-};
+}
 
 class Editor extends Component {
   getMaterialText(id) {
-    var findIndex = lodash.findIndex(this.props.state.editedMaterials, {id: id});
-    if(findIndex!==-1) {
-      var result = this.props.state.editedMaterials[findIndex].text;
-      return result;
-    } else {
-      var result =  this.props.currentMaterial[lodash.findIndex(this.props.currentMaterial, {_id: id})].text;
+    const findIndex = lodash.findIndex(this.props.state.editedMaterials, { id });
+    let result;
+    if (findIndex !== -1) {
+      result = this.props.state.editedMaterials[findIndex].text;
       return result;
     }
+    result = this.props.currentMaterial[lodash.findIndex(this.props.currentMaterial, { _id: id })].text;
+    return result;
   }
   addMaterial() {
     // TODO role check!!! only if admin or editor?
     if (this.props.state.newMaterialText === null) {
       // do nothing -> add button only can be clicked, if not empty
     } else {
-      var newMaterial = {
+      const newMaterial = {
         text: this.props.state.newMaterialText,
         role: this.props.state.activeRole,
         position: this.props.currentMaterial.length,
         languageKey: this.props.state.activeLanguage,
-        isHeading: false
+        isHeading: false,
       };
       EditorActions.addMaterial(this.props.state.activeStageId, newMaterial);
       this.setState({
-        newMaterialText: ''
+        newMaterialText: '',
       });
     }
   }
   render() {
     let currentMaterialHelper;
-    if(this.props.currentMaterial) {
+    if (this.props.currentMaterial) {
       currentMaterialHelper = this.props.currentMaterial;
-      if(this.props.state.materialsOrdered!==null){
-        currentMaterialHelper = this.props.state.materialsOrdered
+      if (this.props.state.materialsOrdered !== null) {
+        currentMaterialHelper = this.props.state.materialsOrdered;
       }
     } else {
       currentMaterialHelper = [];
     }
-    var listItems = currentMaterialHelper.map(function(material, i) {
+    const listItems = currentMaterialHelper.map(function (material, i) {
       return (
-        <li data-id={i}
-            key={i}
-            className="list-group-item">
+        <li
+          data-id={i}
+          key={i}
+          className="list-group-item"
+        >
           {
             <div>
               <FormGroup>
                 <InputGroup>
-                  <FormControl type="text" id={material._id} value={this.getMaterialText(material._id)} onChange={this.props.handleMaterialChange}/>
+                  <FormControl
+                    type="text"
+                    id={material._id}
+                    value={this.getMaterialText(material._id)}
+                    onChange={this.props.handleMaterialChange}
+                  />
                   <InputGroup.Button>
-                    <DropdownButton id="optionsDrop" pullRight={true} title="">
+                    <DropdownButton id="optionsDrop" pullRight title="">
                       <MenuItem eventKey={1} id={1} onClick={this.props.deleteMaterial.bind(null, material._id)}>Delete</MenuItem>
                       <MenuItem eventKey={2} id={2} onClick={this.props.toggleHeading.bind(null, material._id)}>Heading</MenuItem>
                     </DropdownButton>
@@ -268,20 +267,28 @@ class Editor extends Component {
 
     const editMaterialHeader = (
       <div className="title-panel">
-        <div className="pull-left">{TAPi18n.__("editor.editMaterials")}</div>
+        <div className="pull-left">{TAPi18n.__('editor.editMaterials')}</div>
         <Button onClick={this.props.onImportClick}>{TAPi18n.__('editor.import')}</Button>
         <div className="pull-right">
           <DropdownButton id="languageDropdown" title={this.props.state.activeLanguage}>
-            {this.props.state.availableLanguages.map(function(languageKey, index) {
+            {this.props.state.availableLanguages.map(function (languageKey, index) {
               return (
-                <MenuItem eventKey={index} onClick={this.props.handleLanguageChange.bind(null, languageKey)}>{TAPi18n.__("languages." + languageKey)}</MenuItem>
+                <MenuItem eventKey={index} onClick={this.props.handleLanguageChange.bind(null, languageKey)}>
+                  {TAPi18n.__(`languages.${languageKey}`)}
+                </MenuItem>
               );
-            },this)}
+            }, this)}
           </DropdownButton>
           <DropdownButton id="roleDropdown" title={this.props.state.activeRole}>
-            <MenuItem eventKey={1} onClick={this.props.handleRoleChange.bind(null, "participant")}>Participant</MenuItem>
-            <MenuItem eventKey={2} onClick={this.props.handleRoleChange.bind(null, "facilitator")}>Facilitator</MenuItem>
-            <MenuItem eventKey={3} onClick={this.props.handleRoleChange.bind(null, "client")}>Client</MenuItem>
+            <MenuItem eventKey={1} onClick={this.props.handleRoleChange.bind(null, 'participant')}>
+              Participant
+            </MenuItem>
+            <MenuItem eventKey={2} onClick={this.props.handleRoleChange.bind(null, 'facilitator')}>
+              Facilitator
+            </MenuItem>
+            <MenuItem eventKey={3} onClick={this.props.handleRoleChange.bind(null, 'client')}>
+              Client
+            </MenuItem>
           </DropdownButton>
           <DropdownButton id="stageDropdown" title={stages[this.props.state.activeStageId]}>
             <MenuItem eventKey={0} onClick={this.props.handleStageChange.bind(null, 0)}>Start</MenuItem>
@@ -292,7 +299,9 @@ class Editor extends Component {
             <MenuItem eventKey={5} onClick={this.props.handleStageChange.bind(null, 5)}>Solution</MenuItem>
             <MenuItem eventKey={6} onClick={this.props.handleStageChange.bind(null, 6)}>Feedback</MenuItem>
           </DropdownButton>
-          <Button disabled={this.props.state.saveMaterialButtonDisabled} onClick={this.props.onSaveMaterialButtonClick}><span className="glyphicon glyphicon-floppy-disk"/> {TAPi18n.__("editor.saveChanges")}</Button>
+          <Button disabled={this.props.state.saveMaterialButtonDisabled} onClick={this.props.onSaveMaterialButtonClick}>
+            <span className="glyphicon glyphicon-floppy-disk" /> {TAPi18n.__('editor.saveChanges')}
+          </Button>
         </div>
       </div>
     );
@@ -307,7 +316,8 @@ class Editor extends Component {
                 type="text"
               />
               <InputGroup.Button>
-                <Button onClick={this.addMaterial.bind(this)} disabled={!this.props.state.newMaterialText}> {TAPi18n.__("editor.add")}
+                <Button onClick={this.addMaterial.bind(this)} disabled={!this.props.state.newMaterialText}>
+                  {TAPi18n.__('editor.add')}
                 </Button>
               </InputGroup.Button>
             </InputGroup>
@@ -319,24 +329,30 @@ class Editor extends Component {
 
     const editStageMessagesHeader = (
       <div className="title-panel">
-        <div className="pull-left">{TAPi18n.__("editor.editStageMessages")}</div>
+        <div className="pull-left">{TAPi18n.__('editor.editStageMessages')}</div>
         <div className="pull-right">
-          <Button disabled={this.props.state.saveStagesButtonDisabled} onClick={this.props.onSaveStateMessagesButtonClick}><span className="glyphicon glyphicon-floppy-disk"/> {TAPi18n.__("editor.saveChanges")}</Button>
+          <Button disabled={this.props.state.saveStagesButtonDisabled} onClick={this.props.onSaveStateMessagesButtonClick}><span className="glyphicon glyphicon-floppy-disk" /> {TAPi18n.__('editor.saveChanges')}</Button>
         </div>
       </div>
     );
 
-    const editStageMessages= (
+    const editStageMessages = (
       <div>
         <Panel header={editStageMessagesHeader}>
           <ListGroup fill>
-            {this.props.state.currentStageMessages.map((stageMessage) => { return (
+            {this.props.state.currentStageMessages.map(stageMessage => (
               <ListGroupItem key={stageMessage._id}>
                 <FormGroup>
-                  <FormControl type="text" label={TAPi18n.__("editor." + stageMessage.stage)} id={"message-" + stageMessage.stage} defaultValue={stageMessage.message} onChange={this.props.handleStageMessageChange}/>
+                  <FormControl
+                    type="text"
+                    label={TAPi18n.__(`editor.${stageMessage.stage}`)}
+                    id={`message-${stageMessage.stage}`}
+                    defaultValue={stageMessage.message}
+                    onChange={this.props.handleStageMessageChange}
+                  />
                 </FormGroup>
               </ListGroupItem>
-            ); })}
+            ))}
           </ListGroup>
         </Panel>
       </div>
@@ -346,7 +362,7 @@ class Editor extends Component {
       <div>
         <Grid fluid>
           {editMaterial}
-          <hr/>
+          <hr />
           {editStageMessages}
         </Grid>
       </div>
@@ -356,17 +372,19 @@ class Editor extends Component {
 
 Editor.propTypes = {
   currentStage: PropTypes.number,
-  currentMaterial: PropTypes.array
+  currentMaterial: PropTypes.array,
 };
 
-let EditorContainer = createContainer((props) => {
-  var materialHandle = Meteor.subscribe("editorMaterial", props.state.activeStageId, props.state.activeRole, props.state.activeLanguage);
-  if(materialHandle.ready()) {
+const EditorContainer = createContainer((props) => {
+  const materialHandle = Meteor.subscribe('editorMaterial', props.state.activeStageId,
+    props.state.activeRole, props.state.activeLanguage,
+  );
+  if (materialHandle.ready()) {
     LoadingActions.unsetLoading();
   }
 
   return {
-    currentStage: StageCollection.find({stage_id: props.state.activeStageId}).fetch()[0],
-    currentMaterial: MaterialCollection.find({},{sort: {position: 1}}).fetch()
+    currentStage: StageCollection.find({ stage_id: props.state.activeStageId }).fetch()[0],
+    currentMaterial: MaterialCollection.find({}, { sort: { position: 1 } }).fetch(),
   };
 }, Editor);
