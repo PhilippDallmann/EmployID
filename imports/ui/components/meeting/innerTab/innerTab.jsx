@@ -49,6 +49,7 @@ const emojifyButtonOptions = {
 };
 let messageChangeCount = 0;
 let currentMeetingId = null;
+let loadingStopped = false;
 
 class InnerTab extends Reflux.Component {
   constructor(props) {
@@ -86,6 +87,7 @@ class InnerTab extends Reflux.Component {
     require('../../../../../node_modules/clipboard/dist/clipboard.js');
     this.updateScroll();
     new Clipboard('.clipboard');
+    loadingStopped = false;
   }
   componentWillUnmount() {
     UserActions.unsetActiveMeeting();
@@ -271,14 +273,14 @@ class InnerTab extends Reflux.Component {
                               <li>
                                 <OverlayTrigger
                                   trigger="click"
-rootClose
-placement="right"
-overlay={
-  <Popover>
-            <ButtonGroup vertical block>
+                                  rootClose
+                                  placement="right"
+                                  overlay={
+                                    <Popover>
+                                      <ButtonGroup vertical block>
                                         <Button className="clipboard" data-clipboard-target={clipTarget} itemID={message._id}>{TAPi18n.__('meeting.addToResult')}</Button>
                                       </ButtonGroup>
-          </Popover>
+                                    </Popover>
                                   }
                                 >
                                   <span className="message-text right" dangerouslySetInnerHTML={createMarkup()} />
@@ -351,8 +353,8 @@ overlay={
                       overlay={<Popover id="emojiPopover">
                         {EMOTICONS.map(emo => (
                           <Button key={emo} onClick={event => this.addEmoticon(emo, event)}>
-                  <span>{ReactEmoji.emojify(emo, emojifyOptions)}</span>
-                </Button>
+                            <span>{ReactEmoji.emojify(emo, emojifyOptions)}</span>
+                          </Button>
                         ))}
                       </Popover>}
                     >
@@ -402,13 +404,26 @@ export default createContainer(({ stageId }) => {
   const meetingId = FlowRouter.getParam('meetingId');
 
   // subscriptions
-  Meteor.subscribe('currentMeeting', meetingId);
-  Meteor.subscribe('meetingParticipants', meetingId);
-  Meteor.subscribe('currentChatMessages', meetingId);
-  const resultHandle = Meteor.subscribe('currentResult', meetingId);
-  Meteor.subscribe('stages');
-  Meteor.subscribe('stageMessages');
-
+  const subs = [
+    Meteor.subscribe('currentMeeting', meetingId),
+    Meteor.subscribe('meetingParticipants', meetingId),
+    Meteor.subscribe('currentChatMessages', meetingId),
+    Meteor.subscribe('currentResult', meetingId),
+    Meteor.subscribe('stages'),
+    Meteor.subscribe('stageMessages'),
+  ];
+  if (!loadingStopped) {
+    let subsReady = true;
+    subs.forEach((sub) => {
+      if (!sub.ready()) {
+        subsReady = false;
+      }
+    });
+    if (subsReady && !loadingStopped) {
+      LoadingActions.unsetLoading();
+      loadingStopped = true;
+    }
+  }
   const currentMeeting = MeetingCollection.find().fetch()[0];
   if (currentMeeting) {
     if (!currentMeetingId) {
@@ -420,10 +435,6 @@ export default createContainer(({ stageId }) => {
       UserActions.setActiveMeeting(currentMeeting._id);
       Streamy.join(currentMeetingId);
     }
-  }
-
-  if (resultHandle.ready()) {
-    LoadingActions.unsetLoading();
   }
 
   return {

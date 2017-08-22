@@ -11,7 +11,6 @@ const LoadingStore = Reflux.createStore({
     swal.showLoading();
   },
   onUnsetLoading() {
-    swal.hideLoading();
     swal.close();
   },
 
