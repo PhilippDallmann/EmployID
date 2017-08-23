@@ -21,6 +21,11 @@ class Meeting extends Component {
     document.title = TAPi18n.__('meeting.documentTitle');
   }
   render() {
+    if (this.props.currentMeeting && this.props.currentMeeting.active_stage_id === 7) {
+      return (
+        <div>Test</div>
+      );
+    }
     return (
       <div className="topic">
         <div className="general-info pull-right" />
@@ -46,10 +51,12 @@ Meeting.propTypes = {
 
 export default createContainer(() => {
   // subscriptions
-  Meteor.subscribe('currentMeeting', FlowRouter.getParam('meetingId'));
+  const meetingHandle = Meteor.subscribe('currentMeeting', FlowRouter.getParam('meetingId'));
 
   const currentMeeting = MeetingCollection.find().fetch()[0];
-
+  if (meetingHandle.ready() && currentMeeting && currentMeeting.active_stage_id === 7) {
+    FlowRouter.go('home', null, { meeting: 'expired' });
+  }
   // #hack if current meeting changes, getMeteorData is called
   // so we can trigger timer
   MeetingTimeActions.meetingDataHasChanged(currentMeeting);

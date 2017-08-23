@@ -52,9 +52,13 @@ const MeetingTimeStore = Reflux.createStore({
     if (t <= 0) {
       document.getElementById('timer').innerHTML = '00:00';
       if (meeting.facilitator === Meteor.userId()) {
-        DefaultModalActions.showWarning(TAPi18n.__('timer.timeExpired'));
-        me.state.timeLeftInSeconds = 0;
-        me.onPauseTimer(meeting._id);
+        if (meeting.active_stage_id === 6) {
+          DefaultModalActions.showWarning(TAPi18n.__('timer.meetingOver'));
+        } else {
+          DefaultModalActions.showWarning(TAPi18n.__('timer.timeExpired'));
+          me.state.timeLeftInSeconds = 0;
+          me.onPauseTimer(meeting._id);
+        }
       }
     } else {
       me.state.timeInterval = setInterval(() => {
@@ -63,9 +67,13 @@ const MeetingTimeStore = Reflux.createStore({
 
         if (t.total <= 0) {
           if (meeting.facilitator === Meteor.userId()) {
-            DefaultModalActions.showWarning(TAPi18n.__('timer.timeExpired'));
-            me.state.timeLeftInSeconds = 0;
-            me.onPauseTimer(meeting._id);
+            if (meeting.active_stage_id === 6) {
+              DefaultModalActions.showWarning(TAPi18n.__('timer.meetingOver'));
+            } else {
+              DefaultModalActions.showWarning(TAPi18n.__('timer.timeExpired'));
+              me.state.timeLeftInSeconds = 0;
+              me.onPauseTimer(meeting._id);
+            }
           }
           clearInterval(me.state.timeInterval);
           document.getElementById('timer').innerHTML = '00:00';

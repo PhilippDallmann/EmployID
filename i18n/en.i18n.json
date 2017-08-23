@@ -82,7 +82,8 @@
     "6" : "<b>Goals of the feedback phase:</b><br /> Reflection on personal learning outcome and process."
   },
   "timer" : {
-    "timeExpired": "Warning. The time for the current stage has expired. Please move to the next stage."
+    "timeExpired": "Warning. The time for the current stage has expired. Please move to the next stage.",
+    "meetingOver": "The suggested time of this last stage has expired. Don't forget to end the meeting by clicking the stop button!"
   },
   "defaultModal": {
     "error" : "Error",
@@ -149,7 +150,10 @@
     "deleteInfo" : "You will not be able to recover these changes",
     "deleteConfirmation" : "Delete it!",
     "importInfo" : "This will delete all existing materials and imports all materials specified in /public/defaultMaterials.json",
-    "importConfirmation" : "Import"
+    "importConfirmation" : "Import",
+    "meetingExpired" : "This meeting is now longer visible. If the client made the results of this meeting public you can still access the result page",
+    "endMeetingInfo" : "This will end the meeting and this page can no longer be accessed.",
+    "confirmation" : "Confirm"
   },
   "tcomb" : {
     "add" : "Add",

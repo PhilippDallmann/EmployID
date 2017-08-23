@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import React from 'react';
 import { mount } from 'react-mounter';
+import { TAPi18n } from 'meteor/tap:i18n';
+import swal from 'sweetalert2';
 
 
 import App from '../../ui/App.jsx';
@@ -33,7 +35,7 @@ const publicRedirect = () => {
 
 function checkIfSubsAreReady(subs, subsReady) {
   if (subsReady === subs) {
-    LoadingActions.unsetLoading();
+    // LoadingActions.unsetLoading();
   }
 }
 
@@ -74,7 +76,7 @@ FlowRouter.route('/', {
 loggedIn.route('/home', {
   name: 'home',
   subscriptions() {
-    LoadingActions.setLoading();
+    // LoadingActions.setLoading();
     let subsReady = 0;
     const subs = 3;
     this.register('userSpecificMeetings', Meteor.subscribe('userSpecificMeetings', Meteor.userId(), {
@@ -96,10 +98,18 @@ loggedIn.route('/home', {
       },
     }));
   },
-  action() {
+  action(params, queryParams) {
     mount(App, {
       children: [<Header />, <Home />],
     });
+    if (queryParams.meeting === 'expired') {
+      swal({
+        title: TAPi18n.__('defaultModal.warning'),
+        text: TAPi18n.__('swal.meetingExpired'),
+        type: 'warning',
+      });
+    }
+    FlowRouter.setQueryParams({ meeting: null });
   },
 });
 

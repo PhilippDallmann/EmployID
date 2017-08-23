@@ -5,6 +5,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { TAPi18n } from 'meteor/tap:i18n';
 import ReactEmoji from 'react-emoji';
 import { Streamy } from 'meteor/yuukan:streamy';
+import swal from 'sweetalert2';
 
 import MeetingCollection from '../../../../api/meetings/meetings';
 import ChatMessageCollection from '../../../../api/chatMessages/chatMessages';
@@ -147,7 +148,21 @@ class InnerTab extends Reflux.Component {
     }
   }
   onPauseButtonClick() {
-    MeetingActions.pauseMeeting(this.props.currentMeeting._id);
+    if (this.props.currentMeeting.active_stage_id === 6) {
+      swal({
+        title: TAPi18n.__('swal.areYouSure'),
+        text: TAPi18n.__('swal.endMeetingInfo'),
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: TAPi18n.__('swal.confirmation'),
+        html: false,
+      }).then(() => {
+        Meteor.call('updateMeeting', this.props.currentMeeting._id, [['active_stage_id', 7]]);
+      });
+    } else {
+      MeetingActions.pauseMeeting(this.props.currentMeeting._id);
+    }
   }
   onNextStageButtonClick() {
     const newStageId = this.props.currentMeeting.active_stage_id + 1;
@@ -199,7 +214,7 @@ class InnerTab extends Reflux.Component {
         </Button>
 
         <Button className="pause-button" onClick={this.onPauseButtonClick} style={this.showOnlyIfFacilitator()} disabled={this.props.currentMeeting ? this.props.currentMeeting.status_code == 0 : true}>
-          <span className="glyph glyphicon glyphicon-pause" />
+          <span className={this.props.currentMeeting && this.props.currentMeeting.active_stage_id !== 6 ? 'glyph glyphicon glyphicon-pause' : 'glyph glyphicon glyphicon-stop'} />
         </Button>
 
         <Button
@@ -436,7 +451,6 @@ export default createContainer(({ stageId }) => {
       Streamy.join(currentMeetingId);
     }
   }
-
   return {
     currentMeeting,
     currentChatMessages: ChatMessageCollection.find().fetch(),
