@@ -60,10 +60,12 @@ class InnerTab extends Reflux.Component {
     this.state = {
       stageId: this.props.stageId,
       time: `${(`0${time.getHours()}`).slice(-2)}:${(`0${time.getMinutes()}`).slice(-2)}`,
+      messageText: '',
     };
     this.time = MeetingTimeStore;
 
     this.createChatMessage = this.createChatMessage.bind(this);
+    this.handleChatMessageChange = this.handleChatMessageChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.onPlayButtonClick = this.onPlayButtonClick.bind(this);
     this.onNextStageButtonClick = this.onNextStageButtonClick.bind(this);
@@ -74,7 +76,7 @@ class InnerTab extends Reflux.Component {
     this.onRecorderSelect = this.onRecorderSelect.bind(this);
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.currentChatMessages !== this.props.currentChatMessages || nextProps.currentResult !== this.props.currentResult) {
+    if (nextProps.currentChatMessages !== this.props.currentChatMessages || nextProps.currentResult !== this.props.currentResult || nextState.messageText !== this.state.messageText) {
       return true;
     }
     return false;
@@ -117,7 +119,9 @@ class InnerTab extends Reflux.Component {
       text: chatMessageText,
     };
     MeetingActions.createChatMessage(message, this.props.currentMeeting.chat);
-
+    this.setState({
+      messageText: '',
+    });
     document.getElementById('chatMessageTextInput').value = '';
   }
   handleChatMessageChange(event) {
@@ -127,6 +131,9 @@ class InnerTab extends Reflux.Component {
     } else {
       messageChangeCount -= 1;
     }
+    this.setState({
+      messageText: event.target.value,
+    });
   }
   handleKeyPress(event) {
     if (event.key === 'Enter') {
@@ -388,7 +395,7 @@ class InnerTab extends Reflux.Component {
                     onChange={this.handleChatMessageChange}
                   />
                   <InputGroup.Button>
-                    <Button onClick={this.createChatMessage}>{TAPi18n.__('meeting.chatInputButton')}</Button>
+                    <Button disabled={!this.state.messageText} onClick={this.createChatMessage}>{TAPi18n.__('meeting.chatInputButton')}</Button>
                   </InputGroup.Button>
                 </InputGroup>
               </FormGroup>
